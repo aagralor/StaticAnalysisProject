@@ -4,10 +4,60 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCode } from "./selectors/github"
 import { storeCode } from "./actions/storeCode";
+// import { githubUrlAccessToken } from "./apis/urls";
 import logo from './logo.svg';
 import './main-page.css';
 
 class MainPage extends Component {
+
+// // POST request using fetch with error handling
+//   generateUrl = code => 
+//     `${githubUrlAccessToken}?client_id=Iv1.9ad3617300b9f691&client_secret=d59cbb6f3c4f09e858f9a9a7ad9b309dfd8da700&code=${code}&redirect_uri=http://localhost:3000`;
+//     // `${githubUrlAccessToken}?client_id=Iv1.9ad3617300b9f691&client_secret=d59cbb6f3c4f09e858f9a9a7ad9b309dfd8da700&code=${code}`;
+
+  doPost(code) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ code }),
+    };
+    fetch('/api/github/accesstoken/', requestOptions)
+    .then(async response => {
+      const data = await response.json();
+      debugger;
+      // check for error response
+      if (!response.ok) {
+        // get error message from body or default to response status
+        const error = (data && data.message) || response.status;
+        return Promise.reject(error);
+      }
+    })
+  }
+//   async doPost2(code) {
+//     debugger;
+//     const requestOptions = {
+//       method: 'POST',
+//       headers: { 
+//         'Content-Type': 'application/json',
+//         'Accept': 'application/json',
+//         'Access-Control-Allow-Origin': '*',
+//         'Access-Control-Request-Method': 'POST',
+//         'Access-Control-Allow-Headers': 'accept, content-type',
+//         'Access-Control-Max-Age': '1728000'
+//       },
+//       // body: {},
+//       body: JSON.stringify({ title: 'React POST Request Example' })
+//     };
+//     // Default options are marked with *
+//     const response = await fetch(this.generateUrl(code), requestOptions);
+    
+//     const ret =  response.json(); // parses JSON response into native JavaScript objects
+//     debugger;
+//   }
+
   render() {
     console.log(this.props);
 
@@ -34,12 +84,9 @@ class MainPage extends Component {
         {
           this.props.code &&
           <p>
-            You have acquired the code, to get your access code click here.
+            You have acquired the code({this.props.code}), to get your access code click <button onClick={() => this.doPost(this.props.code)}>HERE</button>.
           </p>
         }
-        <p>
-          If that link doesn't work, remember to provide your own <a href="/apps/building-oauth-apps/authorizing-oauth-apps/">Client ID</a>!
-        </p>
       </div>
     );
   }

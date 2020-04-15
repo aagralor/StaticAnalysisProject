@@ -24,8 +24,8 @@ class App extends Component {
           <Switch>
             <Route path="/customers/new" component={NewCustomerContainer} />
             <Route path="/customers/:dni" render={this.renderCustomerContainer} />
-          </Switch> */}
-          {/* <Switch>
+          </Switch>
+          <Switch>
             <Route exact path="/customers/new" component={this.renderCustomerNewContainer} />
             <Route exact path="/customers/:dni" component={this.renderCustomerContainer} />
             <Route exact path="/customers" component={this.renderCustomersContainer} />
