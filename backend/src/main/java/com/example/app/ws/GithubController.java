@@ -1,4 +1,4 @@
-package com.example.app.resources;
+package com.example.app.ws;
 
 import com.example.app.dto.GithubIdentity;
 
