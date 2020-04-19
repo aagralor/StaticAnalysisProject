@@ -2,20 +2,24 @@ package com.example.app.service;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.example.app.utils.ZipHelper;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.eclipse.egit.github.core.Download;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.client.GitHubRequest;
+import org.eclipse.egit.github.core.client.GitHubResponse;
 import org.eclipse.egit.github.core.service.RepositoryService;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.app.utils.ZipHelper;
 
 public class GithubServiceImpl implements GithubService {
 
@@ -74,9 +78,9 @@ public class GithubServiceImpl implements GithubService {
 		RepositoryService service = new RepositoryService(client);
 
 		List<Repository> myRepos = service.getRepositories("aagralor");
-		for (Repository repo : myRepos) {
+		for (Repository repo : myRepos)
 			System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
-		}
+
 		Repository repoTest = service.getRepository("aagralor", "test");
 		List<RepositoryBranch> branchesTest = service.getBranches(repoTest);
 		RepositoryBranch branchMasterTest = branchesTest.get(0);
@@ -87,7 +91,8 @@ public class GithubServiceImpl implements GithubService {
 //		GitHubResponse responseTest = client.get(requestTest);
 
 		Repository repoMain = service.getRepository("aagralor", "main");
-		Repository repoProject = service.getRepository("aagralor", "StaticAnalysisProject");
+		List<RepositoryBranch> branchesMain = service.getBranches(repoMain);
+		RepositoryBranch branchMasterMain = branchesMain.get(0);
 
 		RestTemplate templ = new RestTemplate();
 
@@ -96,14 +101,9 @@ public class GithubServiceImpl implements GithubService {
 
 		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("main", "master"), HttpMethod.GET,
 				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
+		
 		byte[] downloadedBytesMain = bytesMain.getBody();
 		ZipHelper.unzip(downloadedBytesMain, "./");
-
-		ResponseEntity<byte[]> bytesProject = templ.exchange(generateDownloadUrl("StaticAnalysisProject", "develop"),
-				HttpMethod.GET,
-				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
-		byte[] downloadedBytesProject = bytesProject.getBody();
-		ZipHelper.unzip(downloadedBytesProject, "./");
 
 		System.out.println("Bye World");
 

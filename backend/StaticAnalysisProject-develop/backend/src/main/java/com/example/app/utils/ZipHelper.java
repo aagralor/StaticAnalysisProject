@@ -8,12 +8,9 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public final class ZipHelper {
+public class ZipHelper {
 
     private static final int BUFFER_SIZE = 4096;
-
-    private ZipHelper() {
-    }
 
     public static void unzip(byte[] data, String dirName) throws IOException {
         File destDir = new File(dirName);
