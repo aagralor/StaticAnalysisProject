@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import logo from './logo.svg';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+import NoMatch from './NoMatch';
+import Layout from "./components/Layout";
+import NavigationBar from "./components/NavegationBar";
+import Jumbotron from "./components/Jumbotron";
+import logo from './logo.svg';
 import './app.css';
 import MainPage from "./main-page.js";
+
+
 
 class App extends Component {
 
   renderGithubHome = () => <MainPage/>
-
-  // renderCustomersContainer = () => (<h1>Customers Container</h1>)
-
-  // renderCustomerContainer = props => <CustomerContainer /* {...props} */ dni={props.match.params.dni} />
-
-  // renderCustomerNewContainer = () => (<h1>Customer New Container</h1>)
-
+  
   render() {
     console.log(this.props);
     return (
-      <Router className="router">
-        <div className="App">
-          <Route exact path="/" render={this.renderGithubHome} />
+      <React.Fragment>
+      <Router>
+        <NavigationBar />
+        <Jumbotron />
+        <Layout>
+            <Switch>
           {/* <Route exact path="/customers" component={CustomersContainer} />
           <Switch>
             <Route path="/customers/new" component={NewCustomerContainer} />
@@ -31,8 +37,15 @@ class App extends Component {
             <Route exact path="/customers" component={this.renderCustomersContainer} />
             <Route exact path="/" component={this.renderHome} />
           </Switch> */}
-        </div>
-      </Router>      
+              <Route exact path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/github" render={this.renderGithubHome} />
+              <Route component={NoMatch} />
+            </Switch>
+        </Layout>
+      </Router>
+    </React.Fragment>      
     );
   }
 }

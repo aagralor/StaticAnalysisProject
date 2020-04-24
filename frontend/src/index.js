@@ -5,11 +5,15 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from "react-redux";
 import { store } from "./store";
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const rootComponent = (
-    <Provider store={store}>
-        <App/>
-    </Provider>
+    <React.StrictMode>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </React.StrictMode>
 )
 
 ReactDOM.render(rootComponent, document.getElementById('root'));

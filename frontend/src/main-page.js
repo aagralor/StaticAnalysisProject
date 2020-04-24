@@ -78,8 +78,9 @@ class MainPage extends Component {
         </p>
         <p>
           We're going to now talk to the GitHub API. Ready?
-          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691">Click here</a> to begin!
+          {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691">Click here</a> to begin! */}
           {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:3000">Click here</a> to begin! */}
+          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:8080/github">Click here</a> to begin!
         </p>
         {
           this.props.code &&
