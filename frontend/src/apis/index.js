@@ -20,7 +20,7 @@ export const apiPut = (url, id, obj) => () =>
     return r;
   });
 
-  export const apiPost = (url, obj) => () =>
+export const apiPost = (url, obj) =>
   fetch(
     `${url}`, 
     {
@@ -36,6 +36,7 @@ export const apiPut = (url, id, obj) => () =>
     }
     return r;
   });
+
 
   export const apiDelete = (url, id) => () =>
   fetch(

@@ -31,6 +31,11 @@ const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
+              <Link to="/project">Project</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
               <Link to="/github">Github</Link>
             </Nav.Link>
           </Nav.Item>

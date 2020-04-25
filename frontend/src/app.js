@@ -4,6 +4,7 @@ import Home from './Home';
 import About from './About';
 import Contact from './Contact';
 import NoMatch from './NoMatch';
+import Project from "./Project";
 import Layout from "./components/Layout";
 import NavigationBar from "./components/NavegationBar";
 import Jumbotron from "./components/Jumbotron";
@@ -38,6 +39,7 @@ class App extends Component {
             <Route exact path="/" component={this.renderHome} />
           </Switch> */}
               <Route exact path="/" component={Home} />
+              <Route exact path="/project" component={Project} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
               <Route path="/github" render={this.renderGithubHome} />

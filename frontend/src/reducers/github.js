@@ -1,12 +1,13 @@
 import { /* handleAction,  */handleActions } from "redux-actions";
 // import { FETCH_CUSTOMERS, INSERT_CUSTOMER, UPDATE_CUSTOMER, DELETE_CUSTOMER } from "../constants";
-import { STORE_CODE } from "../constants/github";
+import { STORE_CODE, STORE_PROJECT } from "../constants/github";
 
 // const customers = handleAction(FETCH_CUSTOMERS, state => state);
 
 export const github = handleActions(
   {
     [STORE_CODE]: (state, action) => ({ ...state, code: action.payload }),
+    [STORE_PROJECT]: (state, action) => ({ ...state, project: action.payload }),
     // [FETCH_CUSTOMERS]: (state, action) => [...action.payload],
     // [INSERT_CUSTOMER]: (state, action) => [...state, action.payload],
     // [UPDATE_CUSTOMER]: (state, action) => {
