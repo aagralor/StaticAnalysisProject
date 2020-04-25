@@ -1,53 +1,42 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from './Home';
-import About from './About';
-import Contact from './Contact';
-import NoMatch from './NoMatch';
-import Project from "./Project";
-import Layout from "./components/Layout";
-import NavigationBar from "./components/NavegationBar";
-import Jumbotron from "./components/Jumbotron";
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './components/home';
+import About from './components/about';
+import Contact from './components/contact';
+import NoMatch from './components/no-match';
+import Project from './components/project';
+import CreateProject from './components/create-project';
+import Layout from './components/layout';
+import NavigationBar from './components/layout/navigation-bar';
+import Jumbotron from './components/layout/jumbotron';
 import './app.css';
-import MainPage from "./main-page.js";
+import GithubPage from './components/github-page';
 
 
 
 class App extends Component {
 
-  renderGithubHome = () => <MainPage/>
-  
+ 
   render() {
     console.log(this.props);
     return (
       <React.Fragment>
-      <Router>
-        <NavigationBar />
-        <Jumbotron />
-        <Layout>
+        <Router>
+          <NavigationBar />
+          <Jumbotron />
+          <Layout>
             <Switch>
-          {/* <Route exact path="/customers" component={CustomersContainer} />
-          <Switch>
-            <Route path="/customers/new" component={NewCustomerContainer} />
-            <Route path="/customers/:dni" render={this.renderCustomerContainer} />
-          </Switch>
-          <Switch>
-            <Route exact path="/customers/new" component={this.renderCustomerNewContainer} />
-            <Route exact path="/customers/:dni" component={this.renderCustomerContainer} />
-            <Route exact path="/customers" component={this.renderCustomersContainer} />
-            <Route exact path="/" component={this.renderHome} />
-          </Switch> */}
               <Route exact path="/" component={Home} />
+              <Route exact path="/project/create" component={CreateProject} />
               <Route exact path="/project" component={Project} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
-              <Route path="/github" render={this.renderGithubHome} />
+              <Route path="/github" render={GithubPage} />
               <Route component={NoMatch} />
             </Switch>
-        </Layout>
-      </Router>
-    </React.Fragment>      
+          </Layout>
+        </Router>
+      </React.Fragment>      
     );
   }
 }

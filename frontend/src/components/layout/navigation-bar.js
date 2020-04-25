@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -18,7 +18,6 @@ const Styles = styled.div`
 
 const NavigationBar = () => (
   <Styles>
-    {/* <Router> */}
     <Navbar expand="lg">
       <Navbar.Brand href="/">Code Life</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -31,7 +30,12 @@ const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/project">Project</Link>
+              <Link to="/project/create">Create Project</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/project">Projects</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -52,7 +56,6 @@ const NavigationBar = () => (
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-    {/* </Router> */}
   </Styles >
 )
 

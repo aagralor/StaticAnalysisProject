@@ -2,13 +2,13 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
-const UserForm = props => {
+const CustomForm = props => {
   const {
     cancel,
     errors,
     submit,
     submitButtonText,
-    elements,
+    // elements,
     passwordErrors,
   } = props;
 
@@ -27,7 +27,8 @@ const UserForm = props => {
     <React.Fragment>
       <ErrorsDisplay errors={errors} passwordErrors={passwordErrors} />
         <Form onSubmit={handleSubmit}>
-          {(elements())}
+          {/* {(elements())} */}
+          {props.children}
           <Button classname="mr-1" variant="primary" type="submit">
             {submitButtonText}
           </Button>
@@ -76,4 +77,4 @@ const ValidationLabel = styled.h2`
   font-size: 28px;
 `;
 
-export default UserForm;
+export default CustomForm;

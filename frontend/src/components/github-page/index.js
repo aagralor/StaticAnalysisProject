@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCode } from "./selectors/github"
-import { storeCode } from "./actions/storeCode";
+import { getCode } from "../../selectors/github"
+import { storeCode } from "../../actions/store-code";
 // import { githubUrlAccessToken } from "./apis/urls";
-import logo from './logo.svg';
-import './main-page.css';
+import logo from '../../logo.svg';
+import './github-page.css';
 
-class MainPage extends Component {
+class GithubPage extends Component {
 
 // // POST request using fetch with error handling
 //   generateUrl = code => 
@@ -93,7 +93,7 @@ class MainPage extends Component {
   }
 }
 
-MainPage.propTypes = {
+GithubPage.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   location: PropTypes.object,
@@ -110,4 +110,4 @@ const mapDispatchToPropsActions = dispatch => ({
   setCode: code => dispatch(storeCode(code)),
 });
 
-export default withRouter(connect(mapStateToPropsActions, mapDispatchToPropsActions)(MainPage));
+export default withRouter(connect(mapStateToPropsActions, mapDispatchToPropsActions)(GithubPage));
