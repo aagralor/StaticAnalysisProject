@@ -17,6 +17,10 @@ class Project extends Component {
     setTimeout(() => this.props.setProjectList(projectList), 500);
   }
 
+  handleClick() {
+    this.props.history.push('/');
+  }
+
   render() {
     debugger;
     const renderList = (!this.props.projectList ? [] : this.props.projectList);
@@ -31,20 +35,21 @@ class Project extends Component {
           renderList.map(element =>
             <Card>
               <Card.Header>
-                <Nav variant="pills" defaultActiveKey="#first">
+                <Nav variant="pills" defaultActiveKey="#enabled" >
                   <Nav.Item>
-                    <Nav.Link href="#first">Access</Nav.Link>
+                    <Nav.Link href="#enabled">Enabled</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link href="https://github.com">Link</Nav.Link>
+                    <Nav.Link href="#disabled" disabled>Disabled</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link href={`/project/${element.key}`}>Edit</Nav.Link>
+                    <Nav.Link href={`/project/${element.key}`}>Access</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link href="#disabled" disabled>
-                      Disabled
-                    </Nav.Link>
+                    <Nav.Link href={`#edit?key=${element.key}`}>Edit</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item >
+                    <Nav.Link href="#remove">Remove</Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Card.Header>
@@ -53,7 +58,8 @@ class Project extends Component {
                 <Card.Text>
                   With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
-                <Button variant="primary">Visit Github</Button>
+                <Button onClick={event =>  window.location.href=element.url} variant="primary">Visit Github</Button>
+                <Button onClick={() => this.handleClick()} variant="primary">Start Analysis</Button>
               </Card.Body>
             </Card>
           )}

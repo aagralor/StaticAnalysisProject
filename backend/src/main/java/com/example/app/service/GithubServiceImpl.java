@@ -6,10 +6,10 @@ import java.util.List;
 
 import com.example.app.utils.ZipHelper;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.RepositoryBranch;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.RepositoryService;
+//import org.eclipse.egit.github.core.Repository;
+//import org.eclipse.egit.github.core.RepositoryBranch;
+//import org.eclipse.egit.github.core.client.GitHubClient;
+//import org.eclipse.egit.github.core.service.RepositoryService;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -67,30 +67,40 @@ public class GithubServiceImpl implements GithubService {
 		};
 	}
 
+	private static HttpHeaders createHeaders2(String token) {
+		return new HttpHeaders() {
+			{
+				String authHeader = "Bearer " + new String(token);
+				set("Authorization", authHeader);
+			}
+		};
+	}
 	public static <T> void main(String[] args) throws IOException {
-		GitHubClient client = new GitHubClient();
-//		client.setCredentials("aagralor", "zYE9uueE");
-		client.setCredentials("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91");
-//		client.setCredentials("aagralor@uoc.edu", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91");
+//		GitHubClient client = new GitHubClient();
+////		client.setCredentials("aagralor", "zYE9uueE");
+//		client.setCredentials("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91");
+////		client.setCredentials("aagralor@uoc.edu", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91");
+//
+//		RepositoryService service = new RepositoryService(client);
+//
+//		List<Repository> myRepos = service.getRepositories("aagralor");
+//		for (Repository repo : myRepos) {
+//			System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
+//		}
+//		Repository repoTest = service.getRepository("aagralor", "test");
+//		List<RepositoryBranch> branchesTest = service.getBranches(repoTest);
+//		RepositoryBranch branchMasterTest = branchesTest.get(0);
+//
+//
+//		Repository repoMain = service.getRepository("aagralor", "main");
+//		Repository repoProject = service.getRepository("aagralor", "StaticAnalysisProject");
 
-		RepositoryService service = new RepositoryService(client);
 
-		List<Repository> myRepos = service.getRepositories("aagralor");
-		for (Repository repo : myRepos) {
-			System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
-		}
-		Repository repoTest = service.getRepository("aagralor", "test");
-		List<RepositoryBranch> branchesTest = service.getBranches(repoTest);
-		RepositoryBranch branchMasterTest = branchesTest.get(0);
-
-//		GitHubRequest requestTest = new GitHubRequest();
-//		requestTest.setUri(generateDownloadUrl("test", "master"));
-//		requestTest.setType(Download.class);
-//		GitHubResponse responseTest = client.get(requestTest);
-
-		Repository repoMain = service.getRepository("aagralor", "main");
-		Repository repoProject = service.getRepository("aagralor", "StaticAnalysisProject");
-
+//		{
+//			"access_token":"4448d2f5778af78ca4e7de53d67c7990cd54fa3b",
+//			"token_type":"bearer",
+//			"scope":""
+//		}
 		RestTemplate templ = new RestTemplate();
 
 		byte[] downloadedBytesTest = templ.getForObject(generateDownloadUrl("test", "master"), byte[].class);
@@ -100,6 +110,11 @@ public class GithubServiceImpl implements GithubService {
 				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
 		byte[] downloadedBytesMain = bytesMain.getBody();
 		ZipHelper.unzip(downloadedBytesMain, "./");
+
+//		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("main", "master"), HttpMethod.GET,
+//				new HttpEntity<T>(createHeaders2("4448d2f5778af78ca4e7de53d67c7990cd54fa3b")), byte[].class);
+//		byte[] downloadedBytesMain = bytesMain.getBody();
+//		ZipHelper.unzip(downloadedBytesMain, "./");
 
 		ResponseEntity<byte[]> bytesProject = templ.exchange(generateDownloadUrl("StaticAnalysisProject", "develop"),
 				HttpMethod.GET,

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCode } from "../../selectors/github"
 import { storeCode } from "../../actions/store-code";
-// import { githubUrlAccessToken } from "./apis/urls";
+import { urlAccessToken } from "../../apis/urls";
 import logo from '../../logo.svg';
 import './github-page.css';
 
@@ -24,7 +24,7 @@ class GithubPage extends Component {
       },
       body: JSON.stringify({ code }),
     };
-    fetch('/api/github/accesstoken/', requestOptions)
+    fetch(urlAccessToken, requestOptions)
     .then(async response => {
       const data = await response.json();
       debugger;
@@ -79,8 +79,8 @@ class GithubPage extends Component {
         <p>
           We're going to now talk to the GitHub API. Ready?
           {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691">Click here</a> to begin! */}
-          {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:3000">Click here</a> to begin! */}
-          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:8080/github">Click here</a> to begin!
+          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:3000/github">Click here</a> to begin!
+          {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:8080/github">Click here</a> to begin! */}
         </p>
         {
           this.props.code &&

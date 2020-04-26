@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Document(collection = "Project")
 @Getter
 @Setter
@@ -30,5 +28,17 @@ public class Project {
 
 	@Field("GithubUsername")
 	private String username;
+
+	@Field("GithubEmail")
+	private String email;
+
+	@Field("GithubRepositoryName")
+	private String repositoryName;
+
+	@Field("GithubBranchName")
+	private String branchName;
+
+	@Field("GithubUrl")
+	private String url;
 
 }
