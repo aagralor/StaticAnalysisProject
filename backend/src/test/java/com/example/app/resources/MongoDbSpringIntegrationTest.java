@@ -77,6 +77,35 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 		// then
 		List<Project> objectList = mongoTemplate.findAll(Project.class, "Project");
 		assertThat(objectList).extracting("Key").containsOnly("project_key");
+		
+		// clean
+		this.mongoTemplate.dropCollection("Project");
+	}
+	
+	@Test
+	public void testGetAllProjects() {
+		// given
+		Project project1 = new Project();
+		project1.setName("Project name_1");
+		project1.setKey("project_key_1");
+		project1.setAccessToken("github_access_token_1");
+		project1.setUsername("github_username_1");
+		Project project2 = new Project();
+		project2.setName("Project name_2");
+		project2.setKey("project_key_2");
+		project2.setAccessToken("github_access_token_2");
+		project2.setUsername("github_username_2");
+		this.mongoTemplate.save(project1, "Project");
+		this.mongoTemplate.save(project2, "Project");
+
+		// when
+		List<Project> objectList = projectService.findAllProjects();
+		
+		// then
+		assertThat(objectList).hasSize(2);
+		
+		// clean
+		this.mongoTemplate.dropCollection("Project");
 	}
 	
 	@Configuration

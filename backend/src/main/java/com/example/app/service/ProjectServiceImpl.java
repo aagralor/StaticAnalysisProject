@@ -1,5 +1,7 @@
 package com.example.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return response;
 	}
 
+	@Override
+	public List<Project> findAllProjects() {
+
+		List<Project> response = this.repo.findAll();
+
+		return response;
+	};
+
 	public static <T> void main(String[] args) {
 		System.out.println("Bye World");
-	};
+	}
 
 }
