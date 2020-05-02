@@ -42,6 +42,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+<!-- 			<version>2.11.0</version> -->
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.github/org.eclipse.egit.github.core -->
 		<dependency>
 			<groupId>org.eclipse.mylyn.github</groupId>
@@ -52,7 +57,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
