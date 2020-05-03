@@ -1,4 +1,4 @@
-package com.example.app.domain;
+package com.example.app.domain.xml;
 
 import java.util.List;
 
@@ -14,10 +14,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BugCollection {
+public class Project {
+	
+    @JacksonXmlProperty(isAttribute = true)
+    private String projectName;
 
-    @JacksonXmlProperty(localName = "file")
+    @JacksonXmlProperty(localName = "Jar")
     @JacksonXmlElementWrapper(useWrapping = false)
-    private List<File> file;
-
+    private List<String> jarList;
+    
+    @JacksonXmlProperty(localName = "Plugin")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    private Plugin plugin;
 }

@@ -9,7 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.zip.ZipInputStream;
 
-import com.example.app.domain.BugCollection;
+import com.example.app.domain.xdocs.BugCollectionXdocsReport;
+import com.example.app.domain.xml.BugCollectionXmlReport;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public final class XmlParser {
@@ -39,13 +40,18 @@ public final class XmlParser {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		System.out.println("Hello world");
 	    
-		File file = new File("project/application_report_XDOCS.xml");
 	    XmlMapper xmlMapper = new XmlMapper();
-	    String xml = inputStreamToString(new FileInputStream(file));
-	    
-	    BugCollection value = xmlMapper.readValue(xml, BugCollection.class);
+
+		File fileXml = new File("project/application_report_XML.xml");
+	    String xml = inputStreamToString(new FileInputStream(fileXml));
+	    BugCollectionXmlReport valueXml = xmlMapper.readValue(xml, BugCollectionXmlReport.class);
 //	    assertTrue(value.getX() == 1 && value.getY() == 2);
 	
+		File fileXdocs = new File("project/application_report_XDOCS.xml");
+	    String xdocs = inputStreamToString(new FileInputStream(fileXdocs));
+	    BugCollectionXdocsReport valueXdocs = xmlMapper.readValue(xdocs, BugCollectionXdocsReport.class);
+//	    assertTrue(value.getX() == 1 && value.getY() == 2);
+	    
 	    System.out.println("Bye world");
 	}
 
