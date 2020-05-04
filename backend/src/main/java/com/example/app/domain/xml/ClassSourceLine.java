@@ -20,14 +20,14 @@ public class ClassSourceLine {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String start;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String end;
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String sourcefile;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String sourcepath;
-	
+
 }

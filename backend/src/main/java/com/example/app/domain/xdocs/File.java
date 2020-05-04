@@ -15,10 +15,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class File {
-	
+
     @JacksonXmlProperty(isAttribute = true)
     private String classname;
-    
+
     @JacksonXmlProperty(localName = "BugInstance")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<BugInstance> bugInstanceList;

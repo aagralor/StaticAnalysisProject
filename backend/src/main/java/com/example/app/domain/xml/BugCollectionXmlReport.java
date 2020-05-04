@@ -23,20 +23,20 @@ public class BugCollectionXmlReport {
 
 	@JacksonXmlProperty(isAttribute = true)
     private String sequence;
- 
+
 	@JacksonXmlProperty(isAttribute = true)
     private String timestamp;
-    
+
 	@JacksonXmlProperty(isAttribute = true)
     private String analysisTimestamp;
-    
+
 	@JacksonXmlProperty(isAttribute = true)
     private String release;
-	
+
     @JacksonXmlProperty(localName = "Project")
     @JacksonXmlElementWrapper(useWrapping = false)
     private Project project;
-    
+
     @JacksonXmlProperty(localName = "BugInstance")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<BugInstance> bugInstanceList;

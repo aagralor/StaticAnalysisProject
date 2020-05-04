@@ -25,7 +25,7 @@ public final class XmlParser {
 
     private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
     }
-    
+
     public static String inputStreamToString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         String line;
@@ -39,19 +39,19 @@ public final class XmlParser {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		System.out.println("Hello world");
-	    
+
 	    XmlMapper xmlMapper = new XmlMapper();
 
 		File fileXml = new File("project/application_report_XML.xml");
 	    String xml = inputStreamToString(new FileInputStream(fileXml));
 	    BugCollectionXmlReport valueXml = xmlMapper.readValue(xml, BugCollectionXmlReport.class);
 //	    assertTrue(value.getX() == 1 && value.getY() == 2);
-	
+
 		File fileXdocs = new File("project/application_report_XDOCS.xml");
 	    String xdocs = inputStreamToString(new FileInputStream(fileXdocs));
 	    BugCollectionXdocsReport valueXdocs = xmlMapper.readValue(xdocs, BugCollectionXdocsReport.class);
 //	    assertTrue(value.getX() == 1 && value.getY() == 2);
-	    
+
 	    System.out.println("Bye world");
 	}
 

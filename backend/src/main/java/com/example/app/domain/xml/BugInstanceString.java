@@ -20,5 +20,5 @@ public class BugInstanceString {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String role;
-	
+
 }

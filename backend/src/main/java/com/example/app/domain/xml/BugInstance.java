@@ -27,10 +27,10 @@ public class BugInstance {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String abbrev;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String category;
-	
+
     @JacksonXmlProperty(localName = "Class")
     @JacksonXmlElementWrapper(useWrapping = false)
     private Class clazz;
@@ -38,11 +38,11 @@ public class BugInstance {
     @JacksonXmlProperty(localName = "Method")
     @JacksonXmlElementWrapper(useWrapping = false)
     private Method method;
-    
+
     @JacksonXmlProperty(localName = "SourceLine")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<BugInstanceSourceLine> sourceLineList;
-    
+
     @JacksonXmlProperty(localName = "String")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<BugInstanceString> stringList;

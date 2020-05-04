@@ -15,14 +15,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
-	
+
     @JacksonXmlProperty(isAttribute = true)
     private String projectName;
 
     @JacksonXmlProperty(localName = "Jar")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<String> jarList;
-    
+
     @JacksonXmlProperty(localName = "Plugin")
     @JacksonXmlElementWrapper(useWrapping = false)
     private Plugin plugin;

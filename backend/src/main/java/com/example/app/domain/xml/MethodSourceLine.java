@@ -20,20 +20,20 @@ public class MethodSourceLine {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String start;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String end;
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String startBytecode;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String endBytecode;
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String sourcefile;
-	
+
 	@JacksonXmlProperty(isAttribute = true)
 	private String sourcepath;
-	
+
 }

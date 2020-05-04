@@ -19,5 +19,5 @@ public class Errors {
     @JacksonXmlProperty(localName = "MissingClass")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<String> missingClassList;
-    
+
 }
