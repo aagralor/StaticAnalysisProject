@@ -1,0 +1,955 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SpotBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+		</style>
+</head>
+<body>
+<h1>SpotBugs Report</h1>
+<p>Produced using <a href="https://spotbugs.github.io">SpotBugs</a>3.1.12.</p>
+<p>Project: 
+			</p>
+<h2>Metrics</h2>
+<p>3430 lines of code analyzed,
+	in 106 classes, 
+	in 14 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right">1</td>
+<td align="right">0.29</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right">33</td>
+<td align="right">9.62</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>34</b>
+</td>
+<td align="right">
+<b>9.91</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Summary</h2>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_SECURITY">Security Warnings</a>
+</td>
+<td align="right">34</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>34</b>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<h1>Warnings</h1>
+<p>Click on each warning link to see a full description of the issue, and
+	    details of how to resolve it.</p>
+<h2>
+<a name="Warnings_SECURITY">Security Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="2" cellpadding="5">
+<tr class="tableheader">
+<th align="left">Warning</th>
+<th align="left">Priority</th>
+<th align="left">Details</th>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#WEAK_MESSAGE_DIGEST_MD5">MD2, MD4 and MD5 are weak hash functions</a>
+</td>
+<td width="10%" valign="top">High</td>
+<td width="70%">
+<p>This API MD5 (MDX) is not a recommended cryptographic hash function<br/>
+<br/>
+<br/>In file PathAssembler.java,
+					
+						line 59<br/>In class org.apache.maven.wrapper.PathAssembler<br/>In method org.apache.maven.wrapper.PathAssembler.getMd5Hash(String)<br/>At PathAssembler.java:[line 59]<br/>Value MD5</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#COMMAND_INJECTION">Potential Command Injection</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This usage of java/lang/ProcessBuilder.&lt;init&gt;([Ljava/lang/String;)V can be vulnerable to Command Injection<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 110<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.setExecutablePermissions(File)<br/>At Installer.java:[line 110]<br/>Sink method java/lang/ProcessBuilder.&lt;init&gt;([Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/io/File.getCanonicalPath()Ljava/lang/String;<br/>Unknown source java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>At Installer.java:[line 107]<br/>At Installer.java:[line 110]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#ENTITY_LEAK">Unexpected property leak</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>Unexpected property could be leaked because a persistence class is directly exposed to the client<br/>
+<br/>
+<br/>In file ProjectController.java,
+					
+						lines 25
+						    to 27<br/>In class com.example.app.ws.ProjectController<br/>In method com.example.app.ws.ProjectController.create(Project)<br/>At ProjectController.java:[lines 25-27]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#ENTITY_MASS_ASSIGNMENT">Mass assignment</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>The persistent objects could be exploited by attacker to read sensitive information.<br/>
+<br/>
+<br/>In file ProjectController.java,
+					
+						lines 25
+						    to 27<br/>In class com.example.app.ws.ProjectController<br/>In method com.example.app.ws.ProjectController.create(Project)<br/>At ProjectController.java:[lines 25-27]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file ZipHelper.java,
+					
+						line 33<br/>In class com.example.app.utils.ZipHelper<br/>In method com.example.app.utils.ZipHelper.unzip(byte[], String)<br/>At ZipHelper.java:[line 33]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source com/example/app/utils/ZipHelper.unzip([BLjava/lang/String;)V parameter 0<br/>Unknown source java/util/zip/ZipEntry.getName()Ljava/lang/String;<br/>At GithubServiceImpl.java:[line 107]<br/>At GithubServiceImpl.java:[line 112]<br/>At GithubServiceImpl.java:[line 123]<br/>At ZipHelper.java:[line 27]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 61<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.createDist(WrapperConfiguration)<br/>At Installer.java:[line 61]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/io/File.getName()Ljava/lang/String;<br/>At Installer.java:[line 61]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 146<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.deleteDir(File)<br/>At Installer.java:[line 146]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/io/File.list()[Ljava/lang/String;</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 169<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.unzip(File, File)<br/>At Installer.java:[line 169]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/util/zip/ZipEntry.getName()Ljava/lang/String;</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 173<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.unzip(File, File)<br/>At Installer.java:[line 173]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/util/zip/ZipEntry.getName()Ljava/lang/String;</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Installer.java,
+					
+						line 174<br/>In class org.apache.maven.wrapper.Installer<br/>In method org.apache.maven.wrapper.Installer.unzip(File, File)<br/>At Installer.java:[line 174]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/util/zip/ZipEntry.getName()Ljava/lang/String;</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file MavenWrapperMain.java,
+					
+						line 116<br/>In class org.apache.maven.wrapper.MavenWrapperMain<br/>In method org.apache.maven.wrapper.MavenWrapperMain.mavenUserHome()<br/>At MavenWrapperMain.java:[line 116]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/apache/maven/wrapper/MavenWrapperMain.DEFAULT_MAVEN_USER_HOME<br/>At MavenWrapperMain.java:[line 116]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file MavenWrapperMain.java,
+					
+						line 84<br/>In class org.apache.maven.wrapper.MavenWrapperMain<br/>In method org.apache.maven.wrapper.MavenWrapperMain.wrapperJar()<br/>At MavenWrapperMain.java:[line 84]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/security/CodeSource.getLocation()Ljava/net/URL;<br/>Unknown source java/net/URL.toURI()Ljava/net/URI;<br/>Unknown source java/net/URI.getPath()Ljava/lang/String;<br/>At MavenWrapperMain.java:[line 77]<br/>At MavenWrapperMain.java:[line 84]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file MavenWrapperMain.java,
+					
+						line 71<br/>In class org.apache.maven.wrapper.MavenWrapperMain<br/>In method org.apache.maven.wrapper.MavenWrapperMain.wrapperProperties(File)<br/>At MavenWrapperMain.java:[line 71]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/io/File.getName()Ljava/lang/String;<br/>At MavenWrapperMain.java:[line 71]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PathAssembler.java,
+					
+						line 47<br/>In class org.apache.maven.wrapper.PathAssembler<br/>In method org.apache.maven.wrapper.PathAssembler.getDistribution(WrapperConfiguration)<br/>At PathAssembler.java:[line 47]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getMd5Hash(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.distribution<br/>Unknown source org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String; parameter 1<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.distributionPath<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.getDistributionPath()Ljava/lang/String;<br/>Unknown source java/net/URI.getPath()Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String; parameter 0<br/>Unknown source java/math/BigInteger.toString(I)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.getDistribution()Ljava/net/URI;<br/>At PathAssembler.java:[line 44]<br/>At PathAssembler.java:[line 45]<br/>At PathAssembler.java:[line 46]<br/>At PathAssembler.java:[line 47]<br/>At PathAssembler.java:[line 53]<br/>At PathAssembler.java:[line 54]<br/>At PathAssembler.java:[line 73]<br/>At PathAssembler.java:[line 77]<br/>At PathAssembler.java:[line 82]<br/>At WrapperConfiguration.java:[line 56]<br/>At WrapperConfiguration.java:[line 72]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PathAssembler.java,
+					
+						line 48<br/>In class org.apache.maven.wrapper.PathAssembler<br/>In method org.apache.maven.wrapper.PathAssembler.getDistribution(WrapperConfiguration)<br/>At PathAssembler.java:[line 48]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getMd5Hash(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.distribution<br/>Unknown source org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String; parameter 1<br/>Unknown source java/net/URI.getPath()Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String; parameter 0<br/>Unknown source java/math/BigInteger.toString(I)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.zipPath<br/>Unknown source org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.getDistribution()Ljava/net/URI;<br/>Unknown source org/apache/maven/wrapper/WrapperConfiguration.getZipPath()Ljava/lang/String;<br/>At PathAssembler.java:[line 44]<br/>At PathAssembler.java:[line 45]<br/>At PathAssembler.java:[line 46]<br/>At PathAssembler.java:[line 48]<br/>At PathAssembler.java:[line 53]<br/>At PathAssembler.java:[line 54]<br/>At PathAssembler.java:[line 73]<br/>At PathAssembler.java:[line 77]<br/>At PathAssembler.java:[line 82]<br/>At WrapperConfiguration.java:[line 56]<br/>At WrapperConfiguration.java:[line 88]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file WrapperExecutor.java,
+					
+						line 81<br/>In class org.apache.maven.wrapper.WrapperExecutor<br/>In method org.apache.maven.wrapper.WrapperExecutor.prepareDistributionUri()<br/>At WrapperExecutor.java:[line 81]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/util/Properties.getProperty(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source java/net/URI.getSchemeSpecificPart()Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source java/net/URI.&lt;init&gt;(Ljava/lang/String;)V<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.reportMissingProperty(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.readDistroUrl()Ljava/net/URI;<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.properties<br/>Unknown source org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;)Ljava/lang/String;<br/>At WrapperExecutor.java:[line 78]<br/>At WrapperExecutor.java:[line 81]<br/>At WrapperExecutor.java:[line 89]<br/>At WrapperExecutor.java:[line 126]<br/>At WrapperExecutor.java:[line 130]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file JarFileArchive.java,
+					
+						line 136<br/>In class org.springframework.boot.loader.archive.JarFileArchive<br/>In method org.springframework.boot.loader.archive.JarFileArchive.createUnpackFolder(File)<br/>At JarFileArchive.java:[line 136]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/data/RandomAccessDataFile.file<br/>Unknown source org/springframework/boot/loader/jar/JarFile.pathFromRoot<br/>Unknown source org/springframework/boot/loader/data/RandomAccessDataFile.getFile()Ljava/io/File;<br/>Unknown source org/springframework/boot/loader/jar/JarFile.getName()Ljava/lang/String;<br/>At JarFileArchive.java:[line 136]<br/>At RandomAccessDataFile.java:[line 94]<br/>At JarFile.java:[line 328]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file JarFileArchive.java,
+					
+						line 138<br/>In class org.springframework.boot.loader.archive.JarFileArchive<br/>In method org.springframework.boot.loader.archive.JarFileArchive.createUnpackFolder(File)<br/>At JarFileArchive.java:[line 138]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/io/File.getName()Ljava/lang/String;<br/>At JarFileArchive.java:[line 137]<br/>At JarFileArchive.java:[line 138]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file JarFileArchive.java,
+					
+						line 118<br/>In class org.springframework.boot.loader.archive.JarFileArchive<br/>In method org.springframework.boot.loader.archive.JarFileArchive.getUnpackedNestedArchive(JarEntry)<br/>At JarFileArchive.java:[line 118]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/util/jar/JarEntry.getName()Ljava/lang/String;<br/>At JarFileArchive.java:[line 116]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Handler.java,
+					
+						line 272<br/>In class org.springframework.boot.loader.jar.Handler<br/>In method org.springframework.boot.loader.jar.Handler.getRootJarFile(String)<br/>At Handler.java:[line 272]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/jar/Handler.getRootJarFile(Ljava/lang/String;)Lorg/springframework/boot/loader/jar/JarFile; parameter 0<br/>Unknown source java/net/URLDecoder.decode(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;<br/>Method usage not detected<br/>At Handler.java:[line 94]<br/>At Handler.java:[line 257]<br/>At Handler.java:[line 262]<br/>At Handler.java:[line 263]<br/>At Handler.java:[line 271]<br/>At Handler.java:[line 272]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file Launcher.java,
+					
+						line 124<br/>In class org.springframework.boot.loader.Launcher<br/>In method org.springframework.boot.loader.Launcher.createArchive()<br/>At Launcher.java:[line 124]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/net/URI.getSchemeSpecificPart()Ljava/lang/String;<br/>Unknown source java/security/CodeSource.getLocation()Ljava/net/URL;<br/>Unknown source java/net/URL.toURI()Ljava/net/URI;<br/>At Launcher.java:[line 119]<br/>At Launcher.java:[line 120]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 462<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getClassPathArchives(String)<br/>At PropertiesLauncher.java:[line 462]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getClassPathArchives(Ljava/lang/String;)Ljava/util/List; parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 442]<br/>At PropertiesLauncher.java:[line 443]<br/>At PropertiesLauncher.java:[line 460]<br/>At PropertiesLauncher.java:[line 564]<br/>At PropertiesLauncher.java:[line 567]<br/>At PropertiesLauncher.java:[line 573]<br/>At PropertiesLauncher.java:[line 578]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 465<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getClassPathArchives(String)<br/>At PropertiesLauncher.java:[line 465]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getClassPathArchives(Ljava/lang/String;)Ljava/util/List; parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 442]<br/>At PropertiesLauncher.java:[line 443]<br/>At PropertiesLauncher.java:[line 460]<br/>At PropertiesLauncher.java:[line 564]<br/>At PropertiesLauncher.java:[line 567]<br/>At PropertiesLauncher.java:[line 573]<br/>At PropertiesLauncher.java:[line 578]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 240<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getFileResource(String)<br/>At PropertiesLauncher.java:[line 240]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getFileResource(Ljava/lang/String;)Ljava/io/InputStream; parameter 0<br/>At PropertiesLauncher.java:[line 146]<br/>At PropertiesLauncher.java:[line 156]<br/>At PropertiesLauncher.java:[line 159]<br/>At PropertiesLauncher.java:[line 160]<br/>At PropertiesLauncher.java:[line 162]<br/>At PropertiesLauncher.java:[line 163]<br/>At PropertiesLauncher.java:[line 164]<br/>At PropertiesLauncher.java:[line 167]<br/>At PropertiesLauncher.java:[line 168]<br/>At PropertiesLauncher.java:[line 209]<br/>At PropertiesLauncher.java:[line 213]<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 377]<br/>At PropertiesLauncher.java:[line 386]<br/>At PropertiesLauncher.java:[line 395]<br/>At PropertiesLauncher.java:[line 397]<br/>At PropertiesLauncher.java:[line 403]<br/>At PropertiesLauncher.java:[line 404]<br/>At PropertiesLauncher.java:[line 417]<br/>At PropertiesLauncher.java:[line 432]<br/>At PropertiesLauncher.java:[line 436]<br/>At SystemPropertyUtils.java:[line 86]<br/>At SystemPropertyUtils.java:[line 92]<br/>At SystemPropertyUtils.java:[line 96]<br/>At SystemPropertyUtils.java:[line 131]<br/>At SystemPropertyUtils.java:[line 148]<br/>At SystemPropertyUtils.java:[line 161]<br/>At SystemPropertyUtils.java:[line 180]<br/>At SystemPropertyUtils.java:[line 183]<br/>At SystemPropertyUtils.java:[line 187]<br/>At SystemPropertyUtils.java:[line 191]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 146<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getHomeDirectory()<br/>At PropertiesLauncher.java:[line 146]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source java/lang/System.getProperty(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.resolvePlaceholders(Ljava/util/Properties;Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source java/util/Properties.getProperty(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source java/lang/System.getenv(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source java/util/jar/Attributes.getValue(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.properties<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.resolvePlaceholders(Ljava/util/Properties;Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 2<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 2<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 1<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.parseStringValue(Ljava/util/Properties;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;)Ljava/lang/String; parameter 1<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 1<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;)Ljava/lang/String; parameter 0<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.parseStringValue(Ljava/util/Properties;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;)Ljava/lang/String;<br/>Unknown source org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;<br/>At PropertiesLauncher.java:[line 146]<br/>At PropertiesLauncher.java:[line 386]<br/>At PropertiesLauncher.java:[line 395]<br/>At PropertiesLauncher.java:[line 397]<br/>At PropertiesLauncher.java:[line 403]<br/>At PropertiesLauncher.java:[line 404]<br/>At PropertiesLauncher.java:[line 417]<br/>At PropertiesLauncher.java:[line 432]<br/>At PropertiesLauncher.java:[line 436]<br/>At SystemPropertyUtils.java:[line 86]<br/>At SystemPropertyUtils.java:[line 92]<br/>At SystemPropertyUtils.java:[line 96]<br/>At SystemPropertyUtils.java:[line 131]<br/>At SystemPropertyUtils.java:[line 148]<br/>At SystemPropertyUtils.java:[line 161]<br/>At SystemPropertyUtils.java:[line 180]<br/>At SystemPropertyUtils.java:[line 183]<br/>At SystemPropertyUtils.java:[line 187]<br/>At SystemPropertyUtils.java:[line 191]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 509<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getNestedArchives(String)<br/>At PropertiesLauncher.java:[line 509]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 442]<br/>At PropertiesLauncher.java:[line 443]<br/>At PropertiesLauncher.java:[line 460]<br/>At PropertiesLauncher.java:[line 478]<br/>At PropertiesLauncher.java:[line 509]<br/>At PropertiesLauncher.java:[line 564]<br/>At PropertiesLauncher.java:[line 567]<br/>At PropertiesLauncher.java:[line 573]<br/>At PropertiesLauncher.java:[line 578]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 511<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getNestedArchives(String)<br/>At PropertiesLauncher.java:[line 511]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 442]<br/>At PropertiesLauncher.java:[line 443]<br/>At PropertiesLauncher.java:[line 460]<br/>At PropertiesLauncher.java:[line 478]<br/>At PropertiesLauncher.java:[line 511]<br/>At PropertiesLauncher.java:[line 564]<br/>At PropertiesLauncher.java:[line 567]<br/>At PropertiesLauncher.java:[line 573]<br/>At PropertiesLauncher.java:[line 578]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 520<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getNestedArchives(String)<br/>At PropertiesLauncher.java:[line 520]<br/>Sink method java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 442]<br/>At PropertiesLauncher.java:[line 443]<br/>At PropertiesLauncher.java:[line 460]<br/>At PropertiesLauncher.java:[line 478]<br/>At PropertiesLauncher.java:[line 514]<br/>At PropertiesLauncher.java:[line 516]<br/>At PropertiesLauncher.java:[line 564]<br/>At PropertiesLauncher.java:[line 567]<br/>At PropertiesLauncher.java:[line 573]<br/>At PropertiesLauncher.java:[line 578]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#PATH_TRAVERSAL_OUT">Potential Path Traversal (file write)</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This API (java/io/FileOutputStream.&lt;init&gt;(Ljava/lang/String;)V) writes to a file whose location might be specified by user input<br/>
+<br/>
+<br/>In file ZipHelper.java,
+					
+						line 43<br/>In class com.example.app.utils.ZipHelper<br/>In method com.example.app.utils.ZipHelper.extractFile(ZipInputStream, String)<br/>At ZipHelper.java:[line 43]<br/>Sink method java/io/FileOutputStream.&lt;init&gt;(Ljava/lang/String;)V<br/>Sink parameter 0<br/>Unknown source com/example/app/utils/ZipHelper.extractFile(Ljava/util/zip/ZipInputStream;Ljava/lang/String;)V parameter 0<br/>Method usage not detected</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This web server request could be used by an attacker to expose internal services and filesystem.<br/>
+<br/>
+<br/>In file DefaultDownloader.java,
+					
+						line 70<br/>In class org.apache.maven.wrapper.DefaultDownloader<br/>In method org.apache.maven.wrapper.DefaultDownloader.downloadInternal(URI, File)<br/>At DefaultDownloader.java:[line 70]<br/>Sink method java/net/URL.openConnection()Ljava/net/URLConnection;<br/>Sink parameter 0<br/>Unknown source java/net/URI.toURL()Ljava/net/URL;<br/>Unknown source org/apache/maven/wrapper/DefaultDownloader.downloadInternal(Ljava/net/URI;Ljava/io/File;)V parameter 1<br/>Method usage not detected<br/>At DefaultDownloader.java:[line 60]<br/>At DefaultDownloader.java:[line 68]</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This web server request could be used by an attacker to expose internal services and filesystem.<br/>
+<br/>
+<br/>In file LaunchedURLClassLoader.java,
+					
+						line 171<br/>In class org.springframework.boot.loader.LaunchedURLClassLoader<br/>In method org.springframework.boot.loader.LaunchedURLClassLoader.clearCache()<br/>At LaunchedURLClassLoader.java:[line 171]<br/>Sink method java/net/URL.openConnection()Ljava/net/URLConnection;<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/LaunchedURLClassLoader.getURLs()[Ljava/net/URL;</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This web server request could be used by an attacker to expose internal services and filesystem.<br/>
+<br/>
+<br/>In file LaunchedURLClassLoader.java,
+					
+						line 139<br/>In class org.springframework.boot.loader.LaunchedURLClassLoader$1<br/>In method org.springframework.boot.loader.LaunchedURLClassLoader$1.run()<br/>At LaunchedURLClassLoader.java:[line 139]<br/>Sink method java/net/URL.openConnection()Ljava/net/URLConnection;<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/LaunchedURLClassLoader.getURLs()[Ljava/net/URL;</p>
+</td>
+</tr>
+<tr class="tablerow1">
+<td width="20%" valign="top">
+<a href="#URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This web server request could be used by an attacker to expose internal services and filesystem.<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 268<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.exists(URL)<br/>At PropertiesLauncher.java:[line 268]<br/>Sink method java/net/URL.openConnection()Ljava/net/URLConnection;<br/>Sink parameter 0<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.exists(Ljava/net/URL;)Z parameter 0<br/>At PropertiesLauncher.java:[line 146]<br/>At PropertiesLauncher.java:[line 156]<br/>At PropertiesLauncher.java:[line 159]<br/>At PropertiesLauncher.java:[line 160]<br/>At PropertiesLauncher.java:[line 162]<br/>At PropertiesLauncher.java:[line 163]<br/>At PropertiesLauncher.java:[line 164]<br/>At PropertiesLauncher.java:[line 167]<br/>At PropertiesLauncher.java:[line 168]<br/>At PropertiesLauncher.java:[line 209]<br/>At PropertiesLauncher.java:[line 211]<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 249]<br/>At PropertiesLauncher.java:[line 250]<br/>At PropertiesLauncher.java:[line 377]<br/>At PropertiesLauncher.java:[line 386]<br/>At PropertiesLauncher.java:[line 395]<br/>At PropertiesLauncher.java:[line 397]<br/>At PropertiesLauncher.java:[line 403]<br/>At PropertiesLauncher.java:[line 404]<br/>At PropertiesLauncher.java:[line 417]<br/>At PropertiesLauncher.java:[line 432]<br/>At PropertiesLauncher.java:[line 436]<br/>At SystemPropertyUtils.java:[line 86]<br/>At SystemPropertyUtils.java:[line 92]<br/>At SystemPropertyUtils.java:[line 96]<br/>At SystemPropertyUtils.java:[line 131]<br/>At SystemPropertyUtils.java:[line 148]<br/>At SystemPropertyUtils.java:[line 161]<br/>At SystemPropertyUtils.java:[line 180]<br/>At SystemPropertyUtils.java:[line 183]<br/>At SystemPropertyUtils.java:[line 187]<br/>At SystemPropertyUtils.java:[line 191]</p>
+</td>
+</tr>
+<tr class="tablerow0">
+<td width="20%" valign="top">
+<a href="#URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</td>
+<td width="10%" valign="top">Medium</td>
+<td width="70%">
+<p>This web server request could be used by an attacker to expose internal services and filesystem.<br/>
+<br/>
+<br/>In file PropertiesLauncher.java,
+					
+						line 251<br/>In class org.springframework.boot.loader.PropertiesLauncher<br/>In method org.springframework.boot.loader.PropertiesLauncher.getURLResource(String)<br/>At PropertiesLauncher.java:[line 251]<br/>Sink method java/net/URL.openConnection()Ljava/net/URLConnection;<br/>Sink parameter 0<br/>Unknown source java/net/URL.&lt;init&gt;(Ljava/lang/String;)V<br/>Unknown source org/springframework/boot/loader/PropertiesLauncher.getURLResource(Ljava/lang/String;)Ljava/io/InputStream; parameter 0<br/>At PropertiesLauncher.java:[line 146]<br/>At PropertiesLauncher.java:[line 156]<br/>At PropertiesLauncher.java:[line 159]<br/>At PropertiesLauncher.java:[line 160]<br/>At PropertiesLauncher.java:[line 162]<br/>At PropertiesLauncher.java:[line 163]<br/>At PropertiesLauncher.java:[line 164]<br/>At PropertiesLauncher.java:[line 167]<br/>At PropertiesLauncher.java:[line 168]<br/>At PropertiesLauncher.java:[line 209]<br/>At PropertiesLauncher.java:[line 211]<br/>At PropertiesLauncher.java:[line 218]<br/>At PropertiesLauncher.java:[line 220]<br/>At PropertiesLauncher.java:[line 249]<br/>At PropertiesLauncher.java:[line 377]<br/>At PropertiesLauncher.java:[line 386]<br/>At PropertiesLauncher.java:[line 395]<br/>At PropertiesLauncher.java:[line 397]<br/>At PropertiesLauncher.java:[line 403]<br/>At PropertiesLauncher.java:[line 404]<br/>At PropertiesLauncher.java:[line 417]<br/>At PropertiesLauncher.java:[line 432]<br/>At PropertiesLauncher.java:[line 436]<br/>At SystemPropertyUtils.java:[line 86]<br/>At SystemPropertyUtils.java:[line 92]<br/>At SystemPropertyUtils.java:[line 96]<br/>At SystemPropertyUtils.java:[line 131]<br/>At SystemPropertyUtils.java:[line 148]<br/>At SystemPropertyUtils.java:[line 161]<br/>At SystemPropertyUtils.java:[line 180]<br/>At SystemPropertyUtils.java:[line 183]<br/>At SystemPropertyUtils.java:[line 187]<br/>At SystemPropertyUtils.java:[line 191]</p>
+</td>
+</tr>
+</table>
+<p>
+<br/>
+<br/>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h1>
+<a name="Details">Warning Types</a>
+</h1>
+<h2>
+<a name="COMMAND_INJECTION">Potential Command Injection</a>
+</h2>
+            
+<p>The highlighted API is used to execute a system command. If unfiltered input is passed to this API, it can lead to arbitrary command execution.</p>
+<br/>
+<p>
+    <b>Vulnerable Code:</b><br/>
+<pre>import java.lang.Runtime;
+
+Runtime r = Runtime.getRuntime();
+r.exec("/bin/sh -c some_tool" + input);</pre>
+</p>
+<p>
+<b>References</b><br/>
+<a href="https://www.owasp.org/index.php/Command_Injection">OWASP: Command Injection</a><br/>
+<a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">OWASP: Top 10 2013-A1-Injection</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/78.html">CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')</a>
+</p>
+
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="ENTITY_LEAK">Unexpected property leak</a>
+</h2>
+            
+<p>
+    Persistent objects should never be returned by APIs. They might lead to leaking business logic over the UI, unauthorized tampering of
+    persistent objects in database.
+</p>
+<p>
+    <b>Vulnerable Code:</b></br/>
+<pre>
+@javax.persistence.Entity
+class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+
+    private String password;
+}
+
+[...]
+@Controller
+class UserController {
+
+    @GetMapping("/user/{id}")
+    public UserEntity getUser(@PathVariable("id") String id) {
+
+        return userService.findById(id).get(); //Return the user entity with ALL fields.
+    }
+
+}
+</pre>
+</p>
+<p>
+    <b>Solution/Countermeasures:</b><br/>
+    <ul>
+        <li>Data transfer objects should be used instead including only the parameters needed as input/response to/from the API.</li>
+        <li>Sensitive parameters should be removed properly before transferring to UI.</li>
+        <li>Data should be persisted in database only after proper sanitisation checks.</li>
+    </ul>
+</p>
+<p>
+    <b>Spring MVC Solution:</b><br/>
+    In Spring specifically, you can apply the following solution to allow or disallow specific fields.
+
+        <pre>
+@Controller
+class UserController {
+
+   @InitBinder
+   public void initBinder(WebDataBinder binder, WebRequest request)
+   {
+      binder.setAllowedFields(["username","firstname","lastname"]);
+   }
+
+}
+    </pre>
+</p>
+
+<p>
+<b>References</b><br/>
+<a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure">OWASP Top 10-2017 A3: Sensitive Data Exposure</a><br/>
+<a href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html#spring-mvc">OWASP Cheat Sheet: Mass Assignment</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/212.html">CWE-212: Improper Cross-boundary Removal of Sensitive Data</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/213.html">CWE-213: Intentional Information Exposure</a><br/>
+
+
+</p>
+
+            
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="ENTITY_MASS_ASSIGNMENT">Mass assignment</a>
+</h2>
+            
+<p>
+    Persistent objects should never be returned by APIs. They might lead to leaking business logic over the UI, unauthorized tampering of
+    persistent objects in database.
+</p>
+<p>
+    <b>Vulnerable Code:</b></br/>
+<pre>
+@javax.persistence.Entity
+class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+
+    private String password;
+
+    private Long role;
+}
+
+[...]
+@Controller
+class UserController {
+
+    @PutMapping("/user/")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void update(UserEntity user) {
+
+        userService.save(user); //ALL fields from the user can be altered
+    }
+
+}
+</pre>
+</p>
+<p>
+    <b>General Guidelines:</b><br/>
+    <ul>
+        <li>Data transfer objects should be used instead including only the parameters needed as input/response to/from the API.</li>
+        <li>Sensitive parameters should be removed properly before transferring to UI.</li>
+        <li>Data should be persisted in database only after proper sanitisation checks.</li>
+    </ul>
+</p>
+<p>
+    <b>Spring MVC Solution:</b><br/>
+    In Spring specifically, you can apply the following solution to allow or disallow specific fields.<br/>
+<br/>
+With whitelist:<br/>
+        <pre>
+@Controller
+class UserController {
+
+   @InitBinder
+   public void initBinder(WebDataBinder binder, WebRequest request)
+   {
+      binder.setAllowedFields(["username","password"]);
+   }
+
+}
+    </pre>
+<br/>
+With a blacklist:<br/>
+    <pre>
+@Controller
+class UserController {
+
+   @InitBinder
+   public void initBinder(WebDataBinder binder, WebRequest request)
+   {
+      binder.setDisallowedFields(["role"]);
+   }
+
+}
+    </pre>
+</p>
+
+<p>
+<b>References</b><br/>
+<a href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html#spring-mvc">OWASP Cheat Sheet: Mass Assignment</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/915.html">CWE-915: Improperly Controlled Modification of Dynamically-Determined Object Attributes</a><br/>
+</p>
+            
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="WEAK_MESSAGE_DIGEST_MD5">MD2, MD4 and MD5 are weak hash functions</a>
+</h2>
+            
+<p>The algorithms MD2, MD4 and MD5 are not a recommended MessageDigest. <b>PBKDF2</b> should be used to hash password for example.</p>
+
+<blockquote>
+    "The security of the MD5 hash function is severely compromised. A collision attack exists that can find collisions
+    within seconds on a computer with a 2.6 GHz Pentium 4 processor (complexity of 2<sup>24.1</sup>).[1] Further, there is also a
+    chosen-prefix collision attack that can produce a collision for two inputs with specified prefixes within hours, using
+    off-the-shelf computing hardware (complexity 2<sup>39</sup>).[2]"<br/>
+    - <a href="https://en.wikipedia.org/wiki/MD5#Security">Wikipedia: MD5 - Security</a>
+</blockquote>
+
+<blockquote>
+    "<b>SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, and SHA-512/256</b>:<br/>
+    The use of these hash functions is acceptable for all hash function applications."<br/>
+    - <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar2.pdf">NIST: Transitioning the Use of Cryptographic Algorithms and Key Lengths p.15</a>
+</blockquote>
+<blockquote>
+    "The main idea of a PBKDF is to slow dictionary or brute force attacks on the passwords by increasing the time
+    needed to test each password. An attacker with a list of likely passwords can evaluate the PBKDF using the known
+    iteration counter and the salt. Since an attacker has to spend a significant amount of computing time for each try,
+    it becomes harder to apply the dictionary or brute force attacks."<br/>
+- <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf">NIST: Recommendation for Password-Based Key Derivation  p.12</a>
+</blockquote>
+<br/>
+<p>
+    <b>Vulnerable Code:</b><br/>
+    <pre>MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+    md5Digest.update(password.getBytes());
+    byte[] hashValue = md5Digest.digest();</pre>
+    <br/>
+    <pre>byte[] hashValue = DigestUtils.getMd5Digest().digest(password.getBytes());</pre>
+</p>
+<br/>
+<p>
+    <b>Solution (Using bouncy castle):</b><br/>
+    <pre>public static byte[] getEncryptedPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(new SHA256Digest());
+    gen.init(password.getBytes("UTF-8"), salt.getBytes(), 4096);
+    return ((KeyParameter) gen.generateDerivedParameters(256)).getKey();
+}</pre>
+    <br/>
+    <b>Solution (Java 8 and later):</b><br/>
+    <pre>public static byte[] getEncryptedPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 4096, 256 * 8);
+    SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+    return f.generateSecret(spec).getEncoded();
+}</pre>
+</p>
+<br/>
+<p>
+<b>References</b><br/>
+[1] <a href="https://www.win.tue.nl/hashclash/On%20Collisions%20for%20MD5%20-%20M.M.J.%20Stevens.pdf">On Collisions for MD5</a>: Master Thesis by M.M.J. Stevens<br/>
+[2] <a href="https://homepages.cwi.nl/~stevens/papers/stJOC%20-%20Chosen-Prefix%20Collisions%20for%20MD5%20and%20Applications.pdf">Chosen-prefix collisions for MD5 and applications</a>: Paper written by Marc Stevens<br/>
+<a href="https://en.wikipedia.org/wiki/MD5">Wikipedia: MD5</a><br/>
+<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar2.pdf">NIST: Transitioning the Use of Cryptographic Algorithms and Key Lengths</a><br/>
+<a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf">NIST: Recommendation for Password-Based Key Derivation</a><br/>
+<a href="https://stackoverflow.com/q/22580853/89769">Stackoverflow: Reliable implementation of PBKDF2-HMAC-SHA256 for Java</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/327.html">CWE-327: Use of a Broken or Risky Cryptographic Algorithm</a>
+</p>
+
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="PATH_TRAVERSAL_IN">Potential Path Traversal (file read)</a>
+</h2>
+            
+<p>A file is opened to read its content. The filename comes from an <b>input</b> parameter.
+If an unfiltered parameter is passed to this file API, files from an arbitrary filesystem location could be read.</p>
+<p>This rule identifies <b>potential</b> path traversal vulnerabilities. In many cases, the constructed file path cannot be controlled
+by the user. If that is the case, the reported instance is a false positive.</p>
+<br/>
+
+<p>
+    <b>Vulnerable Code:</b><br/>
+<pre>@GET
+@Path("/images/{image}")
+@Produces("images/*")
+public Response getImage(@javax.ws.rs.PathParam("image") String image) {
+    File file = new File("resources/images/", image); //Weak point
+
+    if (!file.exists()) {
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+    return Response.ok().entity(new FileInputStream(file)).build();
+}</pre>
+</p>
+<br/>
+
+<p>
+    <b>Solution:</b><br/>
+<pre>import org.apache.commons.io.FilenameUtils;
+
+@GET
+@Path("/images/{image}")
+@Produces("images/*")
+public Response getImage(@javax.ws.rs.PathParam("image") String image) {
+    File file = new File("resources/images/", FilenameUtils.getName(image)); //Fix
+
+    if (!file.exists()) {
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+    return Response.ok().entity(new FileInputStream(file)).build();
+}</pre>
+</p>
+<br/>
+<p>
+<b>References</b><br/>
+<a href="http://projects.webappsec.org/w/page/13246952/Path%20Traversal">WASC: Path Traversal</a><br/>
+<a href="https://www.owasp.org/index.php/Path_Traversal">OWASP: Path Traversal</a><br/>
+<a href="https://capec.mitre.org/data/definitions/126.html">CAPEC-126: Path Traversal</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/22.html">CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')</a>
+</p>
+
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="PATH_TRAVERSAL_OUT">Potential Path Traversal (file write)</a>
+</h2>
+            
+<p>A file is opened to write to its contents. The filename comes from an <b>input</b> parameter.
+If an unfiltered parameter is passed to this file API, files at an arbitrary filesystem location could be modified.</p>
+<p>This rule identifies <b>potential</b> path traversal vulnerabilities. In many cases, the constructed file path cannot be controlled
+by the user. If that is the case, the reported instance is a false positive.</p>
+<br/>
+<p>
+<b>References</b><br/>
+<a href="http://projects.webappsec.org/w/page/13246952/Path%20Traversal">WASC-33: Path Traversal</a><br/>
+<a href="https://www.owasp.org/index.php/Path_Traversal">OWASP: Path Traversal</a><br/>
+<a href="https://capec.mitre.org/data/definitions/126.html">CAPEC-126: Path Traversal</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/22.html">CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')</a>
+</p>
+
+        
+<p>
+<br/>
+<br/>
+</p>
+<h2>
+<a name="URLCONNECTION_SSRF_FD">URLConnection Server-Side Request Forgery (SSRF) and File Disclosure</a>
+</h2>
+            
+<p>
+    Server-Side Request Forgery occur when a web server executes a request to a user supplied destination
+    parameter that is not validated. Such vulnerabilities could allow an attacker to access internal services
+    or to launch attacks from your web server.
+</p>
+<p>
+    URLConnection can be used with file:// protocol or other protocols to access local filesystem and potentially other services.
+<p>
+    <b>Vulnerable Code:</b>
+<pre>
+new URL(String url).openConnection()
+</pre>
+
+<pre>
+new URL(String url).openStream()
+</pre>
+
+<pre>
+new URL(String url).getContent()
+</pre>
+</p>
+<p>
+    <b>Solution/Countermeasures:</b><br/>
+    <ul>
+        <li>Don't accept URL destinations from users</li>
+        <li>Accept a destination key, and use it to look up the target destination associate with the key</li>
+        <li>White list URLs (if possible)</li>
+        <li>Validate that the beginning of the URL is part of a white list</li>
+    </ul>
+</p>
+<br/>
+<p>
+<b>References</b><br/>
+<a href="https://cwe.mitre.org/data/definitions/918.html">CWE-918: Server-Side Request Forgery (SSRF)</a><br/>
+<a href="https://www.bishopfox.com/blog/2015/04/vulnerable-by-design-understanding-server-side-request-forgery/">Understanding Server-Side Request Forgery</a><br/>
+<a href="https://cwe.mitre.org/data/definitions/73.html">CWE-73: External Control of File Name or Path</a><br/>
+<a href="https://www.pwntester.com/blog/2013/11/28/abusing-jar-downloads/">Abusing jar:// downloads</a><br />
+</p>
+            
+<p>
+<br/>
+<br/>
+</p>
+</body>
+</html>

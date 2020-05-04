@@ -26,6 +26,6 @@ public class Method {
     private String isStatic;
 
     @JacksonXmlProperty(localName = "SourceLine")
-    private MethodSourceLine sourceLine;
+    private SourceLine sourceLine;
 
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "SourceLine")
-public class ClassSourceLine {
+public class SourceLine {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String classname;
@@ -23,6 +23,12 @@ public class ClassSourceLine {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String end;
+
+	@JacksonXmlProperty(isAttribute = true)
+	private String startBytecode;
+
+	@JacksonXmlProperty(isAttribute = true)
+	private String endBytecode;
 
 	@JacksonXmlProperty(isAttribute = true)
 	private String sourcefile;

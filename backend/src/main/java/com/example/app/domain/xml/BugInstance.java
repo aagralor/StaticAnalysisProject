@@ -41,7 +41,7 @@ public class BugInstance {
 
     @JacksonXmlProperty(localName = "SourceLine")
     @JacksonXmlElementWrapper(useWrapping = false)
-    private List<BugInstanceSourceLine> sourceLineList;
+    private List<SourceLine> sourceLineList;
 
     @JacksonXmlProperty(localName = "String")
     @JacksonXmlElementWrapper(useWrapping = false)

@@ -17,6 +17,6 @@ public class Class {
     private String classname;
 
     @JacksonXmlProperty(localName = "SourceLine")
-    private ClassSourceLine sourceLine;
+    private SourceLine sourceLine;
 
 }
