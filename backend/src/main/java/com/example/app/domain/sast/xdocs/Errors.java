@@ -1,4 +1,4 @@
-package com.example.app.domain.xml;
+package com.example.app.domain.sast.xdocs;
 
 import java.util.List;
 
@@ -14,16 +14,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Project {
+public class Errors {
 
-    @JacksonXmlProperty(isAttribute = true)
-    private String projectName;
-
-    @JacksonXmlProperty(localName = "Jar")
+    @JacksonXmlProperty(localName = "MissingClass")
     @JacksonXmlElementWrapper(useWrapping = false)
-    private List<String> jarList;
+    private List<String> missingClassList;
 
-    @JacksonXmlProperty(localName = "Plugin")
-    @JacksonXmlElementWrapper(useWrapping = false)
-    private Plugin plugin;
 }

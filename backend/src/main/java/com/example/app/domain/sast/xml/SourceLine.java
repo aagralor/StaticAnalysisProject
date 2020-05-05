@@ -1,4 +1,4 @@
-package com.example.app.domain.xml;
+package com.example.app.domain.sast.xml;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

@@ -13,8 +13,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.example.app.domain.html.BugCollectionHtmlReport;
-import com.example.app.domain.html.VulnInstance;
+import com.example.app.domain.sast.html.BugCollectionHtmlReport;
+import com.example.app.domain.sast.html.VulnInstance;
 
 public final class HtmlParser {
 

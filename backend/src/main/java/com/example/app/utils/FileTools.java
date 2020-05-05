@@ -12,6 +12,9 @@ public final class FileTools {
 
 	private static final int BUFFER_SIZE = 4096;
 
+	private FileTools() {
+	}
+
     public static String inputStreamToString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         String line;
@@ -22,7 +25,7 @@ public final class FileTools {
         br.close();
         return sb.toString();
     }
-    
+
     public static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
         byte[] bytesIn = new byte[BUFFER_SIZE];

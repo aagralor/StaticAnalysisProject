@@ -1,9 +1,6 @@
-package com.example.app.domain.xdocs;
-
-import java.util.List;
+package com.example.app.domain.sast.xml;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import lombok.Getter;
@@ -14,13 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class File {
+public class Class {
 
     @JacksonXmlProperty(isAttribute = true)
     private String classname;
 
-    @JacksonXmlProperty(localName = "BugInstance")
-    @JacksonXmlElementWrapper(useWrapping = false)
-    private List<BugInstance> bugInstanceList;
+    @JacksonXmlProperty(localName = "SourceLine")
+    private SourceLine sourceLine;
 
 }

@@ -1,8 +1,9 @@
-package com.example.app.domain.mongo;
+package com.example.app.domain.sast;
 
 import java.util.List;
 
-
+import com.example.app.domain.sast.xml.BugInstanceString;
+import com.example.app.domain.sast.xml.SourceLine;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Vuln {
-	
+
 	// HTML
 	private String nameByHtml;
 
@@ -27,10 +28,14 @@ public class Vuln {
 	private String warningTextHtmlByHtml;
 
 	private List<String> sourceLineListByHtml;
-	
+
+	private String fileNameByHtml;
+
+	private String lineNumberByHtml;
+
 	// XDOCS
     private String classnameByXdocs;
-    
+
 	private String typeByXdocs;
 
 	private String priorityByXdocs;
@@ -44,7 +49,7 @@ public class Vuln {
 	private String typeByXml;
 
 	private String priorityByXml;
-	
+
 	private String rankByXml;
 
 	private String abbrevByXml;
@@ -52,7 +57,7 @@ public class Vuln {
 	private String categoryByXml;
 
     private String classnameByXml;
-    
+
     private String methodClassnameByXml;
 
     private String methodNameByXml;
@@ -61,7 +66,7 @@ public class Vuln {
 
     private List<SourceLine> traceByXml;
 
-    private List<VulnElement> elementListByXml;
+    private List<BugInstanceString> elementListByXml;
 
 
 

@@ -1,7 +1,8 @@
-package com.example.app.domain.xml;
+package com.example.app.domain.sast.xml;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Plugin {
+@JacksonXmlRootElement(localName = "String")
+public class BugInstanceString {
 
 	@JacksonXmlProperty(isAttribute = true)
-	private String id;
+	private String value;
 
 	@JacksonXmlProperty(isAttribute = true)
-	private String enabled;
+	private String role;
 
 }

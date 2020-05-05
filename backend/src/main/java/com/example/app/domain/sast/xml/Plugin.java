@@ -1,4 +1,4 @@
-package com.example.app.domain.xml;
+package com.example.app.domain.sast.xml;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Class {
+public class Plugin {
 
-    @JacksonXmlProperty(isAttribute = true)
-    private String classname;
+	@JacksonXmlProperty(isAttribute = true)
+	private String id;
 
-    @JacksonXmlProperty(localName = "SourceLine")
-    private SourceLine sourceLine;
+	@JacksonXmlProperty(isAttribute = true)
+	private String enabled;
 
 }

@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.example.app.domain.mongo.Project;
+import com.example.app.domain.Project;
 import com.example.app.service.ProjectService;
 import com.example.app.service.ProjectServiceImpl;
 import com.mongodb.BasicDBObjectBuilder;

@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.example.app.domain.xdocs.BugCollectionXdocsReport;
-import com.example.app.domain.xml.BugCollectionXmlReport;
+import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
+import com.example.app.domain.sast.xml.BugCollectionXmlReport;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public final class XmlParser {
@@ -48,7 +48,7 @@ public final class XmlParser {
 //		BugCollectionXmlReport valueXml = xmlMapper.readValue(xml, BugCollectionXmlReport.class);
 //	    assertTrue(value.getX() == 1 && value.getY() == 2);
 		BugCollectionXmlReport valueXml = parseToBugCollectionFromXml("project/application_report_XML.xml");
-		
+
 //		File fileXdocs = new File("project/application_report_XDOCS.xml");
 //		String xdocs = FileTools.inputStreamToString(new FileInputStream(fileXdocs));
 //		BugCollectionXdocsReport valueXdocs = xmlMapper.readValue(xdocs, BugCollectionXdocsReport.class);

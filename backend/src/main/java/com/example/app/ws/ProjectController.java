@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.app.domain.mongo.Project;
+import com.example.app.domain.Project;
 import com.example.app.service.ProjectService;
 
 @RestController

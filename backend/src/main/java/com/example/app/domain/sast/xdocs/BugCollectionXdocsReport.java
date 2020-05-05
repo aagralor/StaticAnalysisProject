@@ -1,4 +1,4 @@
-package com.example.app.domain.xdocs;
+package com.example.app.domain.sast.xdocs;
 
 import java.util.List;
 

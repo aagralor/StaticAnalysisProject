@@ -1,4 +1,4 @@
-package com.example.app.domain.html;
+package com.example.app.domain.sast.html;
 
 import java.util.List;
 
