@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.1.12" sequence="0" timestamp="1588454898000" analysisTimestamp="1588546554828" release="">
+  <Project projectName="">
+    <Jar>/home/alberto/workspace_TFM/application/frontend/target/frontend-0.1.0-SNAPSHOT.jar</Jar>
+    <Jar>/home/alberto/workspace_TFM/application/.mvn/wrapper/maven-wrapper.jar</Jar>
+    <Jar>/home/alberto/workspace_TFM/application/backend/target/backend-0.1.0-SNAPSHOT.jar</Jar>
+    <Plugin id="com.h3xstream.findsecbugs" enabled="true"/>
+  </Project>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="com.example.app.utils.ZipHelper">
+      <SourceLine classname="com.example.app.utils.ZipHelper" start="15" end="50" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    </Class>
+    <Method classname="com.example.app.utils.ZipHelper" name="unzip" signature="([BLjava/lang/String;)V" isStatic="true">
+      <SourceLine classname="com.example.app.utils.ZipHelper" start="19" end="40" startBytecode="0" endBytecode="324" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    </Method>
+    <SourceLine classname="com.example.app.utils.ZipHelper" start="33" end="33" startBytecode="101" endBytecode="101" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="com/example/app/utils/ZipHelper.unzip([BLjava/lang/String;)V parameter 0" role="Unknown source"/>
+    <String value="java/util/zip/ZipEntry.getName()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="com.example.app.service.GithubServiceImpl" start="107" end="107" startBytecode="32" endBytecode="32" sourcefile="GithubServiceImpl.java" sourcepath="com/example/app/service/GithubServiceImpl.java"/>
+    <SourceLine classname="com.example.app.service.GithubServiceImpl" start="112" end="112" startBytecode="83" endBytecode="83" sourcefile="GithubServiceImpl.java" sourcepath="com/example/app/service/GithubServiceImpl.java"/>
+    <SourceLine classname="com.example.app.service.GithubServiceImpl" start="123" end="123" startBytecode="136" endBytecode="136" sourcefile="GithubServiceImpl.java" sourcepath="com/example/app/service/GithubServiceImpl.java"/>
+    <SourceLine classname="com.example.app.utils.ZipHelper" start="27" end="27" startBytecode="73" endBytecode="73" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_OUT" priority="2" rank="12" abbrev="SECPTO" category="SECURITY">
+    <Class classname="com.example.app.utils.ZipHelper">
+      <SourceLine classname="com.example.app.utils.ZipHelper" start="15" end="50" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    </Class>
+    <Method classname="com.example.app.utils.ZipHelper" name="extractFile" signature="(Ljava/util/zip/ZipInputStream;Ljava/lang/String;)V" isStatic="true">
+      <SourceLine classname="com.example.app.utils.ZipHelper" start="43" end="50" startBytecode="0" endBytecode="177" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    </Method>
+    <SourceLine classname="com.example.app.utils.ZipHelper" start="43" end="43" startBytecode="9" endBytecode="9" sourcefile="ZipHelper.java" sourcepath="com/example/app/utils/ZipHelper.java"/>
+    <String value="java/io/FileOutputStream.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="com/example/app/utils/ZipHelper.extractFile(Ljava/util/zip/ZipInputStream;Ljava/lang/String;)V parameter 0" role="Unknown source"/>
+    <String value="not detected" role="Method usage"/>
+  </BugInstance>
+  <BugInstance type="ENTITY_LEAK" priority="2" rank="12" abbrev="SECELEAK" category="SECURITY">
+    <Class classname="com.example.app.ws.ProjectController">
+      <SourceLine classname="com.example.app.ws.ProjectController" start="17" end="35" sourcefile="ProjectController.java" sourcepath="com/example/app/ws/ProjectController.java"/>
+    </Class>
+    <Method classname="com.example.app.ws.ProjectController" name="create" signature="(Lcom/example/app/domain/Project;)Lorg/springframework/http/ResponseEntity;" isStatic="false">
+      <SourceLine classname="com.example.app.ws.ProjectController" start="25" end="27" startBytecode="0" endBytecode="88" sourcefile="ProjectController.java" sourcepath="com/example/app/ws/ProjectController.java"/>
+    </Method>
+  </BugInstance>
+  <BugInstance type="ENTITY_MASS_ASSIGNMENT" priority="2" rank="12" abbrev="SECEMA" category="SECURITY">
+    <Class classname="com.example.app.ws.ProjectController">
+      <SourceLine classname="com.example.app.ws.ProjectController" start="17" end="35" sourcefile="ProjectController.java" sourcepath="com/example/app/ws/ProjectController.java"/>
+    </Class>
+    <Method classname="com.example.app.ws.ProjectController" name="create" signature="(Lcom/example/app/domain/Project;)Lorg/springframework/http/ResponseEntity;" isStatic="false">
+      <SourceLine classname="com.example.app.ws.ProjectController" start="25" end="27" startBytecode="0" endBytecode="88" sourcefile="ProjectController.java" sourcepath="com/example/app/ws/ProjectController.java"/>
+    </Method>
+  </BugInstance>
+  <BugInstance type="URLCONNECTION_SSRF_FD" priority="2" rank="12" abbrev="SECSSSRFUC" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.DefaultDownloader">
+      <SourceLine classname="org.apache.maven.wrapper.DefaultDownloader" start="42" end="105" sourcefile="DefaultDownloader.java" sourcepath="org/apache/maven/wrapper/DefaultDownloader.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.DefaultDownloader" name="downloadInternal" signature="(Ljava/net/URI;Ljava/io/File;)V" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.DefaultDownloader" start="64" end="94" startBytecode="0" endBytecode="483" sourcefile="DefaultDownloader.java" sourcepath="org/apache/maven/wrapper/DefaultDownloader.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.DefaultDownloader" start="70" end="70" startBytecode="29" endBytecode="29" sourcefile="DefaultDownloader.java" sourcepath="org/apache/maven/wrapper/DefaultDownloader.java"/>
+    <String value="java/net/URL.openConnection()Ljava/net/URLConnection;" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/apache/maven/wrapper/DefaultDownloader.downloadInternal(Ljava/net/URI;Ljava/io/File;)V parameter 1" role="Unknown source"/>
+    <String value="java/net/URI.toURL()Ljava/net/URL;" role="Unknown source"/>
+    <String value="not detected" role="Method usage"/>
+    <SourceLine classname="org.apache.maven.wrapper.DefaultDownloader" start="60" end="60" startBytecode="19" endBytecode="19" sourcefile="DefaultDownloader.java" sourcepath="org/apache/maven/wrapper/DefaultDownloader.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.DefaultDownloader" start="68" end="68" startBytecode="6" endBytecode="6" sourcefile="DefaultDownloader.java" sourcepath="org/apache/maven/wrapper/DefaultDownloader.java"/>
+  </BugInstance>
+  <BugInstance type="COMMAND_INJECTION" priority="2" rank="12" abbrev="SECCI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="setExecutablePermissions" signature="(Ljava/io/File;)V" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="104" end="132" startBytecode="0" endBytecode="479" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="110" end="110" startBytecode="46" endBytecode="46" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/lang/ProcessBuilder.&lt;init&gt;([Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Unknown source"/>
+    <String value="java/io/File.getCanonicalPath()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="107" end="107" startBytecode="15" endBytecode="15" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="110" end="110" startBytecode="42" endBytecode="42" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="createDist" signature="(Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/io/File;" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="52" end="88" startBytecode="0" endBytecode="664" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="61" end="61" startBytecode="80" endBytecode="80" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/io/File.getName()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="61" end="61" startBytecode="77" endBytecode="77" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="deleteDir" signature="(Ljava/io/File;)Z" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="143" end="154" startBytecode="0" endBytecode="164" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="146" end="146" startBytecode="26" endBytecode="26" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/io/File.list()[Ljava/lang/String;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="unzip" signature="(Ljava/io/File;Ljava/io/File;)V" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="161" end="177" startBytecode="0" endBytecode="266" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="169" end="169" startBytecode="48" endBytecode="48" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/util/zip/ZipEntry.getName()Ljava/lang/String;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="unzip" signature="(Ljava/io/File;Ljava/io/File;)V" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="161" end="177" startBytecode="0" endBytecode="266" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="173" end="173" startBytecode="68" endBytecode="68" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/util/zip/ZipEntry.getName()Ljava/lang/String;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.Installer">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="46" end="189" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.Installer" name="unzip" signature="(Ljava/io/File;Ljava/io/File;)V" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.Installer" start="161" end="177" startBytecode="0" endBytecode="266" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.Installer" start="174" end="174" startBytecode="104" endBytecode="104" sourcefile="Installer.java" sourcepath="org/apache/maven/wrapper/Installer.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/util/zip/ZipEntry.getName()Ljava/lang/String;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.MavenWrapperMain">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="32" end="116" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.MavenWrapperMain" name="mavenUserHome" signature="()Ljava/io/File;" isStatic="true">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="110" end="116" startBytecode="0" endBytecode="110" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="116" end="116" startBytecode="45" endBytecode="45" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/apache/maven/wrapper/MavenWrapperMain.DEFAULT_MAVEN_USER_HOME" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="116" end="116" startBytecode="42" endBytecode="42" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.MavenWrapperMain">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="32" end="116" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.MavenWrapperMain" name="wrapperJar" signature="()Ljava/io/File;" isStatic="true">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="77" end="84" startBytecode="0" endBytecode="162" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="84" end="84" startBytecode="69" endBytecode="69" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/net/URI.getPath()Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/security/CodeSource.getLocation()Ljava/net/URL;" role="Unknown source"/>
+    <String value="java/net/URL.toURI()Ljava/net/URI;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="77" end="77" startBytecode="11" endBytecode="11" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="84" end="84" startBytecode="66" endBytecode="66" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.MavenWrapperMain">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="32" end="116" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.MavenWrapperMain" name="wrapperProperties" signature="(Ljava/io/File;)Ljava/io/File;" isStatic="true">
+      <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="71" end="71" startBytecode="0" endBytecode="64" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="71" end="71" startBytecode="19" endBytecode="19" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/io/File.getName()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.MavenWrapperMain" start="71" end="71" startBytecode="16" endBytecode="16" sourcefile="MavenWrapperMain.java" sourcepath="org/apache/maven/wrapper/MavenWrapperMain.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.PathAssembler">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="33" end="91" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.PathAssembler" name="getDistribution" signature="(Lorg/apache/maven/wrapper/WrapperConfiguration;)Lorg/apache/maven/wrapper/PathAssembler$LocalDistribution;" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="44" end="49" startBytecode="0" endBytecode="254" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="47" end="47" startBytecode="62" endBytecode="62" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.distribution" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="java/net/URI.getPath()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.getDistributionPath()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getMd5Hash(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String; parameter 1" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.getDistribution()Ljava/net/URI;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.distributionPath" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/math/BigInteger.toString(I)Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="44" end="44" startBytecode="2" endBytecode="2" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="45" end="45" startBytecode="11" endBytecode="11" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="46" end="46" startBytecode="18" endBytecode="18" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="47" end="47" startBytecode="56" endBytecode="56" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="53" end="53" startBytecode="8" endBytecode="8" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="54" end="54" startBytecode="26" endBytecode="26" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="73" end="73" startBytecode="16" endBytecode="16" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="77" end="77" startBytecode="1" endBytecode="1" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="82" end="82" startBytecode="22" endBytecode="22" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperConfiguration" start="56" end="56" startBytecode="1" endBytecode="1" sourcefile="WrapperConfiguration.java" sourcepath="org/apache/maven/wrapper/WrapperConfiguration.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperConfiguration" start="72" end="72" startBytecode="1" endBytecode="1" sourcefile="WrapperConfiguration.java" sourcepath="org/apache/maven/wrapper/WrapperConfiguration.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.PathAssembler">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="33" end="91" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.PathAssembler" name="getDistribution" signature="(Lorg/apache/maven/wrapper/WrapperConfiguration;)Lorg/apache/maven/wrapper/PathAssembler$LocalDistribution;" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="44" end="49" startBytecode="0" endBytecode="254" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="48" end="48" startBytecode="115" endBytecode="115" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.distribution" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="java/net/URI.getPath()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.getZipPath()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getMd5Hash(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.zipPath" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.rootDirName(Ljava/lang/String;Lorg/apache/maven/wrapper/WrapperConfiguration;)Ljava/lang/String; parameter 1" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperConfiguration.getDistribution()Ljava/net/URI;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.removeExtension(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/PathAssembler.getDistName(Ljava/net/URI;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/math/BigInteger.toString(I)Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="44" end="44" startBytecode="2" endBytecode="2" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="45" end="45" startBytecode="11" endBytecode="11" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="46" end="46" startBytecode="18" endBytecode="18" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="48" end="48" startBytecode="105" endBytecode="105" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="53" end="53" startBytecode="8" endBytecode="8" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="54" end="54" startBytecode="26" endBytecode="26" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="73" end="73" startBytecode="16" endBytecode="16" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="77" end="77" startBytecode="1" endBytecode="1" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="82" end="82" startBytecode="22" endBytecode="22" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperConfiguration" start="56" end="56" startBytecode="1" endBytecode="1" sourcefile="WrapperConfiguration.java" sourcepath="org/apache/maven/wrapper/WrapperConfiguration.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperConfiguration" start="88" end="88" startBytecode="1" endBytecode="1" sourcefile="WrapperConfiguration.java" sourcepath="org/apache/maven/wrapper/WrapperConfiguration.java"/>
+  </BugInstance>
+  <BugInstance type="WEAK_MESSAGE_DIGEST_MD5" priority="1" rank="10" abbrev="SECMD5" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.PathAssembler">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="33" end="91" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.PathAssembler" name="getMd5Hash" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="59" end="64" startBytecode="0" endBytecode="155" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.PathAssembler" start="59" end="59" startBytecode="2" endBytecode="2" sourcefile="PathAssembler.java" sourcepath="org/apache/maven/wrapper/PathAssembler.java"/>
+    <String value="MD5"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.apache.maven.wrapper.WrapperExecutor">
+      <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="46" end="141" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    </Class>
+    <Method classname="org.apache.maven.wrapper.WrapperExecutor" name="prepareDistributionUri" signature="()Ljava/net/URI;" isStatic="false">
+      <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="78" end="83" startBytecode="0" endBytecode="99" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    </Method>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="81" end="81" startBytecode="27" endBytecode="27" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.reportMissingProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/net/URI.getSchemeSpecificPart()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/net/URI.&lt;init&gt;(Ljava/lang/String;)V" role="Unknown source"/>
+    <String value="java/util/Properties.getProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.readDistroUrl()Ljava/net/URI;" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.properties" role="Unknown source"/>
+    <String value="org/apache/maven/wrapper/WrapperExecutor.getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="78" end="78" startBytecode="1" endBytecode="1" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="81" end="81" startBytecode="24" endBytecode="24" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="89" end="89" startBytecode="19" endBytecode="19" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="126" end="126" startBytecode="3" endBytecode="3" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+    <SourceLine classname="org.apache.maven.wrapper.WrapperExecutor" start="130" end="130" startBytecode="1" endBytecode="1" sourcefile="WrapperExecutor.java" sourcepath="org/apache/maven/wrapper/WrapperExecutor.java"/>
+  </BugInstance>
+  <BugInstance type="URLCONNECTION_SSRF_FD" priority="2" rank="12" abbrev="SECSSSRFUC" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.LaunchedURLClassLoader">
+      <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader" start="39" end="198" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.LaunchedURLClassLoader" name="clearCache" signature="()V" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader" start="169" end="181" startBytecode="0" endBytecode="182" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader" start="171" end="171" startBytecode="22" endBytecode="22" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    <String value="java/net/URL.openConnection()Ljava/net/URLConnection;" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/LaunchedURLClassLoader.getURLs()[Ljava/net/URL;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="URLCONNECTION_SSRF_FD" priority="2" rank="12" abbrev="SECSSSRFUC" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.LaunchedURLClassLoader$1">
+      <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader$1" start="132" end="156" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.LaunchedURLClassLoader$1" name="run" signature="()Ljava/lang/Object;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader$1" start="135" end="156" startBytecode="0" endBytecode="377" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.LaunchedURLClassLoader$1" start="139" end="139" startBytecode="90" endBytecode="90" sourcefile="LaunchedURLClassLoader.java" sourcepath="org/springframework/boot/loader/LaunchedURLClassLoader.java"/>
+    <String value="java/net/URL.openConnection()Ljava/net/URLConnection;" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/LaunchedURLClassLoader.getURLs()[Ljava/net/URL;" role="Unknown source"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.Launcher">
+      <SourceLine classname="org.springframework.boot.loader.Launcher" start="39" end="129" sourcefile="Launcher.java" sourcepath="org/springframework/boot/loader/Launcher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.Launcher" name="createArchive" signature="()Lorg/springframework/boot/loader/archive/Archive;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.Launcher" start="117" end="129" startBytecode="0" endBytecode="310" sourcefile="Launcher.java" sourcepath="org/springframework/boot/loader/Launcher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.Launcher" start="124" end="124" startBytecode="64" endBytecode="64" sourcefile="Launcher.java" sourcepath="org/springframework/boot/loader/Launcher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/net/URI.getSchemeSpecificPart()Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/security/CodeSource.getLocation()Ljava/net/URL;" role="Unknown source"/>
+    <String value="java/net/URL.toURI()Ljava/net/URI;" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.Launcher" start="119" end="119" startBytecode="25" endBytecode="25" sourcefile="Launcher.java" sourcepath="org/springframework/boot/loader/Launcher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.Launcher" start="120" end="120" startBytecode="38" endBytecode="38" sourcefile="Launcher.java" sourcepath="org/springframework/boot/loader/Launcher.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getClassPathArchives" signature="(Ljava/lang/String;)Ljava/util/List;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="483" startBytecode="0" endBytecode="457" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="462" end="462" startBytecode="23" endBytecode="23" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getClassPathArchives(Ljava/lang/String;)Ljava/util/List; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="442" end="442" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="443" end="443" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="460" startBytecode="3" endBytecode="3" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="564" end="564" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="567" end="567" startBytecode="16" endBytecode="16" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="573" end="573" startBytecode="63" endBytecode="63" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="578" end="578" startBytecode="101" endBytecode="101" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getClassPathArchives" signature="(Ljava/lang/String;)Ljava/util/List;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="483" startBytecode="0" endBytecode="457" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="465" end="465" startBytecode="54" endBytecode="54" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.stripFileUrlPrefix(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getClassPathArchives(Ljava/lang/String;)Ljava/util/List; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.cleanupPath(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="442" end="442" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="443" end="443" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="460" startBytecode="3" endBytecode="3" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="564" end="564" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="567" end="567" startBytecode="16" endBytecode="16" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="573" end="573" startBytecode="63" endBytecode="63" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="578" end="578" startBytecode="101" endBytecode="101" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getFileResource" signature="(Ljava/lang/String;)Ljava/io/InputStream;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="240" end="245" startBytecode="0" endBytecode="141" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="240" end="240" startBytecode="5" endBytecode="5" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getFileResource(Ljava/lang/String;)Ljava/io/InputStream; parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="146" startBytecode="12" endBytecode="12" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="156" end="156" startBytecode="24" endBytecode="24" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="159" end="159" startBytecode="38" endBytecode="38" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="160" end="160" startBytecode="43" endBytecode="43" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="162" end="162" startBytecode="83" endBytecode="83" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="163" end="163" startBytecode="136" endBytecode="136" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="164" end="164" startBytecode="160" endBytecode="160" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="167" end="167" startBytecode="200" endBytecode="200" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="168" end="168" startBytecode="211" endBytecode="211" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="209" end="209" startBytecode="25" endBytecode="25" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="213" end="213" startBytecode="45" endBytecode="45" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="377" end="377" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="386" end="386" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="395" end="395" startBytecode="19" endBytecode="19" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="397" end="397" startBytecode="35" endBytecode="35" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="403" end="403" startBytecode="92" endBytecode="92" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="404" end="404" startBytecode="96" endBytecode="96" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="417" end="417" startBytecode="224" endBytecode="224" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="432" end="432" startBytecode="304" endBytecode="304" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="436" end="436" startBytecode="321" endBytecode="321" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="86" end="86" startBytecode="16" endBytecode="16" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="92" end="92" startBytecode="5" endBytecode="5" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="96" end="96" startBytecode="28" endBytecode="28" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="131" end="131" startBytecode="220" endBytecode="220" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="148" end="148" startBytecode="281" endBytecode="281" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="161" end="161" startBytecode="4" endBytecode="4" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="180" end="180" startBytecode="1" endBytecode="1" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="183" end="183" startBytecode="10" endBytecode="10" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="187" end="187" startBytecode="26" endBytecode="26" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="191" end="191" startBytecode="42" endBytecode="42" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getHomeDirectory" signature="()Ljava/io/File;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="149" startBytecode="0" endBytecode="105" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="146" startBytecode="12" endBytecode="12" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.parseStringValue(Ljava/util/Properties;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="java/util/jar/Attributes.getValue(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 1" role="Unknown source"/>
+    <String value="java/lang/System.getProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.resolvePlaceholders(Ljava/util/Properties;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getPropertyWithDefault(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/lang/System.getenv(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="java/util/Properties.getProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.resolvePlaceholders(Ljava/util/Properties;Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.parseStringValue(Ljava/util/Properties;Ljava/lang/String;Ljava/lang/String;Ljava/util/Set;)Ljava/lang/String; parameter 1" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.properties" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 2" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 0" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/util/SystemPropertyUtils.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 1" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getProperty(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; parameter 2" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="146" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="386" end="386" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="395" end="395" startBytecode="19" endBytecode="19" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="397" end="397" startBytecode="35" endBytecode="35" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="403" end="403" startBytecode="92" endBytecode="92" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="404" end="404" startBytecode="96" endBytecode="96" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="417" end="417" startBytecode="224" endBytecode="224" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="432" end="432" startBytecode="304" endBytecode="304" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="436" end="436" startBytecode="321" endBytecode="321" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="86" end="86" startBytecode="16" endBytecode="16" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="92" end="92" startBytecode="5" endBytecode="5" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="96" end="96" startBytecode="28" endBytecode="28" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="131" end="131" startBytecode="220" endBytecode="220" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="148" end="148" startBytecode="281" endBytecode="281" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="161" end="161" startBytecode="4" endBytecode="4" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="180" end="180" startBytecode="1" endBytecode="1" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="183" end="183" startBytecode="10" endBytecode="10" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="187" end="187" startBytecode="26" endBytecode="26" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="191" end="191" startBytecode="35" endBytecode="35" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getNestedArchives" signature="(Ljava/lang/String;)Ljava/util/List;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="500" end="538" startBytecode="0" endBytecode="587" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="509" end="509" startBytecode="81" endBytecode="81" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="442" end="442" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="443" end="443" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="460" startBytecode="3" endBytecode="3" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="478" end="478" startBytecode="169" endBytecode="169" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="509" end="509" startBytecode="78" endBytecode="78" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="564" end="564" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="567" end="567" startBytecode="16" endBytecode="16" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="573" end="573" startBytecode="63" endBytecode="63" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="578" end="578" startBytecode="101" endBytecode="101" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getNestedArchives" signature="(Ljava/lang/String;)Ljava/util/List;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="500" end="538" startBytecode="0" endBytecode="587" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="511" end="511" startBytecode="110" endBytecode="110" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="442" end="442" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="443" end="443" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="460" startBytecode="3" endBytecode="3" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="478" end="478" startBytecode="169" endBytecode="169" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="511" end="511" startBytecode="107" endBytecode="107" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="564" end="564" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="567" end="567" startBytecode="16" endBytecode="16" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="573" end="573" startBytecode="63" endBytecode="63" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="578" end="578" startBytecode="101" endBytecode="101" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getNestedArchives" signature="(Ljava/lang/String;)Ljava/util/List;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="500" end="538" startBytecode="0" endBytecode="587" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="520" end="520" startBytecode="174" endBytecode="174" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getNestedArchives(Ljava/lang/String;)Ljava/util/List; parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="442" end="442" startBytecode="9" endBytecode="9" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="443" end="443" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="460" end="460" startBytecode="3" endBytecode="3" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="478" end="478" startBytecode="169" endBytecode="169" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="514" end="514" startBytecode="134" endBytecode="134" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="516" end="516" startBytecode="149" endBytecode="149" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="564" end="564" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="567" end="567" startBytecode="16" endBytecode="16" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="573" end="573" startBytecode="63" endBytecode="63" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="578" end="578" startBytecode="101" endBytecode="101" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+  </BugInstance>
+  <BugInstance type="URLCONNECTION_SSRF_FD" priority="2" rank="12" abbrev="SECSSSRFUC" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="exists" signature="(Ljava/net/URL;)Z" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="268" end="287" startBytecode="0" endBytecode="441" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="268" end="268" startBytecode="1" endBytecode="1" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/net/URL.openConnection()Ljava/net/URLConnection;" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.exists(Ljava/net/URL;)Z parameter 0" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="146" startBytecode="12" endBytecode="12" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="156" end="156" startBytecode="24" endBytecode="24" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="159" end="159" startBytecode="38" endBytecode="38" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="160" end="160" startBytecode="43" endBytecode="43" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="162" end="162" startBytecode="83" endBytecode="83" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="163" end="163" startBytecode="136" endBytecode="136" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="164" end="164" startBytecode="160" endBytecode="160" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="167" end="167" startBytecode="200" endBytecode="200" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="168" end="168" startBytecode="211" endBytecode="211" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="209" end="209" startBytecode="25" endBytecode="25" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="211" end="211" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="249" end="249" startBytecode="5" endBytecode="5" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="250" end="250" startBytecode="11" endBytecode="11" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="377" end="377" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="386" end="386" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="395" end="395" startBytecode="19" endBytecode="19" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="397" end="397" startBytecode="35" endBytecode="35" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="403" end="403" startBytecode="92" endBytecode="92" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="404" end="404" startBytecode="96" endBytecode="96" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="417" end="417" startBytecode="224" endBytecode="224" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="432" end="432" startBytecode="304" endBytecode="304" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="436" end="436" startBytecode="321" endBytecode="321" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="86" end="86" startBytecode="16" endBytecode="16" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="92" end="92" startBytecode="5" endBytecode="5" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="96" end="96" startBytecode="28" endBytecode="28" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="131" end="131" startBytecode="220" endBytecode="220" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="148" end="148" startBytecode="281" endBytecode="281" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="161" end="161" startBytecode="4" endBytecode="4" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="180" end="180" startBytecode="1" endBytecode="1" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="183" end="183" startBytecode="10" endBytecode="10" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="187" end="187" startBytecode="26" endBytecode="26" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="191" end="191" startBytecode="42" endBytecode="42" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+  </BugInstance>
+  <BugInstance type="URLCONNECTION_SSRF_FD" priority="2" rank="12" abbrev="SECSSSRFUC" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.PropertiesLauncher">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="122" end="622" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.PropertiesLauncher" name="getURLResource" signature="(Ljava/lang/String;)Ljava/io/InputStream;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="249" end="263" startBytecode="0" endBytecode="208" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="251" end="251" startBytecode="18" endBytecode="18" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <String value="java/net/URL.openConnection()Ljava/net/URLConnection;" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/PropertiesLauncher.getURLResource(Ljava/lang/String;)Ljava/io/InputStream; parameter 0" role="Unknown source"/>
+    <String value="java/net/URL.&lt;init&gt;(Ljava/lang/String;)V" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="146" end="146" startBytecode="12" endBytecode="12" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="156" end="156" startBytecode="24" endBytecode="24" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="159" end="159" startBytecode="38" endBytecode="38" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="160" end="160" startBytecode="43" endBytecode="43" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="162" end="162" startBytecode="83" endBytecode="83" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="163" end="163" startBytecode="136" endBytecode="136" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="164" end="164" startBytecode="160" endBytecode="160" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="167" end="167" startBytecode="200" endBytecode="200" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="168" end="168" startBytecode="211" endBytecode="211" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="209" end="209" startBytecode="25" endBytecode="25" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="211" end="211" startBytecode="39" endBytecode="39" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="218" end="218" startBytecode="15" endBytecode="15" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="220" end="220" startBytecode="30" endBytecode="30" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="249" end="249" startBytecode="5" endBytecode="5" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="377" end="377" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="386" end="386" startBytecode="4" endBytecode="4" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="395" end="395" startBytecode="19" endBytecode="19" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="397" end="397" startBytecode="35" endBytecode="35" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="403" end="403" startBytecode="92" endBytecode="92" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="404" end="404" startBytecode="96" endBytecode="96" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="417" end="417" startBytecode="224" endBytecode="224" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="432" end="432" startBytecode="304" endBytecode="304" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.PropertiesLauncher" start="436" end="436" startBytecode="321" endBytecode="321" sourcefile="PropertiesLauncher.java" sourcepath="org/springframework/boot/loader/PropertiesLauncher.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="86" end="86" startBytecode="16" endBytecode="16" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="92" end="92" startBytecode="5" endBytecode="5" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="96" end="96" startBytecode="28" endBytecode="28" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="131" end="131" startBytecode="220" endBytecode="220" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="148" end="148" startBytecode="281" endBytecode="281" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="161" end="161" startBytecode="4" endBytecode="4" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="180" end="180" startBytecode="1" endBytecode="1" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="183" end="183" startBytecode="10" endBytecode="10" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="187" end="187" startBytecode="26" endBytecode="26" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+    <SourceLine classname="org.springframework.boot.loader.util.SystemPropertyUtils" start="191" end="191" startBytecode="42" endBytecode="42" sourcefile="SystemPropertyUtils.java" sourcepath="org/springframework/boot/loader/util/SystemPropertyUtils.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.archive.JarFileArchive">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="57" end="174" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.archive.JarFileArchive" name="createUnpackFolder" signature="(Ljava/io/File;)Ljava/io/File;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="134" end="143" startBytecode="0" endBytecode="240" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="136" end="136" startBytecode="23" endBytecode="23" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="org/springframework/boot/loader/data/RandomAccessDataFile.getFile()Ljava/io/File;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/data/RandomAccessDataFile.file" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/jar/JarFile.getName()Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/jar/JarFile.pathFromRoot" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="136" end="136" startBytecode="20" endBytecode="20" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    <SourceLine classname="org.springframework.boot.loader.data.RandomAccessDataFile" start="94" end="94" startBytecode="1" endBytecode="1" sourcefile="RandomAccessDataFile.java" sourcepath="org/springframework/boot/loader/data/RandomAccessDataFile.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.JarFile" start="328" end="328" startBytecode="24" endBytecode="24" sourcefile="JarFile.java" sourcepath="org/springframework/boot/loader/jar/JarFile.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.archive.JarFileArchive">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="57" end="174" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.archive.JarFileArchive" name="createUnpackFolder" signature="(Ljava/io/File;)Ljava/io/File;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="134" end="143" startBytecode="0" endBytecode="240" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="138" end="138" startBytecode="60" endBytecode="60" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/io/File.getName()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="137" end="137" startBytecode="48" endBytecode="48" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="138" end="138" startBytecode="57" endBytecode="57" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.archive.JarFileArchive">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="57" end="174" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.archive.JarFileArchive" name="getUnpackedNestedArchive" signature="(Ljava/util/jar/JarEntry;)Lorg/springframework/boot/loader/archive/Archive;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="114" end="122" startBytecode="0" endBytecode="198" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="118" end="118" startBytecode="37" endBytecode="37" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/io/File;Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/util/jar/JarEntry.getName()Ljava/lang/String;" role="Unknown source"/>
+    <SourceLine classname="org.springframework.boot.loader.archive.JarFileArchive" start="116" end="116" startBytecode="24" endBytecode="24" sourcefile="JarFileArchive.java" sourcepath="org/springframework/boot/loader/archive/JarFileArchive.java"/>
+  </BugInstance>
+  <BugInstance type="PATH_TRAVERSAL_IN" priority="2" rank="12" abbrev="SECPTI" category="SECURITY">
+    <Class classname="org.springframework.boot.loader.jar.Handler">
+      <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="51" end="309" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    </Class>
+    <Method classname="org.springframework.boot.loader.jar.Handler" name="getRootJarFile" signature="(Ljava/lang/String;)Lorg/springframework/boot/loader/jar/JarFile;" isStatic="false">
+      <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="268" end="282" startBytecode="0" endBytecode="352" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    </Method>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="272" end="272" startBytecode="39" endBytecode="39" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <String value="java/io/File.&lt;init&gt;(Ljava/lang/String;)V" role="Sink method"/>
+    <String value="0" role="Sink parameter"/>
+    <String value="java/net/URLDecoder.decode(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" role="Unknown source"/>
+    <String value="org/springframework/boot/loader/jar/Handler.getRootJarFile(Ljava/lang/String;)Lorg/springframework/boot/loader/jar/JarFile; parameter 0" role="Unknown source"/>
+    <String value="not detected" role="Method usage"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="94" end="94" startBytecode="19" endBytecode="19" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="257" end="257" startBytecode="1" endBytecode="1" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="262" end="262" startBytecode="30" endBytecode="30" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="263" end="263" startBytecode="38" endBytecode="38" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="271" end="271" startBytecode="25" endBytecode="25" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+    <SourceLine classname="org.springframework.boot.loader.jar.Handler" start="272" end="272" startBytecode="36" endBytecode="36" sourcefile="Handler.java" sourcepath="org/springframework/boot/loader/jar/Handler.java"/>
+  </BugInstance>
+  <Errors errors="0" missingClasses="18">
+    <MissingClass>org.apache.tomcat.util.codec.binary.Base64</MissingClass>
+    <MissingClass>org.slf4j.Logger</MissingClass>
+    <MissingClass>org.slf4j.LoggerFactory</MissingClass>
+    <MissingClass>org.springframework.boot.SpringApplication</MissingClass>
+    <MissingClass>org.springframework.boot.autoconfigure.web.WebMvcRegistrationsAdapter</MissingClass>
+    <MissingClass>org.springframework.data.mongodb.repository.MongoRepository</MissingClass>
+    <MissingClass>org.springframework.http.HttpEntity</MissingClass>
+    <MissingClass>org.springframework.http.HttpHeaders</MissingClass>
+    <MissingClass>org.springframework.http.HttpMethod</MissingClass>
+    <MissingClass>org.springframework.http.HttpStatus</MissingClass>
+    <MissingClass>org.springframework.http.ResponseEntity</MissingClass>
+    <MissingClass>org.springframework.web.client.RestTemplate</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.CorsRegistration</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.CorsRegistry</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.condition.PatternsRequestCondition</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.method.RequestMappingInfo</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping</MissingClass>
+  </Errors>
+  <FindBugsSummary timestamp="Sat, 2 May 2020 23:28:18 +0200" total_classes="106" referenced_classes="401" total_bugs="34" total_size="3430" num_packages="14" java_version="1.8.0_241" vm_version="25.241-b07" cpu_seconds="12.90" clock_seconds="3.69" peak_mbytes="565.87" alloc_mbytes="1758.50" gc_seconds="0.15" priority_2="33" priority_1="1">
+    <PackageStats package="com.example.app" total_bugs="0" total_types="4" total_size="48">
+      <ClassStats class="com.example.app.Application" sourceFile="Application.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="com.example.app.Application$1" sourceFile="Application.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.example.app.Application$2" sourceFile="Application.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.example.app.Application$2$1" sourceFile="Application.java" interface="false" size="17" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.domain" total_bugs="0" total_types="1" total_size="40">
+      <ClassStats class="com.example.app.domain.Project" sourceFile="Project.java" interface="false" size="40" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.dto" total_bugs="0" total_types="3" total_size="51">
+      <ClassStats class="com.example.app.dto.AccessToken" sourceFile="AccessToken.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="com.example.app.dto.GithubIdentity" sourceFile="GithubIdentity.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.example.app.dto.GithubResponse" sourceFile="GithubResponse.java" interface="false" size="21" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.repo" total_bugs="0" total_types="1" total_size="1">
+      <ClassStats class="com.example.app.repo.ProjectRepository" sourceFile="ProjectRepository.java" interface="true" size="1" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.service" total_bugs="0" total_types="6" total_size="62">
+      <ClassStats class="com.example.app.service.GithubService" sourceFile="GithubService.java" interface="true" size="1" bugs="0"/>
+      <ClassStats class="com.example.app.service.GithubServiceImpl" sourceFile="GithubServiceImpl.java" interface="false" size="28" bugs="0"/>
+      <ClassStats class="com.example.app.service.GithubServiceImpl$1" sourceFile="GithubServiceImpl.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="com.example.app.service.GithubServiceImpl$2" sourceFile="GithubServiceImpl.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.example.app.service.ProjectService" sourceFile="ProjectService.java" interface="true" size="3" bugs="0"/>
+      <ClassStats class="com.example.app.service.ProjectServiceImpl" sourceFile="ProjectServiceImpl.java" interface="false" size="13" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.utils" total_bugs="2" total_types="2" total_size="41" priority_2="2">
+      <ClassStats class="com.example.app.utils.XmlParser" sourceFile="XmlParser.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.example.app.utils.ZipHelper" sourceFile="ZipHelper.java" interface="false" size="30" bugs="2" priority_2="2"/>
+    </PackageStats>
+    <PackageStats package="com.example.app.ws" total_bugs="2" total_types="3" total_size="25" priority_2="2">
+      <ClassStats class="com.example.app.ws.GithubController" sourceFile="GithubController.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.example.app.ws.PingResource" sourceFile="PingResource.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.example.app.ws.ProjectController" sourceFile="ProjectController.java" interface="false" size="10" bugs="2" priority_2="2"/>
+    </PackageStats>
+    <PackageStats package="org.apache.maven.wrapper" total_bugs="14" total_types="11" total_size="448" priority_2="13" priority_1="1">
+      <ClassStats class="org.apache.maven.wrapper.BootstrapMainStarter" sourceFile="BootstrapMainStarter.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.DefaultDownloader" sourceFile="DefaultDownloader.java" interface="false" size="55" bugs="1" priority_2="1"/>
+      <ClassStats class="org.apache.maven.wrapper.DefaultDownloader$SystemPropertiesProxyAuthenticator" sourceFile="DefaultDownloader.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.Downloader" sourceFile="Downloader.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.Installer" sourceFile="Installer.java" interface="false" size="100" bugs="6" priority_2="6"/>
+      <ClassStats class="org.apache.maven.wrapper.MavenWrapperMain" sourceFile="MavenWrapperMain.java" interface="false" size="62" bugs="3" priority_2="3"/>
+      <ClassStats class="org.apache.maven.wrapper.PathAssembler" sourceFile="PathAssembler.java" interface="false" size="45" bugs="3" priority_2="2" priority_1="1"/>
+      <ClassStats class="org.apache.maven.wrapper.PathAssembler$LocalDistribution" sourceFile="PathAssembler.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.SystemPropertiesHandler" sourceFile="SystemPropertiesHandler.java" interface="false" size="23" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.WrapperConfiguration" sourceFile="WrapperConfiguration.java" interface="false" size="53" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.WrapperExecutor" sourceFile="WrapperExecutor.java" interface="false" size="68" bugs="1" priority_2="1"/>
+    </PackageStats>
+    <PackageStats package="org.apache.maven.wrapper.cli" total_bugs="0" total_types="23" total_size="520">
+      <ClassStats class="org.apache.maven.wrapper.cli.AbstractCommandLineConverter" sourceFile="AbstractCommandLineConverter.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.AbstractPropertiesCommandLineConverter" sourceFile="AbstractPropertiesCommandLineConverter.java" interface="false" size="24" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineArgumentException" sourceFile="CommandLineArgumentException.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineConverter" sourceFile="CommandLineConverter.java" interface="true" size="6" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineOption" sourceFile="CommandLineOption.java" interface="false" size="57" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser" sourceFile="CommandLineParser.java" interface="false" size="127" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$AfterFirstSubCommand" sourceFile="CommandLineParser.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$AfterOptions" sourceFile="CommandLineParser.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$BeforeFirstSubCommand" sourceFile="CommandLineParser.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$CaseInsensitiveStringComparator" sourceFile="CommandLineParser.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$KnownOptionParserState" sourceFile="CommandLineParser.java" interface="false" size="42" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$MissingOptionArgState" sourceFile="CommandLineParser.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$OptionAwareParserState" sourceFile="CommandLineParser.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$OptionComparator" sourceFile="CommandLineParser.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$OptionParserState" sourceFile="CommandLineParser.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$OptionString" sourceFile="CommandLineParser.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$OptionStringComparator" sourceFile="CommandLineParser.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$ParserState" sourceFile="CommandLineParser.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.CommandLineParser$UnknownOptionParserState" sourceFile="CommandLineParser.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.ParsedCommandLine" sourceFile="ParsedCommandLine.java" interface="false" size="49" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.ParsedCommandLineOption" sourceFile="ParsedCommandLineOption.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.ProjectPropertiesCommandLineConverter" sourceFile="ProjectPropertiesCommandLineConverter.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.apache.maven.wrapper.cli.SystemPropertiesCommandLineConverter" sourceFile="SystemPropertiesCommandLineConverter.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.springframework.boot.loader" total_bugs="12" total_types="12" total_size="556" priority_2="12">
+      <ClassStats class="org.springframework.boot.loader.ExecutableArchiveLauncher" sourceFile="ExecutableArchiveLauncher.java" interface="false" size="31" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.ExecutableArchiveLauncher$1" sourceFile="ExecutableArchiveLauncher.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.JarLauncher" sourceFile="JarLauncher.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.LaunchedURLClassLoader" sourceFile="LaunchedURLClassLoader.java" interface="false" size="61" bugs="1" priority_2="1"/>
+      <ClassStats class="org.springframework.boot.loader.LaunchedURLClassLoader$1" sourceFile="LaunchedURLClassLoader.java" interface="false" size="22" bugs="1" priority_2="1"/>
+      <ClassStats class="org.springframework.boot.loader.Launcher" sourceFile="Launcher.java" interface="false" size="35" bugs="1" priority_2="1"/>
+      <ClassStats class="org.springframework.boot.loader.MainMethodRunner" sourceFile="MainMethodRunner.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.PropertiesLauncher" sourceFile="PropertiesLauncher.java" interface="false" size="322" bugs="9" priority_2="9"/>
+      <ClassStats class="org.springframework.boot.loader.PropertiesLauncher$1" sourceFile="PropertiesLauncher.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.PropertiesLauncher$ArchiveEntryFilter" sourceFile="PropertiesLauncher.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.PropertiesLauncher$PrefixMatchingArchiveFilter" sourceFile="PropertiesLauncher.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.WarLauncher" sourceFile="WarLauncher.java" interface="false" size="19" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.springframework.boot.loader.archive" total_bugs="3" total_types="11" total_size="235" priority_2="3">
+      <ClassStats class="org.springframework.boot.loader.archive.Archive" sourceFile="Archive.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.Archive$Entry" sourceFile="Archive.java" interface="true" size="3" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.Archive$EntryFilter" sourceFile="Archive.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.ExplodedArchive" sourceFile="ExplodedArchive.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.ExplodedArchive$1" sourceFile="ExplodedArchive.java" interface="false" size="1" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.ExplodedArchive$FileEntry" sourceFile="ExplodedArchive.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.ExplodedArchive$FileEntryIterator" sourceFile="ExplodedArchive.java" interface="false" size="47" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.ExplodedArchive$FileEntryIterator$EntryComparator" sourceFile="ExplodedArchive.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.JarFileArchive" sourceFile="JarFileArchive.java" interface="false" size="81" bugs="3" priority_2="3"/>
+      <ClassStats class="org.springframework.boot.loader.archive.JarFileArchive$EntryIterator" sourceFile="JarFileArchive.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.archive.JarFileArchive$JarFileEntry" sourceFile="JarFileArchive.java" interface="false" size="12" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.springframework.boot.loader.data" total_bugs="0" total_types="6" total_size="156">
+      <ClassStats class="org.springframework.boot.loader.data.ByteArrayRandomAccessData" sourceFile="ByteArrayRandomAccessData.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.data.RandomAccessData" sourceFile="RandomAccessData.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.data.RandomAccessData$ResourceAccess" sourceFile="RandomAccessData.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.data.RandomAccessDataFile" sourceFile="RandomAccessDataFile.java" interface="false" size="45" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.data.RandomAccessDataFile$DataInputStream" sourceFile="RandomAccessDataFile.java" interface="false" size="46" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.data.RandomAccessDataFile$FilePool" sourceFile="RandomAccessDataFile.java" interface="false" size="31" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.springframework.boot.loader.jar" total_bugs="1" total_types="22" total_size="1153" priority_2="1">
+      <ClassStats class="org.springframework.boot.loader.jar.AsciiBytes" sourceFile="AsciiBytes.java" interface="false" size="116" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.Bytes" sourceFile="Bytes.java" interface="false" size="34" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.CentralDirectoryEndRecord" sourceFile="CentralDirectoryEndRecord.java" interface="false" size="46" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.CentralDirectoryFileHeader" sourceFile="CentralDirectoryFileHeader.java" interface="false" size="91" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.CentralDirectoryParser" sourceFile="CentralDirectoryParser.java" interface="false" size="50" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.CentralDirectoryVisitor" sourceFile="CentralDirectoryVisitor.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.FileHeader" sourceFile="FileHeader.java" interface="true" size="6" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.Handler" sourceFile="Handler.java" interface="false" size="154" bugs="1" priority_2="1"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarEntry" sourceFile="JarEntry.java" interface="false" size="40" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarEntryFilter" sourceFile="JarEntryFilter.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFile" sourceFile="JarFile.java" interface="false" size="155" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFile$1" sourceFile="JarFile.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFile$2" sourceFile="JarFile.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFile$3" sourceFile="JarFile.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFile$JarFileType" sourceFile="JarFile.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFileEntries" sourceFile="JarFileEntries.java" interface="false" size="148" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFileEntries$1" sourceFile="JarFileEntries.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarFileEntries$EntryIterator" sourceFile="JarFileEntries.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarURLConnection" sourceFile="JarURLConnection.java" interface="false" size="145" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarURLConnection$1" sourceFile="JarURLConnection.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.JarURLConnection$JarEntryName" sourceFile="JarURLConnection.java" interface="false" size="57" bugs="0"/>
+      <ClassStats class="org.springframework.boot.loader.jar.ZipInflaterInputStream" sourceFile="ZipInflaterInputStream.java" interface="false" size="32" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="org.springframework.boot.loader.util" total_bugs="0" total_types="1" total_size="94">
+      <ClassStats class="org.springframework.boot.loader.util.SystemPropertyUtils" sourceFile="SystemPropertyUtils.java" interface="false" size="94" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="255" invocations="1388" avgMicrosecondsPerInvocation="183" maxMicrosecondsPerInvocation="18700" standardDeviationMicrosecondsPerInvocation="698"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="182" invocations="666" avgMicrosecondsPerInvocation="273" maxMicrosecondsPerInvocation="90958" standardDeviationMicrosecondsPerInvocation="3535"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="156" invocations="401" avgMicrosecondsPerInvocation="389" maxMicrosecondsPerInvocation="11083" standardDeviationMicrosecondsPerInvocation="918"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="147" invocations="401" avgMicrosecondsPerInvocation="367" maxMicrosecondsPerInvocation="6808" standardDeviationMicrosecondsPerInvocation="733"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="131" invocations="1445" avgMicrosecondsPerInvocation="91" maxMicrosecondsPerInvocation="2636" standardDeviationMicrosecondsPerInvocation="161"/>
+      <ClassProfile name="com.h3xstream.findsecbugs.taintanalysis.TaintDataflowEngine" totalMilliseconds="119" invocations="642" avgMicrosecondsPerInvocation="185" maxMicrosecondsPerInvocation="6089" standardDeviationMicrosecondsPerInvocation="490"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="112" invocations="634" avgMicrosecondsPerInvocation="177" maxMicrosecondsPerInvocation="20717" standardDeviationMicrosecondsPerInvocation="861"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="111" invocations="642" avgMicrosecondsPerInvocation="174" maxMicrosecondsPerInvocation="3482" standardDeviationMicrosecondsPerInvocation="328"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="101" invocations="627" avgMicrosecondsPerInvocation="161" maxMicrosecondsPerInvocation="2363" standardDeviationMicrosecondsPerInvocation="251"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="91" invocations="662" avgMicrosecondsPerInvocation="138" maxMicrosecondsPerInvocation="5872" standardDeviationMicrosecondsPerInvocation="336"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="70" invocations="682" avgMicrosecondsPerInvocation="103" maxMicrosecondsPerInvocation="6311" standardDeviationMicrosecondsPerInvocation="259"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="56" invocations="519" avgMicrosecondsPerInvocation="109" maxMicrosecondsPerInvocation="1784" standardDeviationMicrosecondsPerInvocation="198"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="54" invocations="401" avgMicrosecondsPerInvocation="135" maxMicrosecondsPerInvocation="2808" standardDeviationMicrosecondsPerInvocation="281"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="53" invocations="517" avgMicrosecondsPerInvocation="103" maxMicrosecondsPerInvocation="12624" standardDeviationMicrosecondsPerInvocation="564"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="42" invocations="682" avgMicrosecondsPerInvocation="62" maxMicrosecondsPerInvocation="16679" standardDeviationMicrosecondsPerInvocation="640"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="35" invocations="1294" avgMicrosecondsPerInvocation="27" maxMicrosecondsPerInvocation="842" standardDeviationMicrosecondsPerInvocation="54"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindOpenStream" totalMilliseconds="34" invocations="106" avgMicrosecondsPerInvocation="329" maxMicrosecondsPerInvocation="5272" standardDeviationMicrosecondsPerInvocation="731"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="34" invocations="401" avgMicrosecondsPerInvocation="86" maxMicrosecondsPerInvocation="1136" standardDeviationMicrosecondsPerInvocation="130"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="33" invocations="401" avgMicrosecondsPerInvocation="84" maxMicrosecondsPerInvocation="4066" standardDeviationMicrosecondsPerInvocation="244"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CalledMethods" totalMilliseconds="33" invocations="401" avgMicrosecondsPerInvocation="82" maxMicrosecondsPerInvocation="1433" standardDeviationMicrosecondsPerInvocation="156"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="32" invocations="401" avgMicrosecondsPerInvocation="81" maxMicrosecondsPerInvocation="4904" standardDeviationMicrosecondsPerInvocation="271"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildStringPassthruGraph" totalMilliseconds="31" invocations="401" avgMicrosecondsPerInvocation="79" maxMicrosecondsPerInvocation="1259" standardDeviationMicrosecondsPerInvocation="168"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ExplicitSerialization" totalMilliseconds="30" invocations="401" avgMicrosecondsPerInvocation="76" maxMicrosecondsPerInvocation="6617" standardDeviationMicrosecondsPerInvocation="460"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="29" invocations="1396" avgMicrosecondsPerInvocation="21" maxMicrosecondsPerInvocation="1464" standardDeviationMicrosecondsPerInvocation="41"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantDataflowFactory" totalMilliseconds="26" invocations="642" avgMicrosecondsPerInvocation="41" maxMicrosecondsPerInvocation="767" standardDeviationMicrosecondsPerInvocation="73"/>
+      <ClassProfile name="edu.umd.cs.findbugs.DetectorToDetector2Adapter" totalMilliseconds="26" invocations="25265" avgMicrosecondsPerInvocation="1" maxMicrosecondsPerInvocation="173" standardDeviationMicrosecondsPerInvocation="1"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.obl.ObligationAnalysis" totalMilliseconds="24" invocations="218" avgMicrosecondsPerInvocation="110" maxMicrosecondsPerInvocation="2015" standardDeviationMicrosecondsPerInvocation="224"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReflectiveClasses" totalMilliseconds="22" invocations="401" avgMicrosecondsPerInvocation="56" maxMicrosecondsPerInvocation="1167" standardDeviationMicrosecondsPerInvocation="117"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.UnreadFields" totalMilliseconds="20" invocations="106" avgMicrosecondsPerInvocation="197" maxMicrosecondsPerInvocation="1306" standardDeviationMicrosecondsPerInvocation="193"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.TypeQualifierNullnessAnnotationDatabase" totalMilliseconds="20" invocations="10992" avgMicrosecondsPerInvocation="1" maxMicrosecondsPerInvocation="674" standardDeviationMicrosecondsPerInvocation="10"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.LoadOfKnownNullValue" totalMilliseconds="20" invocations="106" avgMicrosecondsPerInvocation="189" maxMicrosecondsPerInvocation="2033" standardDeviationMicrosecondsPerInvocation="252"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DumbMethods" totalMilliseconds="19" invocations="106" avgMicrosecondsPerInvocation="183" maxMicrosecondsPerInvocation="1477" standardDeviationMicrosecondsPerInvocation="236"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EqualsOperandShouldHaveClassCompatibleWithThis" totalMilliseconds="19" invocations="401" avgMicrosecondsPerInvocation="48" maxMicrosecondsPerInvocation="787" standardDeviationMicrosecondsPerInvocation="86"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindInconsistentSync2" totalMilliseconds="17" invocations="106" avgMicrosecondsPerInvocation="161" maxMicrosecondsPerInvocation="1429" standardDeviationMicrosecondsPerInvocation="214"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LiveLocalStoreDataflowFactory" totalMilliseconds="16" invocations="590" avgMicrosecondsPerInvocation="28" maxMicrosecondsPerInvocation="647" standardDeviationMicrosecondsPerInvocation="52"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueRangeAnalysisFactory" totalMilliseconds="15" invocations="682" avgMicrosecondsPerInvocation="22" maxMicrosecondsPerInvocation="2013" standardDeviationMicrosecondsPerInvocation="92"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation" totalMilliseconds="15" invocations="106" avgMicrosecondsPerInvocation="144" maxMicrosecondsPerInvocation="3401" standardDeviationMicrosecondsPerInvocation="338"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDeref$CheckCallSitesAndReturnInstructions" totalMilliseconds="15" invocations="627" avgMicrosecondsPerInvocation="24" maxMicrosecondsPerInvocation="632" standardDeviationMicrosecondsPerInvocation="39"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDeadLocalStores" totalMilliseconds="14" invocations="106" avgMicrosecondsPerInvocation="140" maxMicrosecondsPerInvocation="2169" standardDeviationMicrosecondsPerInvocation="271"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUselessObjects" totalMilliseconds="14" invocations="106" avgMicrosecondsPerInvocation="133" maxMicrosecondsPerInvocation="1178" standardDeviationMicrosecondsPerInvocation="190"/>
+      <ClassProfile name="com.h3xstream.findsecbugs.file.PathTraversalDetector" totalMilliseconds="14" invocations="106" avgMicrosecondsPerInvocation="132" maxMicrosecondsPerInvocation="1591" standardDeviationMicrosecondsPerInvocation="206"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison" totalMilliseconds="13" invocations="106" avgMicrosecondsPerInvocation="131" maxMicrosecondsPerInvocation="933" standardDeviationMicrosecondsPerInvocation="166"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MethodReturnCheck" totalMilliseconds="13" invocations="106" avgMicrosecondsPerInvocation="126" maxMicrosecondsPerInvocation="1200" standardDeviationMicrosecondsPerInvocation="193"/>
+      <ClassProfile name="com.h3xstream.findsecbugs.password.ConstantPasswordDetector" totalMilliseconds="13" invocations="106" avgMicrosecondsPerInvocation="125" maxMicrosecondsPerInvocation="1077" standardDeviationMicrosecondsPerInvocation="153"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDeref" totalMilliseconds="13" invocations="106" avgMicrosecondsPerInvocation="122" maxMicrosecondsPerInvocation="1367" standardDeviationMicrosecondsPerInvocation="157"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.StreamResourceTracker" totalMilliseconds="12" invocations="48" avgMicrosecondsPerInvocation="263" maxMicrosecondsPerInvocation="1217" standardDeviationMicrosecondsPerInvocation="245"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DefaultEncodingDetector" totalMilliseconds="11" invocations="106" avgMicrosecondsPerInvocation="111" maxMicrosecondsPerInvocation="1211" standardDeviationMicrosecondsPerInvocation="214"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RuntimeExceptionCapture" totalMilliseconds="11" invocations="106" avgMicrosecondsPerInvocation="109" maxMicrosecondsPerInvocation="728" standardDeviationMicrosecondsPerInvocation="145"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

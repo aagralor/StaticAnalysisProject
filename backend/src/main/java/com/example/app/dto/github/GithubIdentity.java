@@ -1,4 +1,4 @@
-package com.example.app.dto;
+package com.example.app.dto.github;
 
 public class GithubIdentity {
 

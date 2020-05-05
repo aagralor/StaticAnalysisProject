@@ -1,8 +1,8 @@
-package com.example.app.dto;
+package com.example.app.dto.sast;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AccessToken {
+public class VulnDTO {
 
 	@JsonProperty("access_token")
 	private String value;
@@ -12,7 +12,7 @@ public class AccessToken {
 
 	private String scope;
 
-	public AccessToken() { }
+	public VulnDTO() { }
 
 	public String getValue() {
 		return this.value;

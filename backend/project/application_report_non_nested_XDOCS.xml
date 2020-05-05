@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection>
+  <file classname="org.springframework.boot.loader.LaunchedURLClassLoader">
+    <BugInstance type="URLCONNECTION_SSRF_FD" priority="Normal" message="SECSSSRFUC: This web server request could be used by an attacker to expose internal services and filesystem." line="171"/>
+  </file>
+  <file classname="org.springframework.boot.loader.LaunchedURLClassLoader$1">
+    <BugInstance type="URLCONNECTION_SSRF_FD" priority="Normal" message="SECSSSRFUC: This web server request could be used by an attacker to expose internal services and filesystem." line="139"/>
+  </file>
+  <file classname="com.example.app.ws.ProjectController">
+    <BugInstance type="ENTITY_MASS_ASSIGNMENT" priority="Normal" message="SECEMA: The persistent objects could be exploited by attacker to read sensitive information." line="25"/>
+    <BugInstance type="ENTITY_LEAK" priority="Normal" message="SECELEAK: Unexpected property could be leaked because a persistence class is directly exposed to the client" line="25"/>
+  </file>
+  <file classname="org.apache.maven.wrapper.PathAssembler">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="47"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="48"/>
+    <BugInstance type="WEAK_MESSAGE_DIGEST_MD5" priority="High" message="SECMD5: This API MD5 (MDX) is not a recommended cryptographic hash function" line="59"/>
+  </file>
+  <file classname="org.apache.maven.wrapper.Installer">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="146"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="173"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="169"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="174"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="61"/>
+    <BugInstance type="COMMAND_INJECTION" priority="Normal" message="SECCI: This usage of java/lang/ProcessBuilder.&amp;lt;init&amp;gt;([Ljava/lang/String;)V can be vulnerable to Command Injection" line="110"/>
+  </file>
+  <file classname="org.springframework.boot.loader.archive.JarFileArchive">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="136"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="138"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="118"/>
+  </file>
+  <file classname="org.apache.maven.wrapper.WrapperExecutor">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="81"/>
+  </file>
+  <file classname="org.springframework.boot.loader.Launcher">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="124"/>
+  </file>
+  <file classname="org.springframework.boot.loader.PropertiesLauncher">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="146"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="509"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="240"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="520"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="511"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/io/File;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="465"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="462"/>
+    <BugInstance type="URLCONNECTION_SSRF_FD" priority="Normal" message="SECSSSRFUC: This web server request could be used by an attacker to expose internal services and filesystem." line="268"/>
+    <BugInstance type="URLCONNECTION_SSRF_FD" priority="Normal" message="SECSSSRFUC: This web server request could be used by an attacker to expose internal services and filesystem." line="251"/>
+  </file>
+  <file classname="org.apache.maven.wrapper.MavenWrapperMain">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="84"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="116"/>
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="71"/>
+  </file>
+  <file classname="org.springframework.boot.loader.jar.Handler">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="272"/>
+  </file>
+  <file classname="com.example.app.utils.ZipHelper">
+    <BugInstance type="PATH_TRAVERSAL_IN" priority="Normal" message="SECPTI: This API (java/io/File.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) reads a file whose location might be specified by user input" line="33"/>
+    <BugInstance type="PATH_TRAVERSAL_OUT" priority="Normal" message="SECPTO: This API (java/io/FileOutputStream.&amp;lt;init&amp;gt;(Ljava/lang/String;)V) writes to a file whose location might be specified by user input" line="43"/>
+  </file>
+  <file classname="org.apache.maven.wrapper.DefaultDownloader">
+    <BugInstance type="URLCONNECTION_SSRF_FD" priority="Normal" message="SECSSSRFUC: This web server request could be used by an attacker to expose internal services and filesystem." line="70"/>
+  </file>
+  <Errors>
+    <MissingClass>org.apache.tomcat.util.codec.binary.Base64</MissingClass>
+    <MissingClass>org.slf4j.Logger</MissingClass>
+    <MissingClass>org.slf4j.LoggerFactory</MissingClass>
+    <MissingClass>org.springframework.boot.SpringApplication</MissingClass>
+    <MissingClass>org.springframework.boot.autoconfigure.web.WebMvcRegistrationsAdapter</MissingClass>
+    <MissingClass>org.springframework.data.mongodb.repository.MongoRepository</MissingClass>
+    <MissingClass>org.springframework.http.HttpEntity</MissingClass>
+    <MissingClass>org.springframework.http.HttpHeaders</MissingClass>
+    <MissingClass>org.springframework.http.HttpMethod</MissingClass>
+    <MissingClass>org.springframework.http.HttpStatus</MissingClass>
+    <MissingClass>org.springframework.http.ResponseEntity</MissingClass>
+    <MissingClass>org.springframework.web.client.RestTemplate</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.CorsRegistration</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.CorsRegistry</MissingClass>
+    <MissingClass>org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.condition.PatternsRequestCondition</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.method.RequestMappingInfo</MissingClass>
+    <MissingClass>org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping</MissingClass>
+  </Errors>
+</BugCollection>

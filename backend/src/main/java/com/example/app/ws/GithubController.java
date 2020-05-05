@@ -1,12 +1,12 @@
 package com.example.app.ws;
 
-import com.example.app.dto.GithubIdentity;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.app.dto.github.GithubIdentity;
 
 @RestController
 public class GithubController {

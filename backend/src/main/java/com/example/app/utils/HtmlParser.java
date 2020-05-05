@@ -18,16 +18,14 @@ import com.example.app.domain.html.VulnInstance;
 
 public final class HtmlParser {
 
-	private static final int BUFFER_SIZE = 4096;
-
 	private HtmlParser() {
 	}
 
-	public static BugCollectionHtmlReport parseToBugCollection(String filePath)
+	public static BugCollectionHtmlReport parseToBugCollectionFromHtml(String filePath)
 			throws FileNotFoundException, IOException {
 
 		File fileHtml = new File(filePath);
-		String html = XmlParser.inputStreamToString(new FileInputStream(fileHtml));
+		String html = FileTools.inputStreamToString(new FileInputStream(fileHtml));
 		Document doc = Jsoup.parse(html);
 
 		Elements warningTableElements = doc.getElementsByAttributeValueStarting("class", "tablerow");
@@ -87,25 +85,15 @@ public final class HtmlParser {
 		return htmlBuilder.toString();
 	}
 
-//	private static String inputStreamToString(InputStream is) throws IOException {
-//		StringBuilder sb = new StringBuilder();
-//		String line;
-//		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//		while ((line = br.readLine()) != null) {
-//			sb.append(line);
-//		}
-//		br.close();
-//		return sb.toString();
-//	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		System.out.println("Hello world");
 
 //		File fileHtml = new File("project/application_report_HTML.htm");
 		File fileHtml = new File("project/application_report_non_nested_plain_HTML.htm");
-		String html = XmlParser.inputStreamToString(new FileInputStream(fileHtml));
+		String html = FileTools.inputStreamToString(new FileInputStream(fileHtml));
 
-		BugCollectionHtmlReport bugCollection = parseToBugCollection(
+		BugCollectionHtmlReport bugCollection = parseToBugCollectionFromHtml(
 				"project/application_report_non_nested_plain_HTML.htm");
 
 		Document doc = Jsoup.parse(html);

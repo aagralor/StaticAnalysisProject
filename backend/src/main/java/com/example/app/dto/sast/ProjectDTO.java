@@ -1,4 +1,4 @@
-package com.example.app.domain;
+package com.example.app.dto.sast;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Project {
+public class ProjectDTO {
 
 	@Id
 	private String id;
