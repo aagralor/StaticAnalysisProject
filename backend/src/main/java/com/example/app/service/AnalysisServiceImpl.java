@@ -1,8 +1,15 @@
 package com.example.app.service;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.stereotype.Service;
 
@@ -12,31 +19,204 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	private AnalysisServiceImpl() {
 	}
 
-	static void copy(InputStream in, OutputStream out) throws IOException {
-	    while (true) {
-	        int c = in.read();
-	        if (c == -1) {
-	            break;
-	        }
-	        out.write((char) c);
-	    }
+	@Override
+	public String executeSAST(String pathToFolder) {
+		executeCommand(generateCommandForMvnBuild(pathToFolder), true);
+
+		executeCommand(generateCommandForJarList(pathToFolder), true);
+
+		executeCommand(generateCommandForHtmlReport(pathToFolder), true);
+
+		executeCommand(generateCommandForXmlReport(pathToFolder), true);
+
+		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
+
+		return pathToFolder;
+	}
+
+	private static void executeCommand(String command, boolean printOut) {
+		Process p = null;
+		String[] cmd = { "/bin/sh", "-c", command };
+
+		try {
+			p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+
+		try {
+			if (printOut) {
+				printInConsole(p.getInputStream(), System.out);
+			}
+			p.waitFor();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private static String generateCommandForXdocsReport(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("cat ").append(path);
+		sb.append("/jarList.txt | ");
+		sb.append("/home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh");
+		sb.append(" -xargs -progress -xdocs -nested:false -output ");
+//		"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xdocs -nested:false -output report_XDOCS.xml" };
+		sb.append(path).append("/report_XDOCS.xml");
+		return sb.toString();
+	}
+
+	private static String generateCommandForXmlReport(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("cat ").append(path);
+		sb.append("/jarList.txt | ");
+		sb.append("/home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh");
+		sb.append(" -xargs -progress -xml -nested:false -output ");
+//		"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xml -nested:false -output report_XML.xml" };
+		sb.append(path).append("/report_XML.xml");
+		return sb.toString();
+	}
+
+	private static String generateCommandForHtmlReport(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("cat ").append(path);
+		sb.append("/jarList.txt | ");
+		sb.append("/home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh");
+		sb.append(" -xargs -progress -html:plain.xsl -nested:false -output ");
+		sb.append(path).append("/report_HTML.htm");
+//		"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -html:plain.xsl -nested:false -output report_HTML.htm"
+		return sb.toString();
+	}
+
+	private static String generateCommandForMvnBuild(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/opt/apache-maven-3.6.3/bin/mvn -f ");
+		sb.append(path).append(" clean install");
+//		/opt/apache-maven-3.6.3/bin/mvn -f ./target/analysis/StaticAnalysisProject-develop clean install
+		return sb.toString();
+	}
+
+	private static String generateCommandForJarList(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("find ").append(path).append(" -name *.jar > ");
+		sb.append(path).append("/jarList.txt");
+//		find ./target/analysis/StaticAnalysisProject-develop -name *.jar > jarList.txt
+		return sb.toString();
+	}
+
+	private static void writeInFile(String text, String pathFile) {
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(pathFile));
+			writer.write(text);
+
+		} catch (IOException e) {
+		} finally {
+			try {
+				if (writer != null) {
+					writer.close();
+				}
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	private static void printInConsole(InputStream in, OutputStream out) throws IOException {
+		while (true) {
+			int c = in.read();
+			if (c == -1) {
+				break;
+			}
+			out.write((char) c);
+		}
+	}
+
+	private static String copyToString(InputStream in) throws IOException {
+		StringBuilder textBuilder = new StringBuilder();
+
+		try (Reader reader = new BufferedReader(
+				new InputStreamReader(in, Charset.forName(StandardCharsets.UTF_8.name())))) {
+			int c = 0;
+			while ((c = reader.read()) != -1) {
+				textBuilder.append((char) c);
+			}
+		}
+
+		return textBuilder.toString();
+	}
+
+	private static String getPwd() throws IOException {
+		Process p = null;
+
+		try {
+			p = Runtime.getRuntime().exec("pwd");
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+		}
+
+		return copyToString(p.getInputStream());
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-	    Process p = null;
+		Process p = null;
 
-	    try {
-	        p = Runtime.getRuntime().exec("/opt/apache-maven-3.6.3/bin/mvn -f ./target/analysis/StaticAnalysisProject-develop clean install -f ./analysis/StaticAnalysisProject-develop clean install");
-	    } catch (IOException e) {
-	        System.err.println("Error on exec() method");
-	        e.printStackTrace();
-	    }
+//	    try {
+//	        p = Runtime.getRuntime().exec("/opt/apache-maven-3.6.3/bin/mvn -f ./target/analysis/StaticAnalysisProject-develop clean install");
+//	    } catch (IOException e) {
+//	        System.err.println("Error on exec() method");
+//	        e.printStackTrace();
+//	    }
+//	    printInConsole(p.getInputStream(), System.out);
+//	    p.waitFor();
 
-	    copy(p.getInputStream(), System.out);
-	    p.waitFor();
+		String pwd = getPwd().trim() + "/";
 
-	    System.out.println("Bye World");
+		String[] cmd = { "/bin/sh", "-c",
+				"find ./target/analysis/StaticAnalysisProject-develop -name *.jar > jarList.txt" };
+		try {
+			p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+		p.waitFor();
+
+		String[] cmd2 = { "/bin/sh", "-c",
+				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -html:plain.xsl -nested:false -output report_HTML.htm" };
+		try {
+			p = Runtime.getRuntime().exec(cmd2);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+		printInConsole(p.getInputStream(), System.out);
+		p.waitFor();
+
+		String[] cmd3 = { "/bin/sh", "-c",
+				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xml -nested:false -output report_XML.xml" };
+		try {
+			p = Runtime.getRuntime().exec(cmd3);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+		printInConsole(p.getInputStream(), System.out);
+		p.waitFor();
+
+		String[] cmd4 = { "/bin/sh", "-c",
+				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xdocs -nested:false -output report_XDOCS.xml" };
+		try {
+			p = Runtime.getRuntime().exec(cmd4);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+		printInConsole(p.getInputStream(), System.out);
+		p.waitFor();
+
+		System.out.println("Bye World");
 
 	}
 

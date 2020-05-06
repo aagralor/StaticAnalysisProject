@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.app.domain.Project;
+import com.example.app.service.AnalysisService;
 import com.example.app.service.GithubService;
 import com.example.app.service.ProjectService;
 
@@ -23,6 +24,9 @@ public class ProjectController {
 
 	@Autowired
 	GithubService githubService;
+
+	@Autowired
+	AnalysisService analysisService;
 
 	@PostMapping(path = "/project")
 	public ResponseEntity<Project> create(@RequestBody Project project) {
@@ -47,6 +51,8 @@ public class ProjectController {
 
 		String downloadPath = this.githubService.downloadRepository(project.getRepositoryName(), project.getBranchName(),
 				project.getUsername(), (project.getAccessToken().isEmpty() ? null : project.getAccessToken()));
+
+		String analysis = this.analysisService.executeSAST(downloadPath);
 
 		return new ResponseEntity<>(project, HttpStatus.OK);
 	}
