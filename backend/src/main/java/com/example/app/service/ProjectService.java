@@ -10,4 +10,6 @@ public interface ProjectService {
 
 	List<Project> findAllProjects();
 
+	Project findByKey(String key);
+
 }

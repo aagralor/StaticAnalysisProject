@@ -56,11 +56,11 @@
                     <artifactId>maven-pmd-plugin</artifactId>
                     <version>${maven-pmd-plugin.version}</version>
                 </plugin>
-                <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>${maven-git-commit-id-plugin.version}</version>
-                </plugin>
+<!--                 <plugin> -->
+<!--                     <groupId>pl.project13.maven</groupId> -->
+<!--                     <artifactId>git-commit-id-plugin</artifactId> -->
+<!--                     <version>${maven-git-commit-id-plugin.version}</version> -->
+<!--                 </plugin> -->
             </plugins>
         </pluginManagement>
     </build>

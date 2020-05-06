@@ -8,4 +8,6 @@ import com.example.app.domain.Project;
 @Repository
 public interface ProjectRepository extends MongoRepository<Project, String> {
 
+	Project findByKey(String key);
+
 }

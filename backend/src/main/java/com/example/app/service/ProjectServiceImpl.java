@@ -14,6 +14,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	ProjectRepository repo;
 
+	@Override
 	public Project createProject(Project project) {
 
 		Project response = this.repo.save(project);
@@ -28,6 +29,14 @@ public class ProjectServiceImpl implements ProjectService {
 
 		return response;
 	};
+
+	@Override
+	public Project findByKey(String key) {
+
+		Project response = this.repo.findByKey(key);
+
+		return response;
+	}
 
 	public static <T> void main(String[] args) {
 		System.out.println("Bye World");
