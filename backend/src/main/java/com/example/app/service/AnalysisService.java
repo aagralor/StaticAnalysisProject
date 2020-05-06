@@ -1,8 +1,9 @@
 package com.example.app.service;
 
+import com.example.app.domain.sast.FindSecBugsAnalysis;
 
 public interface AnalysisService {
 
-	String executeSAST(String pathToFolder);
+	FindSecBugsAnalysis executeSAST(String pathToFolder);
 
 }

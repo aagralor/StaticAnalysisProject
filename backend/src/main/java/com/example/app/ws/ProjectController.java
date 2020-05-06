@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.app.domain.AnalysisSAST;
 import com.example.app.domain.Project;
+import com.example.app.domain.sast.FindSecBugsAnalysis;
+import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.service.AnalysisService;
 import com.example.app.service.GithubService;
 import com.example.app.service.ProjectService;
@@ -27,6 +30,9 @@ public class ProjectController {
 
 	@Autowired
 	AnalysisService analysisService;
+	
+	@Autowired
+	AnalysisSASTMapper analysisSASTMapper;
 
 	@PostMapping(path = "/project")
 	public ResponseEntity<Project> create(@RequestBody Project project) {
@@ -45,16 +51,18 @@ public class ProjectController {
 	}
 
 	@GetMapping(path = "/project/analysis")
-	public ResponseEntity<Project> startAnalysys(@RequestParam String key) {
+	public ResponseEntity<AnalysisSAST> startAnalysys(@RequestParam String key) {
 
 		Project project = this.projectService.findByKey(key);
 
 		String downloadPath = this.githubService.downloadRepository(project.getRepositoryName(), project.getBranchName(),
 				project.getUsername(), (project.getAccessToken().isEmpty() ? null : project.getAccessToken()));
 
-		String analysis = this.analysisService.executeSAST(downloadPath);
+		FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath);
+		
+		AnalysisSAST response = analysisSASTMapper.toAnalysisSAST(analysis);
 
-		return new ResponseEntity<>(project, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 }
