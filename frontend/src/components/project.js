@@ -22,7 +22,6 @@ class Project extends Component {
   }
 
   render() {
-    debugger;
     const renderList = (!this.props.projectList ? [] : this.props.projectList);
     renderList.forEach(element => {
       console.log(JSON.stringify(element));

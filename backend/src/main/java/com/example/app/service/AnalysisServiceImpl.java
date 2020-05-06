@@ -10,17 +10,22 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.AnalysisSAST;
+import com.example.app.domain.Project;
 import com.example.app.domain.sast.FindSecBugsAnalysis;
 import com.example.app.domain.sast.html.BugCollectionHtmlReport;
 import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
 import com.example.app.repo.AnalysisSASTRepository;
+import com.example.app.repo.ProjectRepository;
 import com.example.app.utils.HtmlParser;
 import com.example.app.utils.XmlParser;
 
@@ -33,7 +38,28 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	@Autowired
 	AnalysisSASTRepository repo;
 
-	private AnalysisServiceImpl() {
+	@Autowired
+	ProjectRepository projectRepo;
+
+	@Override
+	public AnalysisSAST findLastAnalysisSast(String projectKey) {
+		Project project = this.projectRepo.findByKey(projectKey);
+
+		List<AnalysisSAST> analysisList = (List<AnalysisSAST>) this.repo.findAll(project.getAnalysisSastList());
+		AnalysisSAST response = analysisList.get(0);
+
+		for (AnalysisSAST a : analysisList) {
+			Date dateAts = new Date(Long.parseLong(a.getAnalysisTimestamp()));
+			Date dateResponse = new Date(Long.parseLong(response.getAnalysisTimestamp()));
+
+			if (dateAts.after(dateResponse)) {
+				response = a;
+			}
+		}
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(sf.format(new Date(Long.parseLong(response.getAnalysisTimestamp()))));
+
+		return response;
 	}
 
 	@Override
@@ -199,9 +225,8 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-
-		Process p = null;
-
+//		Process p = null;
+//
 //	    try {
 //	        p = Runtime.getRuntime().exec("/opt/apache-maven-3.6.3/bin/mvn -f ./target/analysis/StaticAnalysisProject-develop clean install");
 //	    } catch (IOException e) {
@@ -210,54 +235,55 @@ public final class AnalysisServiceImpl implements AnalysisService {
 //	    }
 //	    printInConsole(p.getInputStream(), System.out);
 //	    p.waitFor();
-
-		String pwd = getPwd().trim() + "/";
-
-		String[] cmd = { "/bin/sh", "-c",
-				"find ./target/analysis/StaticAnalysisProject-develop -name *.jar > jarList.txt" };
-		try {
-			p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-		p.waitFor();
-
-		String[] cmd2 = { "/bin/sh", "-c",
-				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -html:plain.xsl -nested:false -output report_HTML.htm" };
-		try {
-			p = Runtime.getRuntime().exec(cmd2);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-		printInConsole(p.getInputStream(), System.out);
-		p.waitFor();
-
-		String[] cmd3 = { "/bin/sh", "-c",
-				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xml -nested:false -output report_XML.xml" };
-		try {
-			p = Runtime.getRuntime().exec(cmd3);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-		printInConsole(p.getInputStream(), System.out);
-		p.waitFor();
-
-		String[] cmd4 = { "/bin/sh", "-c",
-				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xdocs -nested:false -output report_XDOCS.xml" };
-		try {
-			p = Runtime.getRuntime().exec(cmd4);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-		printInConsole(p.getInputStream(), System.out);
-		p.waitFor();
-
-		System.out.println("Bye World");
+//
+//		String pwd = getPwd().trim() + "/";
+//
+//		String[] cmd = { "/bin/sh", "-c",
+//				"find ./target/analysis/StaticAnalysisProject-develop -name *.jar > jarList.txt" };
+//		try {
+//			p = Runtime.getRuntime().exec(cmd);
+//		} catch (IOException e) {
+//			System.err.println("Error on exec() method");
+//			e.printStackTrace();
+//		}
+//		p.waitFor();
+//
+//		String[] cmd2 = { "/bin/sh", "-c",
+//				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -html:plain.xsl -nested:false -output report_HTML.htm" };
+//		try {
+//			p = Runtime.getRuntime().exec(cmd2);
+//		} catch (IOException e) {
+//			System.err.println("Error on exec() method");
+//			e.printStackTrace();
+//		}
+//		printInConsole(p.getInputStream(), System.out);
+//		p.waitFor();
+//
+//		String[] cmd3 = { "/bin/sh", "-c",
+//				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xml -nested:false -output report_XML.xml" };
+//		try {
+//			p = Runtime.getRuntime().exec(cmd3);
+//		} catch (IOException e) {
+//			System.err.println("Error on exec() method");
+//			e.printStackTrace();
+//		}
+//		printInConsole(p.getInputStream(), System.out);
+//		p.waitFor();
+//
+//		String[] cmd4 = { "/bin/sh", "-c",
+//				"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -xdocs -nested:false -output report_XDOCS.xml" };
+//		try {
+//			p = Runtime.getRuntime().exec(cmd4);
+//		} catch (IOException e) {
+//			System.err.println("Error on exec() method");
+//			e.printStackTrace();
+//		}
+//		printInConsole(p.getInputStream(), System.out);
+//		p.waitFor();
+//
+//		System.out.println("Bye World");
 
 	}
+
 
 }

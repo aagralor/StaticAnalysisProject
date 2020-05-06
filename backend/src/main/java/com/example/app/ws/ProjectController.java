@@ -58,15 +58,31 @@ public class ProjectController {
 		String downloadPath = this.githubService.downloadRepository(project.getRepositoryName(), project.getBranchName(),
 				project.getUsername(), (project.getAccessToken().isEmpty() ? null : project.getAccessToken()));
 
-		FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath);
+		AnalysisSAST response;
+		HttpStatus responseHTTP = HttpStatus.OK;
+		try {
+			FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath);
 
-		AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
+			AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
 
-		AnalysisSAST response = this.analysisService.createAnalysis(sast);
+			response = this.analysisService.createAnalysis(sast);
 
-		Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
+			Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			response = null;
+			responseHTTP = HttpStatus.CONFLICT;
+		}
 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, responseHTTP);
+	}
+
+	@GetMapping(path = "/analysis")
+	public ResponseEntity<AnalysisSAST> findLastAnalysisSast(@RequestParam String projectKey) {
+
+		AnalysisSAST sast = this.analysisService.findLastAnalysisSast(projectKey);
+
+		return new ResponseEntity<>(sast, HttpStatus.OK);
 	}
 
 }

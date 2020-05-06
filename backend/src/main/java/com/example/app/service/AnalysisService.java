@@ -9,5 +9,6 @@ public interface AnalysisService {
 
 	AnalysisSAST createAnalysis(AnalysisSAST analysis);
 
+	AnalysisSAST findLastAnalysisSast(String projectKey);
 
 }
