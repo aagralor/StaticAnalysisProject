@@ -63,7 +63,7 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	}
 
 	@Override
-	public AnalysisSAST createAnalysis(AnalysisSAST analysis) {
+	public AnalysisSAST createOrUpdateAnalysis(AnalysisSAST analysis) {
 
 		AnalysisSAST response = this.repo.save(analysis);
 
@@ -71,16 +71,21 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	}
 
 	@Override
-	public FindSecBugsAnalysis executeSAST(String pathToFolder) {
+	public FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast) {
 		executeCommand(generateCommandForMvnBuild(pathToFolder), true);
-
+		currentSast.setCompletion("35");
+		this.repo.save(currentSast);
 		executeCommand(generateCommandForJarList(pathToFolder), true);
 
 		executeCommand(generateCommandForHtmlReport(pathToFolder), true);
-
+		currentSast.setCompletion("50");
+		this.repo.save(currentSast);
 		executeCommand(generateCommandForXmlReport(pathToFolder), true);
-
+		currentSast.setCompletion("65");
+		this.repo.save(currentSast);
 		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
+		currentSast.setCompletion("80");
+		this.repo.save(currentSast);
 
 		FindSecBugsAnalysis result = null;
 

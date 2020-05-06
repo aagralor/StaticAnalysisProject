@@ -43,4 +43,10 @@ public class AnalysisSAST {
 	@Field("IssueList")
 	private List<IssueSAST> issueList;
 
+	@Field("Completion")
+	private String completion;
+
+	@Field("Status")
+	private String status;
+
 }

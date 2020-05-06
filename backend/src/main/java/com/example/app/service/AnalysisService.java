@@ -5,9 +5,9 @@ import com.example.app.domain.sast.FindSecBugsAnalysis;
 
 public interface AnalysisService {
 
-	FindSecBugsAnalysis executeSAST(String pathToFolder);
+	FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast);
 
-	AnalysisSAST createAnalysis(AnalysisSAST analysis);
+	AnalysisSAST createOrUpdateAnalysis(AnalysisSAST analysis);
 
 	AnalysisSAST findLastAnalysisSast(String projectKey);
 

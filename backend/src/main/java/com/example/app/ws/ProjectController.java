@@ -54,27 +54,33 @@ public class ProjectController {
 	public ResponseEntity<AnalysisSAST> startAnalysys(@RequestParam String key) {
 
 		Project project = this.projectService.findByKey(key);
+		AnalysisSAST  currentSast = new AnalysisSAST();
+		currentSast.setCompletion("10");
+		currentSast.setStatus("RUNNING");
+		AnalysisSAST response = this.analysisService.createOrUpdateAnalysis(currentSast);
+		Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
 
-		String downloadPath = this.githubService.downloadRepository(project.getRepositoryName(), project.getBranchName(),
-				project.getUsername(), (project.getAccessToken().isEmpty() ? null : project.getAccessToken()));
+		new Thread(() -> {
+    		String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(), updatedProject.getBranchName(),
+    				updatedProject.getUsername(), (updatedProject.getAccessToken().isEmpty() ? null : updatedProject.getAccessToken()));
 
-		AnalysisSAST response;
-		HttpStatus responseHTTP = HttpStatus.OK;
-		try {
-			FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath);
+    		try {
+    			FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath, currentSast);
 
-			AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
+    			AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
+    			sast.setId(currentSast.getId());
+    			sast.setCompletion("100");
+    			sast.setStatus("COMPLETE");
+    			this.analysisService.createOrUpdateAnalysis(sast);
+    		} catch (RuntimeException e) {
+    			e.printStackTrace();
+    			currentSast.setCompletion("100");
+    			currentSast.setStatus("CANCELLED");
+    			this.analysisService.createOrUpdateAnalysis(currentSast);
+    		}
+		}).start();
 
-			response = this.analysisService.createAnalysis(sast);
-
-			Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			response = null;
-			responseHTTP = HttpStatus.CONFLICT;
-		}
-
-		return new ResponseEntity<>(response, responseHTTP);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/analysis")
