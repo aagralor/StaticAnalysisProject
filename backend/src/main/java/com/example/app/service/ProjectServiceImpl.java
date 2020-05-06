@@ -38,6 +38,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return response;
 	}
 
+	@Override
+	public Project addAnalysisSAST(Project project, String analysisId) {
+
+		project.addAnalysisSast(analysisId);
+
+		Project response = this.repo.save(project);
+
+		return response;
+	}
+
 	public static <T> void main(String[] args) {
 		System.out.println("Bye World");
 	}

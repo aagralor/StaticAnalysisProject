@@ -14,21 +14,34 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.app.domain.AnalysisSAST;
 import com.example.app.domain.sast.FindSecBugsAnalysis;
 import com.example.app.domain.sast.html.BugCollectionHtmlReport;
 import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
+import com.example.app.repo.AnalysisSASTRepository;
 import com.example.app.utils.HtmlParser;
 import com.example.app.utils.XmlParser;
 
 @Service
 public final class AnalysisServiceImpl implements AnalysisService {
-	
+
 	@Autowired
-	FindSecBugsAnalysisMapper analysisMapper;
+	FindSecBugsAnalysisMapper fsbAnalysisMapper;
+
+	@Autowired
+	AnalysisSASTRepository repo;
 
 	private AnalysisServiceImpl() {
+	}
+
+	@Override
+	public AnalysisSAST createAnalysis(AnalysisSAST analysis) {
+
+		AnalysisSAST response = this.repo.save(analysis);
+
+		return response;
 	}
 
 	@Override
@@ -42,9 +55,9 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		executeCommand(generateCommandForXmlReport(pathToFolder), true);
 
 		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
-		
+
 		FindSecBugsAnalysis result = null;
-		
+
 		try {
 			BugCollectionHtmlReport html = HtmlParser
 					.parseToBugCollectionFromHtml(pathToFolder.concat("/report_HTML.htm"));
@@ -52,7 +65,7 @@ public final class AnalysisServiceImpl implements AnalysisService {
 					.parseToBugCollectionFromXml(pathToFolder.concat("/report_XML.xml"));
 			BugCollectionXdocsReport xdocs = XmlParser
 					.parseToBugCollectionFromXdocs(pathToFolder.concat("/report_XDOCS.xml"));
-			result = analysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
+			result = this.fsbAnalysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}

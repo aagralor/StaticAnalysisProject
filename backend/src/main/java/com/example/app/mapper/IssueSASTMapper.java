@@ -17,7 +17,7 @@ public final class IssueSASTMapper {
 	public IssueSAST toIssueSAST(Vuln vuln) {
 
 		IssueSAST resp = new IssueSAST();
-		
+
 		resp.setReference(vuln.getTypeByXdocs());
 		resp.setName(vuln.getNameByHtml());
 		resp.setPriority(vuln.getPriorityByHtml());
@@ -33,22 +33,22 @@ public final class IssueSASTMapper {
 		resp.setAbbrev(vuln.getAbbrevByXml());
 		resp.setCategory(vuln.getCategoryByXml());
 		resp.setMethodName(vuln.getMethodNameByXml());
-		
+
 		return resp;
 	}
-	
+
 	public List<IssueSAST> toIssueSASTList(List<Vuln> vulnList) {
 
 		List<IssueSAST> resp = new ArrayList<IssueSAST>();
-		
+
 		if (vulnList == null) {
 			return resp;
 		}
-		
+
 		for (Vuln v : vulnList) {
 			resp.add(toIssueSAST(v));
 		}
-		
+
 		return resp;
 	}
 

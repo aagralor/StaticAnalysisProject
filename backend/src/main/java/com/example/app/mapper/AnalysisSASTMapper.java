@@ -11,7 +11,7 @@ import com.example.app.domain.sast.FindSecBugsAnalysis;
 
 @Component
 public final class AnalysisSASTMapper {
-	
+
 	@Autowired
 	IssueSASTMapper issueSASTMapper;
 
@@ -29,8 +29,8 @@ public final class AnalysisSASTMapper {
 		resp.setRelease(fsba.getRelease());
 		resp.setProjectName(fsba.getProjectName());
 		resp.setJarList(fsba.getJarList());
-		resp.setIssueList(issueSASTMapper.toIssueSASTList(fsba.getVulnList()));
-		
+		resp.setIssueList(this.issueSASTMapper.toIssueSASTList(fsba.getVulnList()));
+
 		return resp;
 	}
 

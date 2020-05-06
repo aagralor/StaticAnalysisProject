@@ -25,10 +25,10 @@ public class IssueSAST {
 
 	@Field("Priority")
 	private String priority;
-	
+
 	@Field("PriorityValue")
 	private String priorityValue;
-	
+
 	@Field("Rank")
 	private String rank;
 
@@ -46,16 +46,16 @@ public class IssueSAST {
 
 	@Field("LineNumber")
 	private String lineNumber;
-	
+
 	@Field("ClassName")
 	private String className;
 
 	@Field("Message")
 	private String message;
-	
+
 	@Field("Abbrev")
 	private String abbrev;
-	
+
 	@Field("Category")
 	private String category;
 

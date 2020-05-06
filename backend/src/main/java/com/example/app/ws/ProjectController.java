@@ -30,7 +30,7 @@ public class ProjectController {
 
 	@Autowired
 	AnalysisService analysisService;
-	
+
 	@Autowired
 	AnalysisSASTMapper analysisSASTMapper;
 
@@ -59,8 +59,12 @@ public class ProjectController {
 				project.getUsername(), (project.getAccessToken().isEmpty() ? null : project.getAccessToken()));
 
 		FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath);
-		
-		AnalysisSAST response = analysisSASTMapper.toAnalysisSAST(analysis);
+
+		AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
+
+		AnalysisSAST response = this.analysisService.createAnalysis(sast);
+
+		Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

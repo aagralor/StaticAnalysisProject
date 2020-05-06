@@ -1,5 +1,8 @@
 package com.example.app.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -40,5 +43,16 @@ public class Project {
 
 	@Field("GithubUrl")
 	private String url;
+
+	@Field("AnalysisSastList")
+	private List<String> analysisSastList;
+
+	public void addAnalysisSast(String anlysisId) {
+		if (this.analysisSastList == null) {
+			this.analysisSastList = new ArrayList<>();
+		}
+		this.analysisSastList.add(anlysisId);
+
+	}
 
 }
