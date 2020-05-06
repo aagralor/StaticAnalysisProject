@@ -28,8 +28,8 @@ class App extends Component {
           <Layout>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/project/:projectKey" component={ProjectAnalysis} />
               <Route exact path="/project/create" component={CreateProject} />
+              <Route exact path="/project/:projectKey" component={ProjectAnalysis} />
               <Route exact path="/project" component={Project} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Card, Nav, Button } from 'react-bootstrap';
+import { Card, Nav, Accordion, Row, Col } from 'react-bootstrap';
+import parse from 'html-react-parser';
 import { storeAnalysis } from "../actions/store-analysis";
 import { urlAnalysisProject } from "../apis/urls";
 import { apiGet } from "../apis";
@@ -37,28 +38,51 @@ class ProjectAnalysis extends Component {
     <div>
         <h2>Issue List</h2>
         <p>Meow meow, i tell my human purr for no reason but chase after silly colored fish toys around the house thinking longingly about tuna brine hack, but where is my slave? I'm getting hungry. Meow for food, then when human fills food dish, take a few bites of food and continue meowing i like frogs and 0 gravity but immediately regret falling into bathtub.</p>
-        { renderList &&
-          renderList.map(element =>
-            <Card>
-              <Card.Header>
-                <Nav variant="pills" defaultActiveKey="#active" >
-                  <Nav.Item>
-                    <Nav.Link href="#active">Active</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link href="#done">Done</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item >
-                    <Nav.Link href="#remove">Remove</Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>{element.name}</Card.Title>
-                <Card.Text><div dangerouslySetInnerHTML={{ __html: this.htmlDecode(element.message) }} /></Card.Text>
-              </Card.Body>
-            </Card>
-          )}
+          <Accordion defaultActiveKey="0">
+            { renderList &&
+              renderList.map(element => {
+                const priorityColor = (element.priority === 'High' ? 'red' : (element.priority === 'Medium' ? 'orange' : 'green'));
+                return (
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey={`${element.abbrev}-${element.filename}-${element.lineNumber}`} >
+                      <Row>
+                        <Col>                      
+                          <Card.Title><b>{element.name}</b></Card.Title>
+                        </Col>
+                        <Col xs lg="2">
+                          <Nav variant="pills" defaultActiveKey="#active" >
+                            <Nav.Item>
+                              <Nav.Link style={{ 'background': priorityColor, 'width': '120px', 'text-align': 'center' }} href="#active">{element.priority}</Nav.Link>
+                            </Nav.Item>
+                          </Nav>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={{ span: 6, offset: 0 }}>Class: {element.className}</Col>
+                        <Col md={{ span: 3, offset: 1 }}>Method: {element.methodName}</Col>
+                      </Row>
+                      <Row>
+                        <Col md={{ span: 6, offset: 0 }}>File: {element.fileName}</Col>
+                        <Col md={{ span: 3, offset: 1 }}>Line: {element.lineNumber}</Col>
+                      </Row>
+                      <Row style={{ 'margin-top': '50px' }} >
+                        <Col>
+                          <Card.Subtitle><div dangerouslySetInnerHTML={{ __html: this.htmlDecode(element.message) }} /></Card.Subtitle>
+                        </Col>
+                      </Row>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey={`${element.abbrev}-${element.filename}-${element.lineNumber}`} >
+                      <Card.Body>
+                        {parse(element.warningHtml)}
+                        {/* <Card.Title>{element.warningHtml}</Card.Title> */}
+                        {/* <Card.Text><div dangerouslySetInnerHTML={{ __html: this.htmlDecode(element.warningHtml) }} /></Card.Text> */}
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                )
+              }
+            )}
+          </Accordion>
     </div>
     )
   }
