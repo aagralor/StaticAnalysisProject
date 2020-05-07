@@ -1,6 +1,14 @@
 import { /* handleAction,  */handleActions } from "redux-actions";
-// import { FETCH_CUSTOMERS, INSERT_CUSTOMER, UPDATE_CUSTOMER, DELETE_CUSTOMER } from "../constants";
-import { STORE_CODE, STORE_PROJECT, STORE_PROJECT_LIST, STORE_ANALYSIS } from "../constants/github";
+import { 
+  STORE_CODE, 
+  STORE_PROJECT, 
+  STORE_PROJECT_LIST, 
+  STORE_ANALYSIS, 
+  STORE_CURRENT_ANALYSIS, 
+  STORE_CURRENT_ANALYSIS_KEY,
+  STORE_CURRENT_ANALYSIS_COMPLETION,
+  FINISH_ANALYSIS_SAST,
+} from "../constants/github";
 
 // const customers = handleAction(FETCH_CUSTOMERS, state => state);
 
@@ -9,24 +17,33 @@ export const github = handleActions(
     [STORE_CODE]: (state, action) => ({ ...state, code: action.payload }),
     [STORE_PROJECT]: (state, action) => ({ ...state, project: action.payload }),
     [STORE_PROJECT_LIST]: (state, action) => ({ ...state, projectList: action.payload }),
-    [STORE_ANALYSIS]: (state, action) => ({ ...state, currentAnalysis: action.payload }),
-    // [FETCH_CUSTOMERS]: (state, action) => [...action.payload],
-    // [INSERT_CUSTOMER]: (state, action) => [...state, action.payload],
-    // [UPDATE_CUSTOMER]: (state, action) => {
-    //   const customerPayload = action.payload;
-    //   const { id } = customerPayload;
-    //   const customers = state;
-    //   const initialValue = [];
-    //   const newCustomers = customers.reduce( (acc, customer) => {
-    //     if (customer.id === id) {
-    //       return [...acc, customerPayload];
-    //     } else {
-    //       return [...acc, customer];
-    //     }
-    //   }, initialValue);
-    //   return newCustomers;
-    // },
-    // [DELETE_CUSTOMER]: (state, action) => state.filter(c => c.id !== action.payload),
+    [STORE_ANALYSIS]: (state, action) => ({ ...state, analysis: action.payload }),
+    [STORE_CURRENT_ANALYSIS]: (state, action) => ({ ...state, currentAnalysis: action.payload }),
+    [STORE_CURRENT_ANALYSIS_KEY]: (state, action) => ({ 
+      ...state,
+      currentAnalysisKey: action.payload,
+      currentAnalysis: {
+        completion: "0",
+        status: "RUNNING"
+      }
+    }),
+    [STORE_CURRENT_ANALYSIS_COMPLETION]: (state, action) => {
+      const count = state.currentAnalysisCount;
+      const stateCount = typeof(count) !== 'undefined';
+      const newCount = (stateCount ? state.currentAnalysisCount + 1 : 0);
+      return ({
+        ...state,
+        currentAnalysisCompletion: action.payload,
+        currentAnalysisCount: newCount,
+      })
+    },
+    [FINISH_ANALYSIS_SAST]: (state, action) => ({ 
+      ...state,
+      currentAnalysisKey: "",
+      currentAnalysis: {},
+      currentAnalysisCompletion: {},
+      currentAnalysisCount: 0,
+    }),
   }, 
   {}
 );

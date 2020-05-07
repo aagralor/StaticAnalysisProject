@@ -5,6 +5,8 @@ const githubUrlBase = "https://github.com";
 
 export const urlProject = `${apiBase}project`;
 export const urlAnalysisProject = projectKey => `${apiBase}analysis?projectKey=${projectKey}`;
+export const urlStartAnalysis = projectKey => `${apiBase}project/analysis?key=${projectKey}`;
+export const urlCurrentAnalysisStatus = id => `${apiBase}analysis/status?id=${id}`;
 export const urlAccessToken = `${apiBase}github/accesstoken/`
 
 export const githubUrlAuthorize = `${githubUrlBase}/login/oauth/authorize`;

@@ -23,6 +23,7 @@ import com.example.app.domain.sast.FindSecBugsAnalysis;
 import com.example.app.domain.sast.html.BugCollectionHtmlReport;
 import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
+import com.example.app.dto.sast.AnalysisStatusDTO;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
 import com.example.app.repo.AnalysisSASTRepository;
 import com.example.app.repo.ProjectRepository;
@@ -69,6 +70,19 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 		return response;
 	}
+
+
+	@Override
+	public AnalysisStatusDTO checkStatus(String id) {
+
+		AnalysisSAST sast = this.repo.findOne(id);
+		AnalysisStatusDTO response = new AnalysisStatusDTO();
+		response.setValue(sast.getCompletion());
+		response.setStatus(sast.getStatus());
+
+		return response;
+	}
+
 
 	@Override
 	public FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast) {
@@ -289,6 +303,5 @@ public final class AnalysisServiceImpl implements AnalysisService {
 //		System.out.println("Bye World");
 
 	}
-
 
 }

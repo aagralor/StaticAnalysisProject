@@ -7,7 +7,7 @@ import parse from 'html-react-parser';
 import { storeAnalysis } from "../actions/store-analysis";
 import { urlAnalysisProject } from "../apis/urls";
 import { apiGet } from "../apis";
-import { getCurrentAnalysis } from '../selectors/github';
+import { getAnalysis } from '../selectors/github';
 
 
 
@@ -29,7 +29,7 @@ class ProjectAnalysis extends Component {
   }
 
   render() {
-    const renderList = (!this.props.currentAnalysis ? [] : this.props.currentAnalysis.issueList);
+    const renderList = (!this.props.analysis ? [] : this.props.analysis.issueList);
     // renderList.forEach(element => {
     //   console.log(JSON.stringify(element));
     // });    
@@ -99,12 +99,12 @@ ProjectAnalysis.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   search: PropTypes.object,
-  currentAnalysis: PropTypes.string,
+  analysis: PropTypes.string,
   setAnalysis: PropTypes.func,
 }
   
 const mapStateToPropsActions = state => ({
-  currentAnalysis: getCurrentAnalysis(state),
+  analysis: getAnalysis(state),
 });
   
 const mapDispatchToPropsActions = dispatch => ({

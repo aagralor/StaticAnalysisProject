@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.app.domain.AnalysisSAST;
 import com.example.app.domain.Project;
 import com.example.app.domain.sast.FindSecBugsAnalysis;
+import com.example.app.dto.sast.AnalysisStatusDTO;
 import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.service.AnalysisService;
 import com.example.app.service.GithubService;
@@ -89,6 +90,14 @@ public class ProjectController {
 		AnalysisSAST sast = this.analysisService.findLastAnalysisSast(projectKey);
 
 		return new ResponseEntity<>(sast, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/analysis/status")
+	public ResponseEntity<AnalysisStatusDTO> checkStatusAnalysisSast(@RequestParam String id) {
+
+		AnalysisStatusDTO sastCompletion = this.analysisService.checkStatus(id);
+
+		return new ResponseEntity<>(sastCompletion, HttpStatus.OK);
 	}
 
 }
