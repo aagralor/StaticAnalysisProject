@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import CustomProgressBar from "./custom-progress-bar";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Card, Nav, Button } from 'react-bootstrap';
+import { Card, Nav, Button, Modal } from 'react-bootstrap';
 import { storeProjectList } from "../../actions/store-project-list";
 import { storeCurrentAnalysis } from "../../actions/store-current-analysis";
 import { storeCurrentAnalysisKey } from "../../actions/store-current-analysis-key";
 import { storeCurrentAnalysisCompletion } from "../../actions/store-current-analysis-completion";
 import { finishAnalysisSast } from "../../actions/finish-analysis-sast";
 import { urlProject, urlStartAnalysis, urlCurrentAnalysisStatus } from "../../apis/urls";
+import { modalExample } from "./modal-example";
 import { apiGet } from "../../apis";
 import {
   getProjectList,
@@ -64,7 +65,7 @@ class Project extends Component {
 
 
     return (      
-    <div>
+      <div>
         <h2>Project List</h2>
         <p>Meow meow, i tell my human purr for no reason but chase after silly colored fish toys around the house thinking longingly about tuna brine hack, but where is my slave? I'm getting hungry. Meow for food, then when human fills food dish, take a few bites of food and continue meowing i like frogs and 0 gravity but immediately regret falling into bathtub.</p>
         { 
@@ -108,8 +109,9 @@ class Project extends Component {
                 </Card.Footer>
               }
             </Card>
-          )}
-    </div>
+          )
+        }
+      </div>
     )
   }
 }
