@@ -27,7 +27,8 @@ public final class FindSecBugsAnalysisMapper {
 	private FindSecBugsAnalysisMapper() {
 	}
 
-	public static FindSecBugsAnalysis toFindSecBugsAnalysis(BugCollectionXdocsReport xdocs, BugCollectionXmlReport xml, BugCollectionHtmlReport html) {
+	public static FindSecBugsAnalysis toFindSecBugsAnalysis(BugCollectionXdocsReport xdocs, BugCollectionXmlReport xml,
+			BugCollectionHtmlReport html) {
 
 		ArrayList<Vuln> vulnList = new ArrayList<>();
 
@@ -38,38 +39,52 @@ public final class FindSecBugsAnalysisMapper {
 			vuln.setPriorityByHtml(vi.getPriority());
 			vuln.setReferenceByHtml(vi.getReference());
 			vuln.setSourceLineListByHtml(vi.getSourceLineList());
-			vuln.setFileNameByHtml(getFilenameFromSourceLine(vi.getSourceLineList().get(0)));
-			vuln.setLineNumberByHtml(getLineNumberFromSourceLine(vi.getSourceLineList().get(0)));
+
 			vuln.setTextByHtml(vi.getText());
 			vuln.setTextHtmlByHtml(vi.getTextHtml());
 			vuln.setWarningTextHtmlByHtml(vi.getWarningTextHtml());
 
-			Map<String, Object> bugInXdocsMap = getBugInstanceXdocs(xdocs.getFileList(), vuln.getFileNameByHtml(),
-					vuln.getLineNumberByHtml(), vuln.getReferenceByHtml().substring(1));
-			BugInstance bugInXdocs = (BugInstance) bugInXdocsMap.get("bugInstance");
-			String bugInXdocsClassname = (String) bugInXdocsMap.get("classname");
+			if (!vi.getSourceLineList().isEmpty()) {
 
-			vuln.setClassnameByXdocs(bugInXdocsClassname);
-			vuln.setTypeByXdocs(bugInXdocs.getType());
-			vuln.setPriorityByXdocs(bugInXdocs.getPriority());
-			vuln.setMessageByXdocs(bugInXdocs.getMessage());
-			vuln.setLineByXdocs(bugInXdocs.getLine());
+				vuln.setFileNameByHtml(getFilenameFromSourceLine(vi.getSourceLineList().get(0)));
+				vuln.setLineNumberByHtml(getLineNumberFromSourceLine(vi.getSourceLineList().get(0)));
+
+				Map<String, Object> bugInXdocsMap = getBugInstanceXdocs(xdocs.getFileList(), vuln.getFileNameByHtml(),
+						vuln.getLineNumberByHtml(), vuln.getReferenceByHtml().substring(1));
+				BugInstance bugInXdocs = (BugInstance) bugInXdocsMap.get("bugInstance");
+				String bugInXdocsClassname = (String) bugInXdocsMap.get("classname");
+
+				vuln.setClassnameByXdocs(bugInXdocsClassname);
+
+				if (bugInXdocs != null) {
+					vuln.setTypeByXdocs(bugInXdocs.getType());
+					vuln.setPriorityByXdocs(bugInXdocs.getPriority());
+					vuln.setMessageByXdocs(bugInXdocs.getMessage());
+					vuln.setLineByXdocs(bugInXdocs.getLine());
+				}
+
+
+			}
+
 
 			com.example.app.domain.sast.xml.BugInstance bugInXml = getBugInstanceXml(xml.getBugInstanceList(),
 					vuln.getFileNameByHtml(), vuln.getLineNumberByHtml(), vuln.getReferenceByHtml().substring(1));
 
-			vuln.setTypeByXml(bugInXml.getType());
-			vuln.setPriorityByXml(bugInXml.getPriority());
-			vuln.setRankByXml(bugInXml.getRank());
-			vuln.setAbbrevByXml(bugInXml.getAbbrev());
-			vuln.setCategoryByXml(bugInXml.getCategory());
-			vuln.setClassnameByXml(bugInXml.getClazz().getClassname());
-			vuln.setMethodClassnameByXml(bugInXml.getMethod().getClassname());
-			vuln.setMethodNameByXml(bugInXml.getMethod().getName());
-			vuln.setMethodSignatureByXml(bugInXml.getMethod().getSignature());
-			vuln.setTraceByXml(bugInXml.getSourceLineList());
-			vuln.setElementListByXml(bugInXml.getStringList());
-
+			if (bugInXml != null) {
+				vuln.setTypeByXml(bugInXml.getType());
+				vuln.setPriorityByXml(bugInXml.getPriority());
+				vuln.setRankByXml(bugInXml.getRank());
+				vuln.setAbbrevByXml(bugInXml.getAbbrev());
+				vuln.setCategoryByXml(bugInXml.getCategory());
+				vuln.setClassnameByXml(bugInXml.getClazz().getClassname());
+				if (bugInXml.getMethod() != null) {
+					vuln.setMethodClassnameByXml(bugInXml.getMethod().getClassname());
+					vuln.setMethodNameByXml(bugInXml.getMethod().getName());
+					vuln.setMethodSignatureByXml(bugInXml.getMethod().getSignature());
+				}
+				vuln.setTraceByXml(bugInXml.getSourceLineList());
+				vuln.setElementListByXml(bugInXml.getStringList());
+			}
 			vulnList.add(vuln);
 		}
 
@@ -92,18 +107,27 @@ public final class FindSecBugsAnalysisMapper {
 	private static Map<String, Object> getBugInstanceXdocs(List<File> files, String filename, String line,
 			String reference) {
 
-		File selectedFile = files.stream().filter(f -> f.getClassname().contains(filename.split("\\.")[0])).findFirst()
-				.get();
+		BugInstance bugInstance = null;
+		File selectedFile = files.stream()
+				.filter(f -> f.getClassname().contains(filename.split("\\.")[0]))
+				.findFirst()
+				.orElseGet(() -> null);
 
-		List<BugInstance> filteredReferenceList = selectedFile.getBugInstanceList().stream()
-				.filter(b -> b.getType().equalsIgnoreCase(reference)).collect(Collectors.toList());
+		if (selectedFile != null) {
+			List<BugInstance> filteredReferenceList = selectedFile.getBugInstanceList().stream()
+					.filter(b -> b.getType().equalsIgnoreCase(reference)).collect(Collectors.toList());
 
-		BugInstance bugInstance = filteredReferenceList.stream().filter(b -> b.getLine().equalsIgnoreCase(line))
-				.findAny().orElseGet(() -> filteredReferenceList.get(0));
+//			if (filteredReferenceList.isEmpty()) {
+//				System.out.println(filteredReferenceList.toString());
+//			}
+
+			bugInstance = filteredReferenceList.stream().filter(b -> b.getLine().equalsIgnoreCase(line))
+					.findAny().orElseGet(() -> (filteredReferenceList.isEmpty() ? null : filteredReferenceList.get(0)));
+		}
 
 		Map<String, Object> response = new HashMap<>();
 		response.put("bugInstance", bugInstance);
-		response.put("classname", selectedFile.getClassname());
+		response.put("classname", (selectedFile != null ? selectedFile.getClassname() : null));
 
 		return response;
 	}
@@ -114,11 +138,17 @@ public final class FindSecBugsAnalysisMapper {
 		List<com.example.app.domain.sast.xml.BugInstance> filteredReferenceList = bugList.stream()
 				.filter(b -> b.getType().equalsIgnoreCase(reference)).collect(Collectors.toList());
 
+//		if (filteredReferenceList.isEmpty()) {
+//			System.out.println(filteredReferenceList.toString());
+//		}
+
 		com.example.app.domain.sast.xml.BugInstance bugInstance = filteredReferenceList.stream()
 				.filter(b -> b.getSourceLineList() != null)
+				.filter(b -> b.getSourceLineList().get(0).getSourcefile() != null)
 				.filter(b -> b.getSourceLineList().get(0).getSourcefile().equalsIgnoreCase(filename))
+				.filter(b -> b.getSourceLineList().get(0).getStart() != null)
 				.filter(b -> b.getSourceLineList().get(0).getStart().equalsIgnoreCase(line)).findAny()
-				.orElseGet(() -> filteredReferenceList.get(0));
+				.orElseGet(() -> (filteredReferenceList.isEmpty() ? null : filteredReferenceList.get(0)));
 
 		return bugInstance;
 	}
@@ -133,35 +163,49 @@ public final class FindSecBugsAnalysisMapper {
 	private static String getLineNumberFromSourceLine(String sourceLine) {
 
 		String[] splitSourceLine = sourceLine.split(":");
-		int startIndex;
-		int finalIndex;
-		String response = splitSourceLine[1];
 
-		if (response.contains("lines")) {
+		if (splitSourceLine.length > 1) {
+			int startIndex;
+			int finalIndex;
+
+			String response = splitSourceLine[1];
+
+			if (response.contains("lines")) {
+				startIndex = response.indexOf(" ");
+				finalIndex = response.indexOf("-");
+
+				return response.substring(startIndex, finalIndex).trim();
+			}
+
 			startIndex = response.indexOf(" ");
-			finalIndex = response.indexOf("-");
+			finalIndex = response.indexOf("]");
+
+			if (startIndex < 0 || finalIndex < 0) {
+				return null;
+			}
 
 			return response.substring(startIndex, finalIndex).trim();
 		}
-
-		startIndex = response.indexOf(" ");
-		finalIndex = response.indexOf("]");
-
-		return response.substring(startIndex, finalIndex).trim();
+		return null;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		System.out.println("Hello world");
 
+//		BugCollectionHtmlReport html = HtmlParser
+//				.parseToBugCollectionFromHtml("project/application_report_non_nested_plain_HTML.htm");
+//		BugCollectionXmlReport xml = XmlParser
+//				.parseToBugCollectionFromXml("project/application_report_non_nested_XML.xml");
+//		BugCollectionXdocsReport xdocs = XmlParser
+//				.parseToBugCollectionFromXdocs("project/application_report_non_nested_XDOCS.xml");
 		BugCollectionHtmlReport html = HtmlParser
-				.parseToBugCollectionFromHtml("project/application_report_non_nested_plain_HTML.htm");
+				.parseToBugCollectionFromHtml("target/analysis/pom-explorer-master/report_HTML.htm");
 		BugCollectionXmlReport xml = XmlParser
-				.parseToBugCollectionFromXml("project/application_report_non_nested_XML.xml");
+				.parseToBugCollectionFromXml("target/analysis/pom-explorer-master/report_XML.xml");
 		BugCollectionXdocsReport xdocs = XmlParser
-				.parseToBugCollectionFromXdocs("project/application_report_non_nested_XDOCS.xml");
-
-		FindSecBugsAnalysis analysis = toFindSecBugsAnalysis(xdocs, xml, html);
-
+				.parseToBugCollectionFromXdocs("target/analysis/pom-explorer-master/report_XDOCS.xml");
+		 FindSecBugsAnalysis analysis = toFindSecBugsAnalysis(xdocs, xml, html);
+//
 //		ArrayList<Vuln> vulnList = new ArrayList<>();
 //
 //		for (VulnInstance vi : html.getVulnList()) {

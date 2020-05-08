@@ -26,10 +26,12 @@ import com.example.app.domain.sast.xml.BugCollectionXmlReport;
 import com.example.app.domain.sca.DependencyCheckAnalysis;
 import com.example.app.dto.sast.AnalysisStatusDTO;
 import com.example.app.mapper.AnalysisSASTMapper;
+import com.example.app.mapper.AnalysisSCAMapper;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
 import com.example.app.repo.AnalysisRepository;
 import com.example.app.repo.ProjectRepository;
 import com.example.app.utils.HtmlParser;
+import com.example.app.utils.JsonParser;
 import com.example.app.utils.XmlParser;
 
 @Service
@@ -47,17 +49,34 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	@Autowired
 	AnalysisSASTMapper analysisSASTMapper;
 
+	@Autowired
+	AnalysisSCAMapper analysisSCAMapper;
+
 	@Override
 	public Analysis findLastAnalysis(String projectKey) {
 		Project project = this.projectRepo.findByKey(projectKey);
 
 		List<Analysis> analysisList = (List<Analysis>) this.repo.findAll(project.getAnalysisList());
+		if (analysisList.isEmpty()) {
+			return null;
+		}
+
 		Analysis response = analysisList.get(0);
 
 		for (Analysis a : analysisList) {
-			Date dateAts = new Date(Long.parseLong(a.getSast().getAnalysisTimestamp()));
-			Date dateResponse = new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()));
-
+			Date dateAts = null;
+			if (a.getSast() != null) {
+				dateAts = new Date(Long.parseLong(a.getSast().getAnalysisTimestamp()));
+			} else {
+				continue;
+			}
+			Date dateResponse = null;
+			if (response.getSast() != null) {
+				dateResponse = new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()));
+			} else {
+				response = a;
+				continue;
+			}
 			if (dateAts.after(dateResponse)) {
 				response = a;
 			}
@@ -117,6 +136,9 @@ public final class AnalysisServiceImpl implements AnalysisService {
 					.parseToBugCollectionFromXdocs(pathToFolder.concat("/report_XDOCS.xml"));
 			resultSAST = this.fsbAnalysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
 			result.setSast(this.analysisSASTMapper.toAnalysisSAST(resultSAST));
+
+			resultSCA = JsonParser.parseToAnalysisFromJson(pathToFolder.concat("/report_JSON.json"));
+			result.setSca(this.analysisSCAMapper.toAnalysisSCA(resultSCA));
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
