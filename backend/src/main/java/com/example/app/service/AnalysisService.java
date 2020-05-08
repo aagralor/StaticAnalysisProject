@@ -1,16 +1,15 @@
 package com.example.app.service;
 
-import com.example.app.domain.AnalysisSAST;
-import com.example.app.domain.sast.FindSecBugsAnalysis;
+import com.example.app.domain.Analysis;
 import com.example.app.dto.sast.AnalysisStatusDTO;
 
 public interface AnalysisService {
 
-	FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast);
+	Analysis execute(String pathToFolder, Analysis currentAnalysis);
 
-	AnalysisSAST createOrUpdateAnalysis(AnalysisSAST analysis);
+	Analysis createOrUpdateAnalysis(Analysis analysis);
 
-	AnalysisSAST findLastAnalysisSast(String projectKey);
+	Analysis findLastAnalysis(String projectKey);
 
 	AnalysisStatusDTO checkStatus(String id);
 

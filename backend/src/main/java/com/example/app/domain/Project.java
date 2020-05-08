@@ -44,14 +44,25 @@ public class Project {
 	@Field("GithubUrl")
 	private String url;
 
-	@Field("AnalysisSastList")
-	private List<String> analysisSastList;
+//	@Field("AnalysisSastList")
+//	private List<String> analysisSastList;
 
-	public void addAnalysisSast(String anlysisId) {
-		if (this.analysisSastList == null) {
-			this.analysisSastList = new ArrayList<>();
+	@Field("AnalysisList")
+	private List<String> analysisList;
+
+//	public void addAnalysisSast(String anlysisSastId) {
+//		if (this.analysisSastList == null) {
+//			this.analysisSastList = new ArrayList<>();
+//		}
+//		this.analysisSastList.add(anlysisSastId);
+//
+//	}
+
+	public void addAnalysis(String anlysisId) {
+		if (this.analysisList == null) {
+			this.analysisList = new ArrayList<>();
 		}
-		this.analysisSastList.add(anlysisId);
+		this.analysisList.add(anlysisId);
 
 	}
 

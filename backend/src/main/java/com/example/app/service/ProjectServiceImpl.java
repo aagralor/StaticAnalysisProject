@@ -39,9 +39,9 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project addAnalysisSAST(Project project, String analysisId) {
+	public Project addAnalysis(Project project, String analysisId) {
 
-		project.addAnalysisSast(analysisId);
+		project.addAnalysis(analysisId);
 
 		Project response = this.repo.save(project);
 

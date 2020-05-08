@@ -17,15 +17,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.app.domain.AnalysisSAST;
+import com.example.app.domain.Analysis;
 import com.example.app.domain.Project;
 import com.example.app.domain.sast.FindSecBugsAnalysis;
 import com.example.app.domain.sast.html.BugCollectionHtmlReport;
 import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
+import com.example.app.domain.sca.DependencyCheckAnalysis;
 import com.example.app.dto.sast.AnalysisStatusDTO;
+import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
-import com.example.app.repo.AnalysisSASTRepository;
+import com.example.app.repo.AnalysisRepository;
 import com.example.app.repo.ProjectRepository;
 import com.example.app.utils.HtmlParser;
 import com.example.app.utils.XmlParser;
@@ -37,36 +39,39 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	FindSecBugsAnalysisMapper fsbAnalysisMapper;
 
 	@Autowired
-	AnalysisSASTRepository repo;
+	AnalysisRepository repo;
 
 	@Autowired
 	ProjectRepository projectRepo;
 
+	@Autowired
+	AnalysisSASTMapper analysisSASTMapper;
+
 	@Override
-	public AnalysisSAST findLastAnalysisSast(String projectKey) {
+	public Analysis findLastAnalysis(String projectKey) {
 		Project project = this.projectRepo.findByKey(projectKey);
 
-		List<AnalysisSAST> analysisList = (List<AnalysisSAST>) this.repo.findAll(project.getAnalysisSastList());
-		AnalysisSAST response = analysisList.get(0);
+		List<Analysis> analysisList = (List<Analysis>) this.repo.findAll(project.getAnalysisList());
+		Analysis response = analysisList.get(0);
 
-		for (AnalysisSAST a : analysisList) {
-			Date dateAts = new Date(Long.parseLong(a.getAnalysisTimestamp()));
-			Date dateResponse = new Date(Long.parseLong(response.getAnalysisTimestamp()));
+		for (Analysis a : analysisList) {
+			Date dateAts = new Date(Long.parseLong(a.getSast().getAnalysisTimestamp()));
+			Date dateResponse = new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()));
 
 			if (dateAts.after(dateResponse)) {
 				response = a;
 			}
 		}
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(sf.format(new Date(Long.parseLong(response.getAnalysisTimestamp()))));
+		System.out.println(sf.format(new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()))));
 
 		return response;
 	}
 
 	@Override
-	public AnalysisSAST createOrUpdateAnalysis(AnalysisSAST analysis) {
+	public Analysis createOrUpdateAnalysis(Analysis analysis) {
 
-		AnalysisSAST response = this.repo.save(analysis);
+		Analysis response = this.repo.save(analysis);
 
 		return response;
 	}
@@ -74,35 +79,35 @@ public final class AnalysisServiceImpl implements AnalysisService {
 	@Override
 	public AnalysisStatusDTO checkStatus(String id) {
 
-		AnalysisSAST sast = this.repo.findOne(id);
+		Analysis a = this.repo.findOne(id);
 		AnalysisStatusDTO response = new AnalysisStatusDTO();
-		response.setValue(sast.getCompletion());
-		response.setStatus(sast.getStatus());
+		response.setValue(a.getCompletion());
+		response.setStatus(a.getStatus());
 
 		return response;
 	}
 
 	@Override
-	public FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast) {
+	public Analysis execute(String pathToFolder, Analysis currentAnalysis) {
 		executeCommand(generateCommandForMvnBuild(pathToFolder), true);
-		currentSast.setCompletion("35");
-		this.repo.save(currentSast);
+		currentAnalysis.setCompletion("35");
+		this.repo.save(currentAnalysis);
 		executeCommand(generateCommandForJarList(pathToFolder), true);
 
 		executeCommand(generateCommandForHtmlReport(pathToFolder), true);
-		currentSast.setCompletion("50");
-		this.repo.save(currentSast);
+		currentAnalysis.setCompletion("50");
+		this.repo.save(currentAnalysis);
 		executeCommand(generateCommandForXmlReport(pathToFolder), true);
-		currentSast.setCompletion("65");
-		this.repo.save(currentSast);
+		currentAnalysis.setCompletion("65");
+		this.repo.save(currentAnalysis);
 		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
-		currentSast.setCompletion("80");
-		this.repo.save(currentSast);
+		currentAnalysis.setCompletion("80");
+		this.repo.save(currentAnalysis);
 		executeCommand(generateCommandForJsonReport(pathToFolder), true);
-		currentSast.setCompletion("95");
-		this.repo.save(currentSast);
-
-		FindSecBugsAnalysis result = null;
+		currentAnalysis.setCompletion("95");
+		Analysis result = this.repo.save(currentAnalysis);
+		FindSecBugsAnalysis resultSAST = null;
+		DependencyCheckAnalysis resultSCA = null;
 
 		try {
 			BugCollectionHtmlReport html = HtmlParser
@@ -110,7 +115,8 @@ public final class AnalysisServiceImpl implements AnalysisService {
 			BugCollectionXmlReport xml = XmlParser.parseToBugCollectionFromXml(pathToFolder.concat("/report_XML.xml"));
 			BugCollectionXdocsReport xdocs = XmlParser
 					.parseToBugCollectionFromXdocs(pathToFolder.concat("/report_XDOCS.xml"));
-			result = this.fsbAnalysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
+			resultSAST = this.fsbAnalysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
+			result.setSast(this.analysisSASTMapper.toAnalysisSAST(resultSAST));
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}

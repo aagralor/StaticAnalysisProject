@@ -29,7 +29,7 @@ class ProjectAnalysis extends Component {
   }
 
   render() {
-    const renderList = (!this.props.analysis ? [] : this.props.analysis.issueList);
+    const renderList = (!(this.props.analysis && this.props.analysis.sast) ? [] : this.props.analysis.sast.issueList);
     // renderList.forEach(element => {
     //   console.log(JSON.stringify(element));
     // });    
@@ -99,7 +99,7 @@ ProjectAnalysis.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   search: PropTypes.object,
-  analysis: PropTypes.string,
+  analysis: PropTypes.object,
   setAnalysis: PropTypes.func,
 }
   

@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.app.domain.AnalysisSAST;
+import com.example.app.domain.Analysis;
 import com.example.app.domain.Project;
-import com.example.app.domain.sast.FindSecBugsAnalysis;
 import com.example.app.dto.sast.AnalysisStatusDTO;
 import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.service.AnalysisService;
@@ -52,32 +51,30 @@ public class ProjectController {
 	}
 
 	@GetMapping(path = "/project/analysis")
-	public ResponseEntity<AnalysisSAST> startAnalysys(@RequestParam String key) {
+	public ResponseEntity<Analysis> startAnalysys(@RequestParam String key) {
 
 		Project project = this.projectService.findByKey(key);
-		AnalysisSAST  currentSast = new AnalysisSAST();
-		currentSast.setCompletion("10");
-		currentSast.setStatus("RUNNING");
-		AnalysisSAST response = this.analysisService.createOrUpdateAnalysis(currentSast);
-		Project updatedProject = this.projectService.addAnalysisSAST(project, response.getId());
+		Analysis  currentAnalysis = new Analysis();
+		currentAnalysis.setCompletion("10");
+		currentAnalysis.setStatus("RUNNING");
+		Analysis response = this.analysisService.createOrUpdateAnalysis(currentAnalysis);
+		Project updatedProject = this.projectService.addAnalysis(project, response.getId());
 
 		new Thread(() -> {
     		String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(), updatedProject.getBranchName(),
     				updatedProject.getUsername(), (updatedProject.getAccessToken().isEmpty() ? null : updatedProject.getAccessToken()));
 
     		try {
-    			FindSecBugsAnalysis analysis = this.analysisService.executeSAST(downloadPath, currentSast);
+    			Analysis analysis = this.analysisService.execute(downloadPath, currentAnalysis);
 
-    			AnalysisSAST sast = this.analysisSASTMapper.toAnalysisSAST(analysis);
-    			sast.setId(currentSast.getId());
-    			sast.setCompletion("100");
-    			sast.setStatus("COMPLETE");
-    			this.analysisService.createOrUpdateAnalysis(sast);
+    			analysis.setCompletion("100");
+    			analysis.setStatus("COMPLETE");
+    			this.analysisService.createOrUpdateAnalysis(analysis);
     		} catch (RuntimeException e) {
     			e.printStackTrace();
-    			currentSast.setCompletion("100");
-    			currentSast.setStatus("CANCELLED");
-    			this.analysisService.createOrUpdateAnalysis(currentSast);
+    			currentAnalysis.setCompletion("100");
+    			currentAnalysis.setStatus("CANCELLED");
+    			this.analysisService.createOrUpdateAnalysis(currentAnalysis);
     		}
 		}).start();
 
@@ -85,11 +82,11 @@ public class ProjectController {
 	}
 
 	@GetMapping(path = "/analysis")
-	public ResponseEntity<AnalysisSAST> findLastAnalysisSast(@RequestParam String projectKey) {
+	public ResponseEntity<Analysis> findLastAnalysisSast(@RequestParam String projectKey) {
 
-		AnalysisSAST sast = this.analysisService.findLastAnalysisSast(projectKey);
+		Analysis resp = this.analysisService.findLastAnalysis(projectKey);
 
-		return new ResponseEntity<>(sast, HttpStatus.OK);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/analysis/status")

@@ -12,6 +12,6 @@ public interface ProjectService {
 
 	Project findByKey(String key);
 
-	Project addAnalysisSAST(Project project, String analysisId);
+	Project addAnalysis(Project project, String analysisId);
 
 }
