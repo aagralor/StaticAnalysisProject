@@ -1,4 +1,4 @@
-package com.example.app.domain.sca;
+package com.example.app.domain.sca.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package com.example.app.domain.sca;
+package com.example.app.domain.sca.json;
 
 import java.util.List;
 

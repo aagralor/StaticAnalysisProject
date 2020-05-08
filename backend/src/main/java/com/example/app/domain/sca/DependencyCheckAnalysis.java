@@ -2,6 +2,9 @@ package com.example.app.domain.sca;
 
 import java.util.List;
 
+import com.example.app.domain.sca.json.Dependency;
+import com.example.app.domain.sca.json.ProjectInfo;
+import com.example.app.domain.sca.json.ScanInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DependencyCheckReport {
+public class DependencyCheckAnalysis {
 
     private String reportSchema;
 

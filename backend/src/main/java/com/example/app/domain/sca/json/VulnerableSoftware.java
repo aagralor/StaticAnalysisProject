@@ -1,4 +1,4 @@
-package com.example.app.domain.sca;
+package com.example.app.domain.sca.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,10 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DataSource {
+public class VulnerableSoftware {
 
-	private String name;
-
-	private String timestamp;
+	private Software software;
 
 }

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
-import com.example.app.domain.sca.DependencyCheckReport;
+import com.example.app.domain.sca.DependencyCheckAnalysis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class JsonParser {
@@ -59,11 +59,13 @@ public final class JsonParser {
 //		BugCollectionXdocsReport valueXdocs = parseToBugCollectionFromXdocs("project/application_report_XDOCS.xml");
 
 		ObjectMapper objectMapper = new ObjectMapper();
-//		Car car = new Car("yellow", "renault");
+//		AnalysisSCAMapper analysisMapper = new AnalysisSCAMapper();
+		//		Car car = new Car("yellow", "renault");
 //		objectMapper.writeValue(new File("project/car.json"), car);
 
-		DependencyCheckReport dcr = objectMapper.readValue(new File("project/report_JSON.json"), DependencyCheckReport.class);
+		DependencyCheckAnalysis dcr = objectMapper.readValue(new File("project/report_JSON.json"), DependencyCheckAnalysis.class);
 
+//		AnalysisSCA sca = analysisMapper.toAnalysisSCA(dcr);
 		System.out.println("Bye world");
 	}
 

@@ -71,7 +71,6 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		return response;
 	}
 
-
 	@Override
 	public AnalysisStatusDTO checkStatus(String id) {
 
@@ -82,7 +81,6 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 		return response;
 	}
-
 
 	@Override
 	public FindSecBugsAnalysis executeSAST(String pathToFolder, AnalysisSAST currentSast) {
@@ -100,21 +98,22 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
 		currentSast.setCompletion("80");
 		this.repo.save(currentSast);
+		executeCommand(generateCommandForJsonReport(pathToFolder), true);
+		currentSast.setCompletion("95");
+		this.repo.save(currentSast);
 
 		FindSecBugsAnalysis result = null;
 
 		try {
 			BugCollectionHtmlReport html = HtmlParser
 					.parseToBugCollectionFromHtml(pathToFolder.concat("/report_HTML.htm"));
-			BugCollectionXmlReport xml = XmlParser
-					.parseToBugCollectionFromXml(pathToFolder.concat("/report_XML.xml"));
+			BugCollectionXmlReport xml = XmlParser.parseToBugCollectionFromXml(pathToFolder.concat("/report_XML.xml"));
 			BugCollectionXdocsReport xdocs = XmlParser
 					.parseToBugCollectionFromXdocs(pathToFolder.concat("/report_XDOCS.xml"));
 			result = this.fsbAnalysisMapper.toFindSecBugsAnalysis(xdocs, xml, html);
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-
 
 		return result;
 	}
@@ -171,6 +170,16 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		sb.append(" -xargs -progress -html:plain.xsl -nested:false -output ");
 		sb.append(path).append("/report_HTML.htm");
 //		"cat jarList.txt | /home/alberto/workspace_TFM/find-sec-bugs-APP/findsecbugs.sh -xargs -progress -html:plain.xsl -nested:false -output report_HTML.htm"
+		return sb.toString();
+	}
+
+	private static String generateCommandForJsonReport(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/home/alberto/workspace_TFM/dependency-check-APP/bin/dependency-check.sh");
+		sb.append(" --project application --scan ");
+		sb.append(path).append("/**/*.jar --format JSON --out ");
+		sb.append(path).append("/report_JSON.json");
+//		"/home/alberto/workspace_TFM/dependency-check-APP/bin/dependency-check.sh --project test --scan ./target/analysis/StaticAnalysisProject-develop/**/*.jar --format JSON --out ./project/application_report_JSON.json"
 		return sb.toString();
 	}
 
@@ -245,7 +254,7 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 //		Process p = null;
-//
+
 //	    try {
 //	        p = Runtime.getRuntime().exec("/opt/apache-maven-3.6.3/bin/mvn -f ./target/analysis/StaticAnalysisProject-develop clean install");
 //	    } catch (IOException e) {
@@ -300,7 +309,20 @@ public final class AnalysisServiceImpl implements AnalysisService {
 //		printInConsole(p.getInputStream(), System.out);
 //		p.waitFor();
 //
-//		System.out.println("Bye World");
+//		String[] cmd5 = { "/bin/sh", "-c",
+//				"/home/alberto/workspace_TFM/dependency-check-APP/bin/dependency-check.sh --project test --scan ./target/analysis/StaticAnalysisProject-develop/**/*.jar --format JSON --out ./project/application_report_JSON.json" };
+//		try {
+//			p = Runtime.getRuntime().exec(cmd5);
+//		} catch (IOException e) {
+//			System.err.println("Error on exec() method");
+//			e.printStackTrace();
+//		}
+//		printInConsole(p.getInputStream(), System.out);
+//		p.waitFor();
+
+		executeCommand(generateCommandForJsonReport("./target/analysis/StaticAnalysisProject-develop"), true);
+
+		System.out.println("Bye World");
 
 	}
 

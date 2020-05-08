@@ -1,4 +1,4 @@
-package com.example.app.domain.sca;
+package com.example.app.domain.sca.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,8 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Software {
+public class ProjectInfo {
 
-	private String id;
+    private String name;
+
+    private String reportDate;
+
+    private Credits credits;
 
 }
