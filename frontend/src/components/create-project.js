@@ -11,6 +11,8 @@ import { storeProject } from "../actions/store-project";
 
 class CreateProject extends Component {
 
+  isPrivate = false;
+
   render() {
     return (      
     <div>
@@ -30,7 +32,7 @@ class CreateProject extends Component {
               setTimeout(() => this.props.setProject(newProject), 0);
               this.props.history.push('/project');
           }}
-          submitButtonText={'Aceptar'}
+          submitButtonText={'Accept'}
         >
           <Form.Group controlId="formBasicText1">
             <Form.Label>Project name</Form.Label>
@@ -70,14 +72,14 @@ class CreateProject extends Component {
             <Form.Control type="text" placeholder="Enter URL of your repository" name="githubUrl" />
           </Form.Group>
 
-          <Form.Group controlId="formBasicCheckbox">
+          <Form.Group controlId="formBasicCheckbox" onChange={(x, y) => { console.log('change'); console.log(x); this.isPrivate = !this.isPrivate; }}>
             <Form.Check type="checkbox" label="Private Repository" name="checkBoxData" />
           </Form.Group>
 
           <Form.Group controlId="formBasicText7">
             <Form.Label>Github Access Token</Form.Label>
             <Form.Control type="text" placeholder="Enter an access token to your private repository" name="githubAccessToken" />
-          </Form.Group>  
+          </Form.Group>
         </CustomForm>   
     </div>
     )

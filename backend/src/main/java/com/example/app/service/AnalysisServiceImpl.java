@@ -280,6 +280,19 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		return copyToString(p.getInputStream());
 	}
 
+	private static String cdToPath(String path) throws IOException {
+		Process p = null;
+
+		try {
+			p = Runtime.getRuntime().exec("cd " + path);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+		}
+
+		return copyToString(p.getInputStream());
+	}
+
+
 	public static void main(String[] args) throws IOException, InterruptedException {
 //		Process p = null;
 
@@ -348,7 +361,12 @@ public final class AnalysisServiceImpl implements AnalysisService {
 //		printInConsole(p.getInputStream(), System.out);
 //		p.waitFor();
 
-		executeCommand(generateCommandForJsonReport("./target/analysis/StaticAnalysisProject-develop"), true);
+//		executeCommand(generateCommandForJsonReport("./target/analysis/StaticAnalysisProject-develop"), true);
+
+		executeCommand("git clone https://x-access-token:080d62818a1328d7c7269759347aab01232675d5@gi"
+				+ "thub.com/aagralor/StaticAnalysisProject.git", true);
+		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject status", true);
+		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject checkout develop", true);
 
 		System.out.println("Bye World");
 
