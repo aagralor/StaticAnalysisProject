@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import com.example.app.dto.github.WebhookInstallation;
+import com.example.app.repo.WebhookInstallationRepository;
 import com.example.app.utils.ZipHelper;
 import org.apache.tomcat.util.codec.binary.Base64;
 //import org.eclipse.egit.github.core.Repository;
 //import org.eclipse.egit.github.core.RepositoryBranch;
 //import org.eclipse.egit.github.core.client.GitHubClient;
 //import org.eclipse.egit.github.core.service.RepositoryService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +22,15 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class GithubServiceImpl<T> implements GithubService {
+
+	@Autowired
+	private WebhookInstallationRepository whRepo;
+
+	@Override
+	public WebhookInstallation createWebhookInstallation(WebhookInstallation wh) {
+
+		return this.whRepo.save(wh);
+	}
 
 	@Override
 	public String downloadRepository(String repoName, String branchName, String username, String accessToken) {

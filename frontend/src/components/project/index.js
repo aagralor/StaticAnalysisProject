@@ -95,7 +95,8 @@ class Project extends Component {
                 <Card.Text>
                   With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
-                <Button onClick={event =>  window.location.href=element.url} variant="primary">Visit Github</Button>
+                <Button onClick={event =>  window.location.href='https://github.com/apps/issuesecuritycenter'} variant="primary" style={{ 'margin-right': '5px' }}>Integrate repository</Button>
+                <Button onClick={event =>  window.location.href=element.url} variant="primary" style={{ 'margin-right': '5px' }}>Visit Github</Button>
                 <Button onClick={() => this.handleClick(element.key)} variant="primary">Start Analysis</Button>
               </Card.Body>
               {
