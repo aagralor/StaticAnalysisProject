@@ -43,6 +43,9 @@ public class Project {
 
 	@Field("GithubUrl")
 	private String url;
+	
+	@Field("BearerToken")
+	private String bearerToken;
 
 //	@Field("AnalysisSastList")
 //	private List<String> analysisSastList;

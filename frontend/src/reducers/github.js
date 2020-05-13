@@ -8,6 +8,8 @@ import {
   STORE_CURRENT_ANALYSIS_KEY,
   STORE_CURRENT_ANALYSIS_COMPLETION,
   FINISH_ANALYSIS_SAST,
+  STORE_INSTALLATION,
+  STORE_TOKEN,
 } from "../constants/github";
 
 // const customers = handleAction(FETCH_CUSTOMERS, state => state);
@@ -43,6 +45,14 @@ export const github = handleActions(
       currentAnalysis: {},
       currentAnalysisCompletion: {},
       currentAnalysisCount: 0,
+    }),
+    [STORE_INSTALLATION]: (state, action) => ({ 
+      ...state,
+      installation: action.payload,
+    }),
+    [STORE_TOKEN]: (state, action) => ({ 
+      ...state,
+      token: action.payload,
     }),
   }, 
   {}

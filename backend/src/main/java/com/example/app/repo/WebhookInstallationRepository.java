@@ -8,4 +8,5 @@ import com.example.app.dto.github.WebhookInstallation;
 @Repository
 public interface WebhookInstallationRepository extends MongoRepository<WebhookInstallation, String> {
 
+	WebhookInstallation findByInstallationId(Long installationId);
 }

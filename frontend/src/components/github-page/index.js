@@ -2,20 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCode } from "../../selectors/github"
-import { storeCode } from "../../actions/store-code";
-import { urlAccessToken } from "../../apis/urls";
+import {
+  Card,
+  Button,
+} from 'react-bootstrap';
+import { getToken, getInstallation } from "../../selectors/github"
+import { storeInstallation } from "../../actions/store-installation";
+import { storeToken } from "../../actions/store-token";
+import {
+  urlAccessToken,
+  urlCurrentInstallation,
+  urlAddBearerTokenToProject,
+} from "../../apis/urls";
+import { apiGet, apiPost } from "../../apis";
 import logo from '../../logo.svg';
 import './github-page.css';
+import { Alert } from 'react-bootstrap';
 
 class GithubPage extends Component {
 
-// // POST request using fetch with error handling
-//   generateUrl = code => 
-//     `${githubUrlAccessToken}?client_id=Iv1.9ad3617300b9f691&client_secret=d59cbb6f3c4f09e858f9a9a7ad9b309dfd8da700&code=${code}&redirect_uri=http://localhost:3000`;
-//     // `${githubUrlAccessToken}?client_id=Iv1.9ad3617300b9f691&client_secret=d59cbb6f3c4f09e858f9a9a7ad9b309dfd8da700&code=${code}`;
+  componentWillMount() {
+    const params = new URLSearchParams(this.props.location.search);
+    const inst = apiGet(urlCurrentInstallation(params.get('installation_id')));
+    setTimeout(() => this.props.setInstallation(inst), 500);
+  }
 
-  doPost(code) {
+  componentWillReceiveProps(nextProps) {
+    const body = (nextProps.token && nextProps.token.body);
+    if (body && !body.error) {
+      const bearerToken = body.access_token;
+      const installationId = nextProps.installation.installationId;
+      const repositoryId = nextProps.installation.repositoryId;
+      const repositoryName = nextProps.installation.repositoryName;
+      const user = nextProps.installation.user;
+      const newProject = apiPost(urlAddBearerTokenToProject, {
+        user,
+        installationId,
+        repositoryId,
+        repositoryName,
+        bearerToken
+      });
+      debugger;
+      setTimeout(() => console.log(newProject), 1500);
+
+    }
+  }
+
+  handleClick(code) {
     const requestOptions = {
       method: 'POST',
       headers: { 
@@ -24,69 +57,35 @@ class GithubPage extends Component {
       },
       body: JSON.stringify({ code }),
     };
-    fetch(urlAccessToken, requestOptions)
-    .then(async response => {
-      const data = await response.json();
-      debugger;
-      // check for error response
-      if (!response.ok) {
-        // get error message from body or default to response status
-        const error = (data && data.message) || response.status;
-        return Promise.reject(error);
-      }
-    })
+    const token = apiPost(urlAccessToken, { code });
+    setTimeout(() => this.props.setToken(token), 500);
   }
-//   async doPost2(code) {
-//     debugger;
-//     const requestOptions = {
-//       method: 'POST',
-//       headers: { 
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//         'Access-Control-Allow-Origin': '*',
-//         'Access-Control-Request-Method': 'POST',
-//         'Access-Control-Allow-Headers': 'accept, content-type',
-//         'Access-Control-Max-Age': '1728000'
-//       },
-//       // body: {},
-//       body: JSON.stringify({ title: 'React POST Request Example' })
-//     };
-//     // Default options are marked with *
-//     const response = await fetch(this.generateUrl(code), requestOptions);
-    
-//     const ret =  response.json(); // parses JSON response into native JavaScript objects
-//     debugger;
-//   }
 
   render() {
-    console.log(this.props);
+    const params = new URLSearchParams(this.props.location.search);
 
-    const codeInSearch = new URLSearchParams(this.props.location.search).get("code");
-    
-    if (!this.props.code) {
-      this.props.setCode(codeInSearch);
-    }
+    const code = params.get('code');
+    const instId = params.get('installation_id');
+    const action = params.get('setup_action');
 
+    const renderForToken = (this.props.installation && code &&
+        this.props.installation.installationId === Number(instId));
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Spring Boot React Starter!</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          We're going to now talk to the GitHub API. Ready?
-          {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691">Click here</a> to begin! */}
-          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:3000/github">Click here</a> to begin!
-          {/* <a href="https://github.com/login/oauth/authorize?client_id=Iv1.9ad3617300b9f691&redirect_uri=http://localhost:8080/github">Click here</a> to begin! */}
-        </p>
+      <div>
         {
-          this.props.code &&
-          <p>
-            You have acquired the code({this.props.code}), to get your access code click <button onClick={() => this.doPost(this.props.code)}>HERE</button>.
-          </p>
+          renderForToken &&
+          <Card className="text-center">
+            <Card.Header>Featured</Card.Header>
+            <Card.Body>
+              <Card.Title>Special title treatment</Card.Title>
+              <Card.Text>
+
+                With supporting text below as a natural lead-in to additional content.
+              </Card.Text>
+              <Button onClick={() => this.handleClick(code)} variant="primary">Go somewhere</Button>
+            </Card.Body>
+            <Card.Footer className="text-muted">2 days ago</Card.Footer>
+          </Card>
         }
       </div>
     );
@@ -98,16 +97,18 @@ GithubPage.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   search: PropTypes.object,
-  code: PropTypes.string,
-  setCode: PropTypes.func,
+  installation: PropTypes.string,
+  setInstallation: PropTypes.func,
 }
 
 const mapStateToPropsActions = state => ({
-  code: getCode(state),
+  installation: getInstallation(state),
+  token: getToken(state),
 });
 
 const mapDispatchToPropsActions = dispatch => ({
-  setCode: code => dispatch(storeCode(code)),
+  setInstallation: installation => dispatch(storeInstallation(installation)),
+  setToken: token => dispatch(storeToken(token)),
 });
 
 export default withRouter(connect(mapStateToPropsActions, mapDispatchToPropsActions)(GithubPage));

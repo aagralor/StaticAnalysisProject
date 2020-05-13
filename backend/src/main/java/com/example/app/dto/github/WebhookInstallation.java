@@ -24,5 +24,7 @@ public class WebhookInstallation {
 	private String repositoryId;
 
 	private String repositoryName;
+	
+	private String bearerToken;
 
 }

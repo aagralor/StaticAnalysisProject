@@ -2,6 +2,10 @@
 
 export const getCode = state => state.github.code;
 
+export const getInstallation = state => state.github.installation;
+
+export const getToken = state => state.github.token;
+
 export const getProjectList = state => state.github.projectList;
 
 export const getAnalysis = state => state.github.analysis;

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import com.example.app.domain.Project;
 import com.example.app.dto.github.WebhookInstallation;
+import com.example.app.repo.ProjectRepository;
 import com.example.app.repo.WebhookInstallationRepository;
 import com.example.app.utils.ZipHelper;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -26,10 +28,30 @@ public class GithubServiceImpl<T> implements GithubService {
 	@Autowired
 	private WebhookInstallationRepository whRepo;
 
+	@Autowired
+	private ProjectRepository prRepo;
+
 	@Override
 	public WebhookInstallation createWebhookInstallation(WebhookInstallation wh) {
 
 		return this.whRepo.save(wh);
+	}
+
+	@Override
+	public WebhookInstallation getWebhookInstallationByInstId(Long instId) {
+
+		return this.whRepo.findByInstallationId(instId);
+	};
+
+	@Override
+	public Project linkAccessToken(WebhookInstallation wh) {
+		Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), wh.getRepositoryName());
+
+		project.setBearerToken(wh.getBearerToken());
+
+		Project response = this.prRepo.save(project);
+
+		return response;
 	}
 
 	@Override
@@ -62,8 +84,8 @@ public class GithubServiceImpl<T> implements GithubService {
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("https://github.com/").append(username).append("/").append(repoName).append("/archive/").append(branchName)
-				.append(".zip");
+		builder.append("https://github.com/").append(username).append("/").append(repoName).append("/archive/")
+				.append(branchName).append(".zip");
 
 		return builder.toString();
 
@@ -143,7 +165,6 @@ public class GithubServiceImpl<T> implements GithubService {
 //		Repository repoMain = service.getRepository("aagralor", "main");
 //		Repository repoProject = service.getRepository("aagralor", "StaticAnalysisProject");
 
-
 //		{
 //			"access_token":"4448d2f5778af78ca4e7de53d67c7990cd54fa3b",
 //			"token_type":"bearer",
@@ -151,10 +172,12 @@ public class GithubServiceImpl<T> implements GithubService {
 //		}
 		RestTemplate templ = new RestTemplate();
 
-		byte[] downloadedBytesTest = templ.getForObject(generateDownloadUrl("aagralor", "test", "master"), byte[].class);
+		byte[] downloadedBytesTest = templ.getForObject(generateDownloadUrl("aagralor", "test", "master"),
+				byte[].class);
 		ZipHelper.unzip(downloadedBytesTest, "./analysis/");
 
-		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("aagralor", "main", "master"), HttpMethod.GET,
+		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("aagralor", "main", "master"),
+				HttpMethod.GET,
 				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
 		byte[] downloadedBytesMain = bytesMain.getBody();
 		ZipHelper.unzip(downloadedBytesMain, "./analysis/");
@@ -164,14 +187,14 @@ public class GithubServiceImpl<T> implements GithubService {
 //		byte[] downloadedBytesMain = bytesMain.getBody();
 //		ZipHelper.unzip(downloadedBytesMain, "./");
 
-		ResponseEntity<byte[]> bytesProject = templ.exchange(generateDownloadUrl("aagralor", "StaticAnalysisProject", "develop"),
-				HttpMethod.GET,
+		ResponseEntity<byte[]> bytesProject = templ.exchange(
+				generateDownloadUrl("aagralor", "StaticAnalysisProject", "develop"), HttpMethod.GET,
 				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
 		byte[] downloadedBytesProject = bytesProject.getBody();
 		ZipHelper.unzip(downloadedBytesProject, "./analysis/");
 
 		System.out.println("Bye World");
 
-	};
+	}
 
 }
