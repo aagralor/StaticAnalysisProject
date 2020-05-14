@@ -28,7 +28,8 @@ class CreateProject extends Component {
               const repositoryName=data.get('githubRepository');
               const branchName=data.get('githubBranch');
               const url=data.get('githubUrl');
-              const newProject = apiPost(urlProject, { key, name, accessToken, email, username, repositoryName, branchName, url });
+              const isPrivate=(data.get('checkBoxData') === 'on');
+              const newProject = apiPost(urlProject, { key, name, accessToken, email, username, repositoryName, branchName, url, isPrivate });
               setTimeout(() => this.props.setProject(newProject), 0);
               this.props.history.push('/project');
           }}

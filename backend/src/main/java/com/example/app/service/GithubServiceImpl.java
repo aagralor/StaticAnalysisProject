@@ -1,6 +1,8 @@
 package com.example.app.service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -55,32 +57,55 @@ public class GithubServiceImpl<T> implements GithubService {
 
 		return response;
 	}
-
+	
 	@Override
-	public String downloadRepository(String repoName, String branchName, String username, String accessToken) {
+	public String downloadRepository(String repoName, String branchName, String username, String bearerToken) {
 
-		RestTemplate templ = new RestTemplate();
 		String downloadFolder = "./target/analysis/";
 
-		String url = generateDownloadUrl(username, repoName, branchName);
-
-		byte[] downloadedBytes = null;
-
-		if (accessToken != null) {
-			downloadedBytes = templ.exchange(url, HttpMethod.GET,
-					new HttpEntity<T>(createHeaders(username, accessToken)), byte[].class).getBody();
+		if (bearerToken != null) {
+			executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" +
+					username + "/" + repoName + ".git", true);
+			executeCommand("git --git-dir=" + repoName + "/.git --work-tree=" + repoName + " checkout develop", true);
+			executeCommand("mkdir -p target/analysis", true);
+			executeCommand("mv " + repoName + "/ target/analysis/" + repoName + "-" + branchName, true);
 		} else {
+			RestTemplate templ = new RestTemplate();
+			String url = generateDownloadUrl(username, repoName, branchName);
+			byte[] downloadedBytes = null;
 			downloadedBytes = templ.getForObject(url, byte[].class);
+			try {
+				ZipHelper.unzip(downloadedBytes, downloadFolder);
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
-
-		try {
-			ZipHelper.unzip(downloadedBytes, downloadFolder);
-		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-
 		return generateDownloadFolder(downloadFolder, repoName, branchName);
 	}
+	
+//	public static String downloadRepository2(String repoName, String branchName, String username, String bearerToken) {
+//
+//		String downloadFolder = "./target/analysis/";
+//
+//		if (bearerToken != null) {
+//			executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" +
+//					username + "/" + repoName + ".git", true);
+//			executeCommand("git --git-dir=" + repoName + "/.git --work-tree=" + repoName + " checkout develop", true);
+//			executeCommand("mkdir -p target/analysis", true);
+//			executeCommand("mv " + repoName + "/ target/analysis/" + repoName + "-" + branchName, true);
+//		} else {
+//			RestTemplate templ = new RestTemplate();
+//			String url = generateDownloadUrl(username, repoName, branchName);
+//			byte[] downloadedBytes = null;
+//			downloadedBytes = templ.getForObject(url, byte[].class);
+//			try {
+//				ZipHelper.unzip(downloadedBytes, downloadFolder);
+//			} catch (IOException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+//		}
+//		return generateDownloadFolder(downloadFolder, repoName, branchName);
+//	}
 
 	private static String generateDownloadUrl(String username, String repoName, String branchName) {
 
@@ -121,6 +146,38 @@ public class GithubServiceImpl<T> implements GithubService {
 				set("Authorization", authHeader);
 			}
 		};
+	}
+	
+	private static void executeCommand(String command, boolean printOut) {
+		Process p = null;
+		String[] cmd = { "/bin/sh", "-c", command };
+
+		try {
+			p = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			System.err.println("Error on exec() method");
+			e.printStackTrace();
+		}
+
+		try {
+			if (printOut) {
+				printInConsole(p.getInputStream(), System.out);
+			}
+			p.waitFor();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private static void printInConsole(InputStream in, OutputStream out) throws IOException {
+		while (true) {
+			int c = in.read();
+			if (c == -1) {
+				break;
+			}
+			out.write((char) c);
+		}
 	}
 
 	public List<String> findRepositoryNamesWithAdminPermission(String accessToken) {
@@ -172,28 +229,30 @@ public class GithubServiceImpl<T> implements GithubService {
 //			"token_type":"bearer",
 //			"scope":""
 //		}
-		RestTemplate templ = new RestTemplate();
-
-		byte[] downloadedBytesTest = templ.getForObject(generateDownloadUrl("aagralor", "test", "master"),
-				byte[].class);
-		ZipHelper.unzip(downloadedBytesTest, "./analysis/");
-
-		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("aagralor", "main", "master"),
-				HttpMethod.GET,
-				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
-		byte[] downloadedBytesMain = bytesMain.getBody();
-		ZipHelper.unzip(downloadedBytesMain, "./analysis/");
+//		RestTemplate templ = new RestTemplate();
+//
+//		byte[] downloadedBytesTest = templ.getForObject(generateDownloadUrl("aagralor", "test", "master"),
+//				byte[].class);
+//		ZipHelper.unzip(downloadedBytesTest, "./analysis/");
+//
+//		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("aagralor", "main", "master"),
+//				HttpMethod.GET,
+//				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
+//		byte[] downloadedBytesMain = bytesMain.getBody();
+//		ZipHelper.unzip(downloadedBytesMain, "./analysis/");
 
 //		ResponseEntity<byte[]> bytesMain = templ.exchange(generateDownloadUrl("main", "master"), HttpMethod.GET,
 //				new HttpEntity<T>(createHeaders2("4448d2f5778af78ca4e7de53d67c7990cd54fa3b")), byte[].class);
 //		byte[] downloadedBytesMain = bytesMain.getBody();
 //		ZipHelper.unzip(downloadedBytesMain, "./");
+//
+//		ResponseEntity<byte[]> bytesProject = templ.exchange(
+//				generateDownloadUrl("aagralor", "StaticAnalysisProject", "develop"), HttpMethod.GET,
+//				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
+//		byte[] downloadedBytesProject = bytesProject.getBody();
+//		ZipHelper.unzip(downloadedBytesProject, "./analysis/");
 
-		ResponseEntity<byte[]> bytesProject = templ.exchange(
-				generateDownloadUrl("aagralor", "StaticAnalysisProject", "develop"), HttpMethod.GET,
-				new HttpEntity<T>(createHeaders("aagralor", "0323c8384ccd0f52882385bcc84cbb69e7a6bf91")), byte[].class);
-		byte[] downloadedBytesProject = bytesProject.getBody();
-		ZipHelper.unzip(downloadedBytesProject, "./analysis/");
+//		String downloadPath = downloadRepository2("StaticAnalysisProject", "develop", "aagralor", "a1dfdad31f4f5f9027d96408fa7cdfa57ceb6ddc");
 
 		System.out.println("Bye World");
 

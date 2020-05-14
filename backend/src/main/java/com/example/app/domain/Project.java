@@ -46,22 +46,14 @@ public class Project {
 	@Field("GithubUrl")
 	private String url;
 
+	@Field("IsPrivate")
+	private Boolean isPrivate;
+
 	@Field("BearerToken")
 	private String bearerToken;
 
-//	@Field("AnalysisSastList")
-//	private List<String> analysisSastList;
-
 	@Field("AnalysisList")
 	private List<String> analysisList;
-
-//	public void addAnalysisSast(String anlysisSastId) {
-//		if (this.analysisSastList == null) {
-//			this.analysisSastList = new ArrayList<>();
-//		}
-//		this.analysisSastList.add(anlysisSastId);
-//
-//	}
 
 	public void addAnalysis(String anlysisId) {
 		if (this.analysisList == null) {

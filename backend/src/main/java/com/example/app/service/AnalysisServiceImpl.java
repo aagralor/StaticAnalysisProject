@@ -363,10 +363,12 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 //		executeCommand(generateCommandForJsonReport("./target/analysis/StaticAnalysisProject-develop"), true);
 
-		executeCommand("git clone https://x-access-token:080d62818a1328d7c7269759347aab01232675d5@gi"
+		executeCommand("git clone https://x-access-token:a1dfdad31f4f5f9027d96408fa7cdfa57ceb6ddc@gi"
 				+ "thub.com/aagralor/StaticAnalysisProject.git", true);
 		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject status", true);
 		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject checkout develop", true);
+		executeCommand("mkdir -p target/analysis", true);
+		executeCommand("mv StaticAnalysisProject/ target/analysis/StaticAnalysisProject-develop", true);
 
 		System.out.println("Bye World");
 

@@ -62,7 +62,7 @@ public class ProjectController {
 
 		new Thread(() -> {
     		String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(), updatedProject.getBranchName(),
-    				updatedProject.getUsername(), (updatedProject.getAccessToken().isEmpty() ? null : updatedProject.getAccessToken()));
+    				updatedProject.getUsername(), (updatedProject.getBearerToken() != null ? updatedProject.getBearerToken() : null));
 
     		try {
     			Analysis analysis = this.analysisService.execute(downloadPath, currentAnalysis);
