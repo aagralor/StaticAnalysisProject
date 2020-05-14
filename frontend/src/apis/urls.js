@@ -9,7 +9,7 @@ export const urlStartAnalysis = projectKey => `${apiBase}project/analysis?key=${
 export const urlCurrentAnalysisStatus = id => `${apiBase}analysis/status?id=${id}`;
 export const urlAccessToken = `${apiBase}github/accesstoken/`
 export const urlCurrentInstallation = id => `${apiBase}github/installation/${id}`;
-export const urlAddBearerTokenToProject = `${apiBase}github/bearertoken"`;
+export const urlAddBearerTokenToProject = `${apiBase}github/bearertoken`;
 
 
 export const githubUrlAuthorize = `${githubUrlBase}/login/oauth/authorize`;

@@ -9,6 +9,7 @@ import {
 import { getToken, getInstallation } from "../../selectors/github"
 import { storeInstallation } from "../../actions/store-installation";
 import { storeToken } from "../../actions/store-token";
+import { finishStoreToken } from "../../actions/finish-store-token";
 import {
   urlAccessToken,
   urlCurrentInstallation,
@@ -42,9 +43,9 @@ class GithubPage extends Component {
         repositoryName,
         bearerToken
       });
-      debugger;
       setTimeout(() => console.log(newProject), 1500);
-
+      this.props.finishTokenProcess();
+      this.props.history.push('/project');
     }
   }
 
@@ -99,6 +100,7 @@ GithubPage.propTypes = {
   search: PropTypes.object,
   installation: PropTypes.string,
   setInstallation: PropTypes.func,
+  finishTokenProcess: PropTypes.func,
 }
 
 const mapStateToPropsActions = state => ({
@@ -109,6 +111,7 @@ const mapStateToPropsActions = state => ({
 const mapDispatchToPropsActions = dispatch => ({
   setInstallation: installation => dispatch(storeInstallation(installation)),
   setToken: token => dispatch(storeToken(token)),
+  finishTokenProcess: () => dispatch(finishStoreToken()),
 });
 
 export default withRouter(connect(mapStateToPropsActions, mapDispatchToPropsActions)(GithubPage));

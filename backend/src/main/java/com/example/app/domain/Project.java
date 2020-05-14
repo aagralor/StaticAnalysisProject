@@ -10,10 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Document(collection = "Project")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Project {
 
@@ -43,7 +45,7 @@ public class Project {
 
 	@Field("GithubUrl")
 	private String url;
-	
+
 	@Field("BearerToken")
 	private String bearerToken;
 

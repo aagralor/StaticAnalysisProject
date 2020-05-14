@@ -45,8 +45,10 @@ public class GithubServiceImpl<T> implements GithubService {
 
 	@Override
 	public Project linkAccessToken(WebhookInstallation wh) {
-		Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), wh.getRepositoryName());
 
+		System.out.println(wh.toString());
+		Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), wh.getRepositoryName());
+		System.out.println(project.toString());
 		project.setBearerToken(wh.getBearerToken());
 
 		Project response = this.prRepo.save(project);

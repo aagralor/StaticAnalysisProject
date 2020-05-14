@@ -10,6 +10,7 @@ import {
   FINISH_ANALYSIS_SAST,
   STORE_INSTALLATION,
   STORE_TOKEN,
+  FINISH_STORE_TOKEN,
 } from "../constants/github";
 
 // const customers = handleAction(FETCH_CUSTOMERS, state => state);
@@ -53,6 +54,11 @@ export const github = handleActions(
     [STORE_TOKEN]: (state, action) => ({ 
       ...state,
       token: action.payload,
+    }),
+    [FINISH_STORE_TOKEN]: (state) => ({ 
+      ...state,
+      token: {},
+      installation: {},
     }),
   }, 
   {}

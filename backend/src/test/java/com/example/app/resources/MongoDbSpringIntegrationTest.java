@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.test.context.ContextConfiguration;
 
 import com.example.app.domain.Project;
+import com.example.app.repo.ProjectRepository;
 import com.example.app.service.ProjectService;
 import com.example.app.service.ProjectServiceImpl;
 import com.mongodb.BasicDBObjectBuilder;
@@ -40,10 +41,13 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
-	
+
 	@Autowired
 	ProjectService projectService;
-	
+
+	@Autowired
+	private ProjectRepository prRepo;
+
 	@Test
 	public void contextLoads() {
 		LOGGER.debug("MongoDbSpringIntegrationTest: contextLoads()");
@@ -70,18 +74,18 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 		project.setKey("project_key");
 		project.setAccessToken("github_access_token");
 		project.setUsername("github_username");
-		
+
 		// when
 		projectService.createProject(project);
-		
+
 		// then
 		List<Project> objectList = mongoTemplate.findAll(Project.class, "Project");
 		assertThat(objectList).extracting("Key").containsOnly("project_key");
-		
+
 		// clean
 		this.mongoTemplate.dropCollection("Project");
 	}
-	
+
 	@Test
 	public void testGetAllProjects() {
 		// given
@@ -100,23 +104,44 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 
 		// when
 		List<Project> objectList = projectService.findAllProjects();
-		
+
 		// then
 		assertThat(objectList).hasSize(2);
-		
+
 		// clean
 		this.mongoTemplate.dropCollection("Project");
 	}
-	
+
+	@Test
+	public void testLinkAccessToken() {
+		// given
+		Project project = new Project();
+		project.setName("Project name");
+		project.setKey("project_key");
+		project.setAccessToken("github_access_token");
+		project.setUsername("github_username");
+		project.setRepositoryName("repo_name");
+		this.mongoTemplate.save(project, "Project");
+
+		// when
+		Project object = prRepo.findByUserAndRepoName(project.getUsername(), project.getRepositoryName());
+
+		// then
+		assertThat(object).isNotNull();
+
+		// clean
+		this.mongoTemplate.dropCollection("Project");
+	}
+
 	@Configuration
 	@EnableMongoRepositories(basePackages = "com.example.app.repo")
 	public static class MDBIntegrationTestConfiguration {
 
 		@Bean
 		public MongoTemplate mongoTemplate() throws UnknownHostException, IOException {
-		    MongodExecutable mongodExecutable;
-		    MongoTemplate mongoTemplate;
-			
+			MongodExecutable mongodExecutable;
+			MongoTemplate mongoTemplate;
+
 			String ip = "localhost";
 			int port = 27018;
 
@@ -127,10 +152,10 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 			mongodExecutable = starter.prepare(mongodConfig);
 			mongodExecutable.start();
 			mongoTemplate = new MongoTemplate(new MongoClient(ip, port), "test");
-			
+
 			return mongoTemplate;
 		}
-		
+
 		@Bean
 		public ProjectService projectService() {
 			return new ProjectServiceImpl();
