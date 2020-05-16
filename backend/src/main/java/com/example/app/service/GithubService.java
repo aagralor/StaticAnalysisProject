@@ -1,7 +1,9 @@
 package com.example.app.service;
 
+import java.util.List;
+
 import com.example.app.domain.Project;
-import com.example.app.dto.github.WebhookInstallation;
+import com.example.app.domain.github.WebhookInstallation;
 
 public interface GithubService {
 
@@ -9,7 +11,7 @@ public interface GithubService {
 
 	WebhookInstallation createWebhookInstallation(WebhookInstallation wh);
 
-	Project linkAccessToken(WebhookInstallation wh);
+	List<Project> linkAccessToken(WebhookInstallation wh);
 
 	WebhookInstallation getWebhookInstallationByInstId(Long instId);
 

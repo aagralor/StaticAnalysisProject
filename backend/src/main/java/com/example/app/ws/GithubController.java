@@ -1,5 +1,7 @@
 package com.example.app.ws;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.app.domain.Project;
+import com.example.app.domain.github.WebhookInstallation;
 import com.example.app.dto.github.GithubIdentity;
-import com.example.app.dto.github.WebhookInstallation;
 import com.example.app.service.GithubService;
 
 @RestController
@@ -42,7 +44,7 @@ public class GithubController {
 	@PostMapping(path = "/github/bearertoken")
 	public ResponseEntity<Object> linkAccessTokenToProject(@RequestBody WebhookInstallation content) {
 
-		Project response = this.ghService.linkAccessToken(content);
+		List<Project> response = this.ghService.linkAccessToken(content);
 		System.out.println(response.toString());
 
 		return new ResponseEntity<>(response, HttpStatus.OK);

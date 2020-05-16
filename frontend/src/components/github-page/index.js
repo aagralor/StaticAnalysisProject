@@ -31,16 +31,17 @@ class GithubPage extends Component {
   componentWillReceiveProps(nextProps) {
     const body = (nextProps.token && nextProps.token.body);
     if (body && !body.error) {
+      debugger;
       const bearerToken = body.access_token;
       const installationId = nextProps.installation.installationId;
-      const repositoryId = nextProps.installation.repositoryId;
-      const repositoryName = nextProps.installation.repositoryName;
+      // const repositoryId = nextProps.installation.repositoryId;
+      // const repositoryName = nextProps.installation.repositoryName;
+      const repoList = nextProps.installation.repoList;
       const user = nextProps.installation.user;
       const newProject = apiPost(urlAddBearerTokenToProject, {
         user,
         installationId,
-        repositoryId,
-        repositoryName,
+        repoList,
         bearerToken
       });
       setTimeout(() => console.log(newProject), 1500);

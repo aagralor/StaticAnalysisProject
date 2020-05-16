@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.app.domain.Project;
-import com.example.app.dto.github.WebhookInstallation;
+import com.example.app.domain.github.BearerToken;
+import com.example.app.domain.github.WebhookInstallation;
+import com.example.app.domain.github.WebhookRepository;
+import com.example.app.repo.BearerTokenRepository;
 import com.example.app.repo.ProjectRepository;
 import com.example.app.repo.WebhookInstallationRepository;
 import com.example.app.utils.ZipHelper;
@@ -33,6 +38,9 @@ public class GithubServiceImpl<T> implements GithubService {
 	@Autowired
 	private ProjectRepository prRepo;
 
+	@Autowired
+	private BearerTokenRepository btRepo;
+	
 	@Override
 	public WebhookInstallation createWebhookInstallation(WebhookInstallation wh) {
 
@@ -46,26 +54,39 @@ public class GithubServiceImpl<T> implements GithubService {
 	};
 
 	@Override
-	public Project linkAccessToken(WebhookInstallation wh) {
+	public List<Project> linkAccessToken(WebhookInstallation wh) {
 
 		System.out.println(wh.toString());
-		Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), wh.getRepositoryName());
-		System.out.println(project.toString());
-		project.setBearerToken(wh.getBearerToken());
-
-		Project response = this.prRepo.save(project);
+		List<Project> projectList = new ArrayList<Project>();
+		for (WebhookRepository whr : wh.getRepoList()) {
+			try {
+			Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), whr.getName());
+			project.setBearerToken(wh.getBearerToken());
+			projectList.add(project);
+			} catch (NullPointerException e) {
+				System.out.println("Repo not found");
+			}
+		}
+		BearerToken bt = new BearerToken();
+		bt.setBearerToken(wh.getBearerToken());
+		bt.setUsername(wh.getUsername());
+		bt.setRepoList(
+			projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList())
+		);
+		this.btRepo.save(bt);
+		List<Project> response = this.prRepo.save(projectList);
 
 		return response;
 	}
-	
+
 	@Override
 	public String downloadRepository(String repoName, String branchName, String username, String bearerToken) {
 
 		String downloadFolder = "./target/analysis/";
 
 		if (bearerToken != null) {
-			executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" +
-					username + "/" + repoName + ".git", true);
+			executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" + username + "/"
+					+ repoName + ".git", true);
 			executeCommand("git --git-dir=" + repoName + "/.git --work-tree=" + repoName + " checkout develop", true);
 			executeCommand("mkdir -p target/analysis", true);
 			executeCommand("mv " + repoName + "/ target/analysis/" + repoName + "-" + branchName, true);
@@ -82,7 +103,7 @@ public class GithubServiceImpl<T> implements GithubService {
 		}
 		return generateDownloadFolder(downloadFolder, repoName, branchName);
 	}
-	
+
 //	public static String downloadRepository2(String repoName, String branchName, String username, String bearerToken) {
 //
 //		String downloadFolder = "./target/analysis/";
@@ -147,7 +168,7 @@ public class GithubServiceImpl<T> implements GithubService {
 			}
 		};
 	}
-	
+
 	private static void executeCommand(String command, boolean printOut) {
 		Process p = null;
 		String[] cmd = { "/bin/sh", "-c", command };
@@ -169,7 +190,7 @@ public class GithubServiceImpl<T> implements GithubService {
 		}
 
 	}
-	
+
 	private static void printInConsole(InputStream in, OutputStream out) throws IOException {
 		while (true) {
 			int c = in.read();
