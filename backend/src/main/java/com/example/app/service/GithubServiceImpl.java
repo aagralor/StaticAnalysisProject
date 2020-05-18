@@ -61,26 +61,16 @@ public class GithubServiceImpl<T> implements GithubService {
 		this.btRepo.save(bt);
 		List<Project> response = this.prRepo.save(projectList);
 
-		System.out.println("WebhookInstallation:");
-		System.out.println(wh);
-		System.out.println("MergedList:");
-		System.out.println(mergedList);
-		System.out.println("ProjectList:");
-		System.out.println(projectList);
-		System.out.println("Response:");
-		System.out.println(response);
-
 		return response;
 	}
-	
+
 	@Override
 	public List<Project> updateRemoveAccessToken(WebhookInstallation wh) {
 
 		BearerToken bt = this.btRepo.findByUsername(wh.getUsername());
-		
+
 		List<Project> btProjectList = getNewProjectList(bt.getRepoList(), bt.getUsername(), null);
 		this.prRepo.save(btProjectList);
-
 		List<String> whrListToQuit = wh.getRepoListToQuit().stream().map(whr -> whr.getName()).collect(Collectors.toList());
 		List<String> mergedList = bt.getRepoList();
 		for (String s : whrListToQuit) {
@@ -88,10 +78,10 @@ public class GithubServiceImpl<T> implements GithubService {
 				mergedList.remove(s);
 			}
 		}
-		List<Project> projectList = getNewProjectList(mergedList, bt.getUsername(), bt.getBearerToken());
-		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
+
+		List<Project> response = this.prRepo.save(getNewProjectList(mergedList, bt.getUsername(), bt.getBearerToken()));
+		bt.setRepoList(response.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
 		this.btRepo.save(bt);
-		List<Project> response = this.prRepo.save(projectList);
 
 		return response;
 	}
@@ -117,9 +107,11 @@ public class GithubServiceImpl<T> implements GithubService {
 		List<Project> projectList = getNewProjectList(
 				wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList()), wh.getUsername(),
 				wh.getBearerToken());
-		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
-		this.btRepo.save(bt);
+
 		List<Project> response = this.prRepo.save(projectList);
+
+		bt.setRepoList(response.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
+		this.btRepo.save(bt);
 
 		return response;
 	}
