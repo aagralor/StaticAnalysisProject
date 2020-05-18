@@ -45,13 +45,23 @@ public class PingResource {
 		String action = (String) temp.get("action");
 
 		if ("Created".equalsIgnoreCase(action) && "Installation".equalsIgnoreCase(event)) {
-			WebhookInstallation whio = getWebhookInstallation(temp, "repositories");
+			WebhookInstallation whio = getWebhookInstallation(temp, action);
 			response = this.githubService.createWebhookInstallation(whio);
 		}
 
-		if ("Added".equalsIgnoreCase(action) && "Installation_repositories".equalsIgnoreCase(event))                                                                                                                               {
-			WebhookInstallation whio = getWebhookInstallation(temp, "repositories_added");
-			response = this.githubService.updateAccessToken(whio);
+		if ("Added".equalsIgnoreCase(action) && "Installation_repositories".equalsIgnoreCase(event)) {
+			WebhookInstallation whio = getWebhookInstallation(temp, action);
+			response = this.githubService.updateAddAccessToken(whio);
+		}
+
+		if ("Removed".equalsIgnoreCase(action) && "Installation_repositories".equalsIgnoreCase(event)) {
+			WebhookInstallation whio = getWebhookInstallation(temp, action);
+			response = this.githubService.updateRemoveAccessToken(whio);
+		}
+
+		if ("Deleted".equalsIgnoreCase(action) && "Installation".equalsIgnoreCase(event)) {
+			WebhookInstallation whio = getWebhookInstallation(temp, action);
+			response = this.githubService.removeAccessToken(whio);
 		}
 
 		return new ResponseEntity<>(ob, HttpStatus.OK);
@@ -64,15 +74,29 @@ public class PingResource {
 		Map<String, String> instAccount = (Map<String, String>) inst.get("account");
 		whio.setUsername(instAccount.get("login"));
 		whio.setInstallationId((Integer) inst.get("id"));
-		List<Map<String, String>> repoList = ((List<Map<String, String>>) in.get(repoAction));
-		List<WebhookRepository> whrList = new ArrayList<WebhookRepository>();
-		for (Map<String, String> repo : repoList) {
-			WebhookRepository whRepo = new WebhookRepository();
-			whRepo.setId(repo.get("node_id"));
-			whRepo.setName(repo.get("name"));
-			whrList.add(whRepo);
+		if (!"Deleted".equalsIgnoreCase(repoAction)) {
+			List<Map<String, String>> repoList = ((List<Map<String, String>>) in
+					.get(("Created".equalsIgnoreCase(repoAction) ? "repositories" : "repositories_added")));
+			List<WebhookRepository> whrList = new ArrayList<WebhookRepository>();
+			for (Map<String, String> repo : repoList) {
+				WebhookRepository whRepo = new WebhookRepository();
+				whRepo.setId(repo.get("node_id"));
+				whRepo.setName(repo.get("name"));
+				whrList.add(whRepo);
+			}
+			whio.setRepoList(whrList);
+			if ("Removed".equalsIgnoreCase(repoAction) || "Added".equalsIgnoreCase(repoAction)) {
+				List<Map<String, String>> repoListToQuit = ((List<Map<String, String>>) in.get("repositories_removed"));
+				List<WebhookRepository> whrListToQuit = new ArrayList<WebhookRepository>();
+				for (Map<String, String> repo : repoListToQuit) {
+					WebhookRepository whRepo = new WebhookRepository();
+					whRepo.setId(repo.get("node_id"));
+					whRepo.setName(repo.get("name"));
+					whrListToQuit.add(whRepo);
+				}
+				whio.setRepoListToQuit(whrListToQuit);
+			}
 		}
-		whio.setRepoList(whrList);
 
 		return whio;
 

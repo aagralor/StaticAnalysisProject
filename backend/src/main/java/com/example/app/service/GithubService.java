@@ -15,6 +15,10 @@ public interface GithubService {
 
 	WebhookInstallation getWebhookInstallationByInstId(Long instId);
 
-	List<Project> updateAccessToken(WebhookInstallation wh);
+	List<Project> updateAddAccessToken(WebhookInstallation wh);
+	
+	List<Project> updateRemoveAccessToken(WebhookInstallation wh);
+
+	List<Project> removeAccessToken(WebhookInstallation wh);
 
 }

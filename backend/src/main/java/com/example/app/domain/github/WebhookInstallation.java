@@ -30,5 +30,7 @@ public class WebhookInstallation {
 	private String bearerToken;
 
 	private List<WebhookRepository> repoList;
+	
+	private List<WebhookRepository> repoListToQuit;
 
 }

@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-//import org.eclipse.egit.github.core.Repository;
-//import org.eclipse.egit.github.core.RepositoryBranch;
-//import org.eclipse.egit.github.core.client.GitHubClient;
-//import org.eclipse.egit.github.core.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -50,7 +46,7 @@ public class GithubServiceImpl<T> implements GithubService {
 	};
 
 	@Override
-	public List<Project> updateAccessToken(WebhookInstallation wh) {
+	public List<Project> updateAddAccessToken(WebhookInstallation wh) {
 
 		BearerToken bt = this.btRepo.findByUsername(wh.getUsername());
 		List<String> whrList = wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList());
@@ -61,17 +57,53 @@ public class GithubServiceImpl<T> implements GithubService {
 			}
 		}
 		List<Project> projectList = getNewProjectList(mergedList, bt.getUsername(), bt.getBearerToken());
-		bt.setRepoList(mergedList);
+		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
 		this.btRepo.save(bt);
 		List<Project> response = this.prRepo.save(projectList);
 
-		System.out.println("mergedList:");
+		System.out.println("WebhookInstallation:");
+		System.out.println(wh);
+		System.out.println("MergedList:");
 		System.out.println(mergedList);
-		System.out.println("projectList:");
+		System.out.println("ProjectList:");
 		System.out.println(projectList);
-		System.out.println(":");
-		System.out.println("response:");
+		System.out.println("Response:");
 		System.out.println(response);
+
+		return response;
+	}
+	
+	@Override
+	public List<Project> updateRemoveAccessToken(WebhookInstallation wh) {
+
+		BearerToken bt = this.btRepo.findByUsername(wh.getUsername());
+		
+		List<Project> btProjectList = getNewProjectList(bt.getRepoList(), bt.getUsername(), null);
+		this.prRepo.save(btProjectList);
+
+		List<String> whrListToQuit = wh.getRepoListToQuit().stream().map(whr -> whr.getName()).collect(Collectors.toList());
+		List<String> mergedList = bt.getRepoList();
+		for (String s : whrListToQuit) {
+			if (mergedList.contains(s)) {
+				mergedList.remove(s);
+			}
+		}
+		List<Project> projectList = getNewProjectList(mergedList, bt.getUsername(), bt.getBearerToken());
+		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
+		this.btRepo.save(bt);
+		List<Project> response = this.prRepo.save(projectList);
+
+		return response;
+	}
+
+
+	@Override
+	public List<Project> removeAccessToken(WebhookInstallation wh) {
+
+		BearerToken bt = this.btRepo.findByUsername(wh.getUsername());
+		List<Project> projectList = getNewProjectList(bt.getRepoList(), bt.getUsername(), null);
+		List<Project> response = this.prRepo.save(projectList);
+		this.btRepo.delete(bt);
 
 		return response;
 	}
@@ -83,7 +115,8 @@ public class GithubServiceImpl<T> implements GithubService {
 		bt.setBearerToken(wh.getBearerToken());
 		bt.setUsername(wh.getUsername());
 		List<Project> projectList = getNewProjectList(
-				wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList()), wh.getUsername(), wh.getBearerToken());
+				wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList()), wh.getUsername(),
+				wh.getBearerToken());
 		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
 		this.btRepo.save(bt);
 		List<Project> response = this.prRepo.save(projectList);
