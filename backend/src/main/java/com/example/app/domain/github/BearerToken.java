@@ -26,7 +26,7 @@ public class BearerToken {
 	private String username;
 
 	private String bearerToken;
-	
+
 	private List<String> repoList;
 
 }

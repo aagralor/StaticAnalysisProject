@@ -1,33 +1,29 @@
 package com.example.app.service;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.app.domain.Project;
-import com.example.app.domain.github.BearerToken;
-import com.example.app.domain.github.WebhookInstallation;
-import com.example.app.domain.github.WebhookRepository;
-import com.example.app.repo.BearerTokenRepository;
-import com.example.app.repo.ProjectRepository;
-import com.example.app.repo.WebhookInstallationRepository;
-import com.example.app.utils.ZipHelper;
 import org.apache.tomcat.util.codec.binary.Base64;
 //import org.eclipse.egit.github.core.Repository;
 //import org.eclipse.egit.github.core.RepositoryBranch;
 //import org.eclipse.egit.github.core.client.GitHubClient;
 //import org.eclipse.egit.github.core.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.app.domain.Project;
+import com.example.app.domain.github.BearerToken;
+import com.example.app.domain.github.WebhookInstallation;
+import com.example.app.repo.BearerTokenRepository;
+import com.example.app.repo.ProjectRepository;
+import com.example.app.repo.WebhookInstallationRepository;
+import com.example.app.utils.CmdHelper;
+import com.example.app.utils.ZipHelper;
 
 @Service
 public class GithubServiceImpl<T> implements GithubService {
@@ -40,7 +36,7 @@ public class GithubServiceImpl<T> implements GithubService {
 
 	@Autowired
 	private BearerTokenRepository btRepo;
-	
+
 	@Override
 	public WebhookInstallation createWebhookInstallation(WebhookInstallation wh) {
 
@@ -54,28 +50,58 @@ public class GithubServiceImpl<T> implements GithubService {
 	};
 
 	@Override
+	public List<Project> updateAccessToken(WebhookInstallation wh) {
+
+		BearerToken bt = this.btRepo.findByUsername(wh.getUsername());
+		List<String> whrList = wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList());
+		List<String> mergedList = bt.getRepoList();
+		for (String s : whrList) {
+			if (!mergedList.contains(s)) {
+				mergedList.add(s);
+			}
+		}
+		List<Project> projectList = getNewProjectList(mergedList, bt.getUsername(), bt.getBearerToken());
+		bt.setRepoList(mergedList);
+		this.btRepo.save(bt);
+		List<Project> response = this.prRepo.save(projectList);
+
+		System.out.println("mergedList:");
+		System.out.println(mergedList);
+		System.out.println("projectList:");
+		System.out.println(projectList);
+		System.out.println(":");
+		System.out.println("response:");
+		System.out.println(response);
+
+		return response;
+	}
+
+	@Override
 	public List<Project> linkAccessToken(WebhookInstallation wh) {
 
-		System.out.println(wh.toString());
-		List<Project> projectList = new ArrayList<Project>();
-		for (WebhookRepository whr : wh.getRepoList()) {
+		BearerToken bt = new BearerToken();
+		bt.setBearerToken(wh.getBearerToken());
+		bt.setUsername(wh.getUsername());
+		List<Project> projectList = getNewProjectList(
+				wh.getRepoList().stream().map(whr -> whr.getName()).collect(Collectors.toList()), wh.getUsername(), wh.getBearerToken());
+		bt.setRepoList(projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList()));
+		this.btRepo.save(bt);
+		List<Project> response = this.prRepo.save(projectList);
+
+		return response;
+	}
+
+	private List<Project> getNewProjectList(List<String> projectList, String username, String bearerToken) {
+		List<Project> response = new ArrayList<Project>();
+		for (String projectName : projectList) {
 			try {
-			Project project = this.prRepo.findByUserAndRepoName(wh.getUsername(), whr.getName());
-			project.setBearerToken(wh.getBearerToken());
-			projectList.add(project);
+				Project project = this.prRepo.findByUserAndRepoName(username, projectName);
+				project.setBearerToken(bearerToken);
+				response.add(project);
 			} catch (NullPointerException e) {
 				System.out.println("Repo not found");
 			}
 		}
-		BearerToken bt = new BearerToken();
-		bt.setBearerToken(wh.getBearerToken());
-		bt.setUsername(wh.getUsername());
-		bt.setRepoList(
-			projectList.stream().map(p -> p.getRepositoryName()).collect(Collectors.toList())
-		);
-		this.btRepo.save(bt);
-		List<Project> response = this.prRepo.save(projectList);
-
 		return response;
 	}
 
@@ -85,11 +111,12 @@ public class GithubServiceImpl<T> implements GithubService {
 		String downloadFolder = "./target/analysis/";
 
 		if (bearerToken != null) {
-			executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" + username + "/"
+			CmdHelper.executeCommand("git clone https://x-access-token:" + bearerToken + "@github.com/" + username + "/"
 					+ repoName + ".git", true);
-			executeCommand("git --git-dir=" + repoName + "/.git --work-tree=" + repoName + " checkout develop", true);
-			executeCommand("mkdir -p target/analysis", true);
-			executeCommand("mv " + repoName + "/ target/analysis/" + repoName + "-" + branchName, true);
+			CmdHelper.executeCommand(
+					"git --git-dir=" + repoName + "/.git --work-tree=" + repoName + " checkout develop", true);
+			CmdHelper.executeCommand("mkdir -p target/analysis", true);
+			CmdHelper.executeCommand("mv " + repoName + "/ target/analysis/" + repoName + "-" + branchName, true);
 		} else {
 			RestTemplate templ = new RestTemplate();
 			String url = generateDownloadUrl(username, repoName, branchName);
@@ -167,38 +194,6 @@ public class GithubServiceImpl<T> implements GithubService {
 				set("Authorization", authHeader);
 			}
 		};
-	}
-
-	private static void executeCommand(String command, boolean printOut) {
-		Process p = null;
-		String[] cmd = { "/bin/sh", "-c", command };
-
-		try {
-			p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-
-		try {
-			if (printOut) {
-				printInConsole(p.getInputStream(), System.out);
-			}
-			p.waitFor();
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	private static void printInConsole(InputStream in, OutputStream out) throws IOException {
-		while (true) {
-			int c = in.read();
-			if (c == -1) {
-				break;
-			}
-			out.write((char) c);
-		}
 	}
 
 	public List<String> findRepositoryNamesWithAdminPermission(String accessToken) {

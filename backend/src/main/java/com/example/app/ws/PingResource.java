@@ -45,43 +45,36 @@ public class PingResource {
 		String action = (String) temp.get("action");
 
 		if ("Created".equalsIgnoreCase(action) && "Installation".equalsIgnoreCase(event)) {
-			WebhookInstallation whio = new WebhookInstallation();
-			Map<String, Object> inst = (Map<String, Object>) temp.get("installation");
-			Map<String, String> instAccount = (Map<String, String>) inst.get("account");
-			String repoSelection = ("Installation".equalsIgnoreCase(event) ? "repositories" : "repositories_added");
-			whio.setUsername(instAccount.get("login"));
-			whio.setInstallationId((Integer) inst.get("id"));
-			List<Map<String, String>> repoList = ((List<Map<String, String>>) temp.get(repoSelection));
-			List<WebhookRepository> whrList = new ArrayList<WebhookRepository>();
-			for (Map<String, String> repo : repoList) {
-				WebhookRepository whRepo = new WebhookRepository();
-				whRepo.setId(repo.get("node_id"));
-				whRepo.setName(repo.get("name"));
-				whrList.add(whRepo);
-			}
-			whio.setRepoList(whrList);
-			response = this.githubService.createWebhookInstallation(whio);
-		}
-		
-		if ("Added".equalsIgnoreCase(action) && "Installation_repositories".equalsIgnoreCase(event))                                                                                                                               {
-			WebhookInstallation whio = new WebhookInstallation();
-			Map<String, Object> inst = (Map<String, Object>) temp.get("installation");
-			Map<String, String> instAccount = (Map<String, String>) inst.get("account");
-			String repoSelection = ("Installation".equalsIgnoreCase(event) ? "repositories" : "repositories_added");
-			whio.setUsername(instAccount.get("login"));
-			whio.setInstallationId((Integer) inst.get("id"));
-			List<Map<String, String>> repoList = ((List<Map<String, String>>) temp.get(repoSelection));
-			List<WebhookRepository> whrList = new ArrayList<WebhookRepository>();
-			for (Map<String, String> repo : repoList) {
-				WebhookRepository whRepo = new WebhookRepository();
-				whRepo.setId(repo.get("node_id"));
-				whRepo.setName(repo.get("name"));
-				whrList.add(whRepo);
-			}
-			whio.setRepoList(whrList);
+			WebhookInstallation whio = getWebhookInstallation(temp, "repositories");
 			response = this.githubService.createWebhookInstallation(whio);
 		}
 
+		if ("Added".equalsIgnoreCase(action) && "Installation_repositories".equalsIgnoreCase(event))                                                                                                                               {
+			WebhookInstallation whio = getWebhookInstallation(temp, "repositories_added");
+			response = this.githubService.updateAccessToken(whio);
+		}
+
 		return new ResponseEntity<>(ob, HttpStatus.OK);
+	}
+
+	private WebhookInstallation getWebhookInstallation(Map<String, Object> in, String repoAction) {
+
+		WebhookInstallation whio = new WebhookInstallation();
+		Map<String, Object> inst = (Map<String, Object>) in.get("installation");
+		Map<String, String> instAccount = (Map<String, String>) inst.get("account");
+		whio.setUsername(instAccount.get("login"));
+		whio.setInstallationId((Integer) inst.get("id"));
+		List<Map<String, String>> repoList = ((List<Map<String, String>>) in.get(repoAction));
+		List<WebhookRepository> whrList = new ArrayList<WebhookRepository>();
+		for (Map<String, String> repo : repoList) {
+			WebhookRepository whRepo = new WebhookRepository();
+			whRepo.setId(repo.get("node_id"));
+			whRepo.setName(repo.get("name"));
+			whrList.add(whRepo);
+		}
+		whio.setRepoList(whrList);
+
+		return whio;
+
 	}
 }

@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -30,6 +29,7 @@ import com.example.app.mapper.AnalysisSCAMapper;
 import com.example.app.mapper.FindSecBugsAnalysisMapper;
 import com.example.app.repo.AnalysisRepository;
 import com.example.app.repo.ProjectRepository;
+import com.example.app.utils.CmdHelper;
 import com.example.app.utils.HtmlParser;
 import com.example.app.utils.JsonParser;
 import com.example.app.utils.XmlParser;
@@ -108,21 +108,21 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 	@Override
 	public Analysis execute(String pathToFolder, Analysis currentAnalysis) {
-		executeCommand(generateCommandForMvnBuild(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForMvnBuild(pathToFolder), true);
 		currentAnalysis.setCompletion("35");
 		this.repo.save(currentAnalysis);
-		executeCommand(generateCommandForJarList(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForJarList(pathToFolder), true);
 
-		executeCommand(generateCommandForHtmlReport(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForHtmlReport(pathToFolder), true);
 		currentAnalysis.setCompletion("50");
 		this.repo.save(currentAnalysis);
-		executeCommand(generateCommandForXmlReport(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForXmlReport(pathToFolder), true);
 		currentAnalysis.setCompletion("65");
 		this.repo.save(currentAnalysis);
-		executeCommand(generateCommandForXdocsReport(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForXdocsReport(pathToFolder), true);
 		currentAnalysis.setCompletion("80");
 		this.repo.save(currentAnalysis);
-		executeCommand(generateCommandForJsonReport(pathToFolder), true);
+		CmdHelper.executeCommand(generateCommandForJsonReport(pathToFolder), true);
 		currentAnalysis.setCompletion("95");
 		Analysis result = this.repo.save(currentAnalysis);
 		FindSecBugsAnalysis resultSAST = null;
@@ -144,28 +144,6 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		}
 
 		return result;
-	}
-
-	private static void executeCommand(String command, boolean printOut) {
-		Process p = null;
-		String[] cmd = { "/bin/sh", "-c", command };
-
-		try {
-			p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			System.err.println("Error on exec() method");
-			e.printStackTrace();
-		}
-
-		try {
-			if (printOut) {
-				printInConsole(p.getInputStream(), System.out);
-			}
-			p.waitFor();
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	private static String generateCommandForXdocsReport(String path) {
@@ -241,16 +219,6 @@ public final class AnalysisServiceImpl implements AnalysisService {
 				}
 			} catch (IOException e) {
 			}
-		}
-	}
-
-	private static void printInConsole(InputStream in, OutputStream out) throws IOException {
-		while (true) {
-			int c = in.read();
-			if (c == -1) {
-				break;
-			}
-			out.write((char) c);
 		}
 	}
 
@@ -363,12 +331,12 @@ public final class AnalysisServiceImpl implements AnalysisService {
 
 //		executeCommand(generateCommandForJsonReport("./target/analysis/StaticAnalysisProject-develop"), true);
 
-		executeCommand("git clone https://x-access-token:a1dfdad31f4f5f9027d96408fa7cdfa57ceb6ddc@gi"
+		CmdHelper.executeCommand("git clone https://x-access-token:a1dfdad31f4f5f9027d96408fa7cdfa57ceb6ddc@gi"
 				+ "thub.com/aagralor/StaticAnalysisProject.git", true);
-		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject status", true);
-		executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject checkout develop", true);
-		executeCommand("mkdir -p target/analysis", true);
-		executeCommand("mv StaticAnalysisProject/ target/analysis/StaticAnalysisProject-develop", true);
+		CmdHelper.executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject status", true);
+		CmdHelper.executeCommand("git --git-dir=StaticAnalysisProject/.git --work-tree=StaticAnalysisProject checkout develop", true);
+		CmdHelper.executeCommand("mkdir -p target/analysis", true);
+		CmdHelper.executeCommand("mv StaticAnalysisProject/ target/analysis/StaticAnalysisProject-develop", true);
 
 		System.out.println("Bye World");
 

@@ -8,8 +8,8 @@ import com.example.app.domain.github.BearerToken;
 @Repository
 public interface BearerTokenRepository extends MongoRepository<BearerToken, String> {
 
-//	Project findByKey(String key);
-//
+	BearerToken findByUsername(String username);
+
 //	@Query("{'GithubUsername' : ?0 , 'GithubRepositoryName' : ?1}")
 //	Project findByUserAndRepoName(String user, String repositoryName);
 

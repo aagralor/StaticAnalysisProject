@@ -28,7 +28,7 @@ public class WebhookInstallation {
 	private Integer installationId;
 
 	private String bearerToken;
-	
+
 	private List<WebhookRepository> repoList;
 
 }
