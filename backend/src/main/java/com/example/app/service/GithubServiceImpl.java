@@ -15,9 +15,11 @@ import org.springframework.web.client.RestTemplate;
 import com.example.app.domain.Project;
 import com.example.app.domain.github.BearerToken;
 import com.example.app.domain.github.WebhookInstallation;
+import com.example.app.domain.github.WebhookPush;
 import com.example.app.repo.BearerTokenRepository;
 import com.example.app.repo.ProjectRepository;
 import com.example.app.repo.WebhookInstallationRepository;
+import com.example.app.repo.WebhookPushRepository;
 import com.example.app.utils.CmdHelper;
 import com.example.app.utils.ZipHelper;
 
@@ -25,7 +27,10 @@ import com.example.app.utils.ZipHelper;
 public class GithubServiceImpl<T> implements GithubService {
 
 	@Autowired
-	private WebhookInstallationRepository whRepo;
+	private WebhookInstallationRepository whiRepo;
+
+	@Autowired
+	private WebhookPushRepository whpRepo;
 
 	@Autowired
 	private ProjectRepository prRepo;
@@ -36,13 +41,13 @@ public class GithubServiceImpl<T> implements GithubService {
 	@Override
 	public WebhookInstallation createWebhookInstallation(WebhookInstallation wh) {
 
-		return this.whRepo.save(wh);
+		return this.whiRepo.save(wh);
 	}
 
 	@Override
 	public WebhookInstallation getWebhookInstallationByInstId(Long instId) {
 
-		return this.whRepo.findByInstallationId(instId);
+		return this.whiRepo.findByInstallationId(instId);
 	};
 
 	@Override
@@ -154,6 +159,13 @@ public class GithubServiceImpl<T> implements GithubService {
 			}
 		}
 		return generateDownloadFolder(downloadFolder, repoName, branchName);
+	}
+
+
+	@Override
+	public WebhookPush createWebhookPush(WebhookPush whp) {
+
+		return this.whpRepo.save(whp);
 	}
 
 //	public static String downloadRepository2(String repoName, String branchName, String username, String bearerToken) {
@@ -298,5 +310,6 @@ public class GithubServiceImpl<T> implements GithubService {
 		System.out.println("Bye World");
 
 	}
+
 
 }

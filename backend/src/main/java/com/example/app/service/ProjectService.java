@@ -14,4 +14,6 @@ public interface ProjectService {
 
 	Project addAnalysis(Project project, String analysisId);
 
+	Project findByUserAndRepo(String username, String reponame);
+
 }

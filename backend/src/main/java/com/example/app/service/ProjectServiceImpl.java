@@ -39,6 +39,14 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public Project findByUserAndRepo(String username, String reponame) {
+
+		Project response = this.repo.findByUserAndRepoName(username, reponame);
+
+		return response;
+	}
+
+	@Override
 	public Project addAnalysis(Project project, String analysisId) {
 
 		project.addAnalysis(analysisId);

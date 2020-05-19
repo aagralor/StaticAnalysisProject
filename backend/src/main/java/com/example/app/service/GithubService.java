@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.app.domain.Project;
 import com.example.app.domain.github.WebhookInstallation;
+import com.example.app.domain.github.WebhookPush;
 
 public interface GithubService {
 
@@ -20,5 +21,7 @@ public interface GithubService {
 	List<Project> updateRemoveAccessToken(WebhookInstallation wh);
 
 	List<Project> removeAccessToken(WebhookInstallation wh);
+
+	WebhookPush createWebhookPush(WebhookPush whp);
 
 }
