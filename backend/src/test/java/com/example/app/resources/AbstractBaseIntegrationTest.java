@@ -8,5 +8,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public abstract class AbstractRestApiTest {
+public abstract class AbstractBaseIntegrationTest {
 }

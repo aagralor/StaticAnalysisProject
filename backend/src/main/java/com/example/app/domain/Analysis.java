@@ -7,11 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Document(collection = "Analysis")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Analysis {
 
 	@Id

@@ -10,9 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(initializers = ConfigFileApplicationContextInitializer.class)
-public class AbstractBaseServiceTest {
+public class AbstractBaseUnitaryTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBaseServiceTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBaseUnitaryTest.class);
 	
 	@Test
 	public void contextLoads() {

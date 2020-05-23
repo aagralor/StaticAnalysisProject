@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -20,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import com.example.app.domain.Project;
 import com.example.app.repo.ProjectRepository;
 import com.example.app.service.ProjectService;
-import com.example.app.service.ProjectServiceImpl;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
@@ -34,17 +34,17 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 
 @DataMongoTest
-@ContextConfiguration(classes = { MongoDbSpringIntegrationTest.MDBIntegrationTestConfiguration.class })
-public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
+@ContextConfiguration(classes = { UnitaryTest.MDBUnitaryTestConfiguration.class })
+public class UnitaryTest extends AbstractBaseUnitaryTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MongoDbSpringIntegrationTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UnitaryTest.class);
 
 	@Autowired
 	MongoTemplate mongoTemplate;
 
 	@Autowired
 	ProjectService projectService;
-
+	
 	@Autowired
 	private ProjectRepository prRepo;
 
@@ -132,10 +132,11 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 		// clean
 		this.mongoTemplate.dropCollection("Project");
 	}
-
+	
 	@Configuration
+	@ComponentScan(basePackages = { "com.example.app.service", "com.example.app.mapper" })
 	@EnableMongoRepositories(basePackages = "com.example.app.repo")
-	public static class MDBIntegrationTestConfiguration {
+	public static class MDBUnitaryTestConfiguration {
 
 		@Bean
 		public MongoTemplate mongoTemplate() throws UnknownHostException, IOException {
@@ -154,11 +155,6 @@ public class MongoDbSpringIntegrationTest extends AbstractBaseServiceTest {
 			mongoTemplate = new MongoTemplate(new MongoClient(ip, port), "test");
 
 			return mongoTemplate;
-		}
-
-		@Bean
-		public ProjectService projectService() {
-			return new ProjectServiceImpl();
 		}
 	}
 

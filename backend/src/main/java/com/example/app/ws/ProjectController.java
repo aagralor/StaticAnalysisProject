@@ -18,6 +18,7 @@ import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.service.AnalysisService;
 import com.example.app.service.GithubService;
 import com.example.app.service.ProjectService;
+import com.example.app.service.ReportService;
 
 @RestController
 public class ProjectController {
@@ -30,6 +31,9 @@ public class ProjectController {
 
 	@Autowired
 	AnalysisService analysisService;
+
+	@Autowired
+	ReportService reportService;
 
 	@Autowired
 	AnalysisSASTMapper analysisSASTMapper;
@@ -95,6 +99,18 @@ public class ProjectController {
 		AnalysisStatusDTO sastCompletion = this.analysisService.checkStatus(id);
 
 		return new ResponseEntity<>(sastCompletion, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/project/report")
+	public ResponseEntity<Object> generateReport(@RequestParam String key) {
+
+		Project project = this.projectService.findByKey(key);
+
+		Analysis analysis = this.analysisService.findLastAnalysis(key);
+
+		Object report = this.reportService.generatePDF(project, analysis);
+
+		return new ResponseEntity<>(report, HttpStatus.OK);
 	}
 
 }
