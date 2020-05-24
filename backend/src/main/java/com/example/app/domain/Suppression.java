@@ -26,7 +26,7 @@ public class Suppression {
 	private String filePath;
 
 	@Field("FilePathIsRegex")
-	private Boolean FilePathIsRegex;
+	private Boolean filePathIsRegex;
 
 	@Field("SHA1")
 	private String sha1;

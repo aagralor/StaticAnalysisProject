@@ -12,6 +12,8 @@ import NavigationBar from './components/layout/navigation-bar';
 import Jumbotron from './components/layout/jumbotron';
 import './app.css';
 import GithubPage from './components/github-page';
+import Suppression from './components/suppression';
+import CreateSuppression from './components/create-suppression';
 
 
 
@@ -31,6 +33,8 @@ class App extends Component {
               <Route exact path="/project/create" component={CreateProject} />
               <Route exact path="/project/:projectKey" component={ProjectAnalysis} />
               <Route exact path="/project" component={Project} />
+              <Route exact path="/suppress/create" component={CreateSuppression} />
+              <Route exact path="/suppress" component={Suppression} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
               <Route path="/github" render={GithubPage} />

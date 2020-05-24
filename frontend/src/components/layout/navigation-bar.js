@@ -38,11 +38,11 @@ const NavigationBar = () => (
               <Link to="/project">Projects</Link>
             </Nav.Link>
           </Nav.Item>
-          {/* <Nav.Item>
+          <Nav.Item>
             <Nav.Link>
-              <Link to="/github">Github</Link>
+              <Link to="/suppress">SCA Suppressions</Link>
             </Nav.Link>
-          </Nav.Item> */}
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link>
               <Link to="/about">About</Link>

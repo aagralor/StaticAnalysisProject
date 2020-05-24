@@ -11,6 +11,7 @@ import {
   STORE_INSTALLATION,
   STORE_TOKEN,
   FINISH_STORE_TOKEN,
+  STORE_SUPPRESSION_LIST,
 } from "../constants/github";
 
 // const customers = handleAction(FETCH_CUSTOMERS, state => state);
@@ -60,6 +61,7 @@ export const github = handleActions(
       token: {},
       installation: {},
     }),
+    [STORE_SUPPRESSION_LIST]: (state, action) => ({ ...state, suppressionList: action.payload }),
   }, 
   {}
 );

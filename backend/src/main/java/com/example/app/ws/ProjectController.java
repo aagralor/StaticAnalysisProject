@@ -128,6 +128,16 @@ public class ProjectController {
 		return new ResponseEntity<>(report, headers, HttpStatus.OK);
 	}
 
+	@PostMapping(path = "/suppress")
+	public ResponseEntity<List<Suppression>> createSuppression(@RequestBody Suppression suppression) {
+
+		this.suppressionService.create(suppression);
+
+		List<Suppression> response = this.suppressionService.findAll();
+
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+
 	@GetMapping(path = "/suppress")
 	public ResponseEntity<List<Suppression>> getAllSuppressions() {
 

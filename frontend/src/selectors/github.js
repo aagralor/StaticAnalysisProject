@@ -18,6 +18,8 @@ export const getCurrentAnalysisCompletion = state => state.github.currentAnalysi
 
 export const getCurrentAnalysisCount = state => state.github.currentAnalysisCount;
 
+export const getSuppressionList = state => state.github.suppressionList;
+
 // export const getCostumerByDni = createSelector(
 //   (state, props) => state.customers.find(c => c.dni === props.dni),
 //   customer => customer

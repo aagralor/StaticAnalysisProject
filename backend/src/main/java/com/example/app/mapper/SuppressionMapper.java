@@ -46,10 +46,14 @@ public class SuppressionMapper {
 		Suppress resp = new Suppress();
 
 		resp.setNotes(in.getNotes());
-		FilePath filePathResp = new FilePath();
-		filePathResp.setRegex(in.getFilePathIsRegex());
-		filePathResp.setValue(in.getFilePath());
-		resp.setFilePath(filePathResp);
+		if (in.getFilePathIsRegex() != null && in.getFilePath() != null) {
+			FilePath filePathResp = new FilePath();
+			filePathResp.setRegex(in.getFilePathIsRegex());
+			filePathResp.setValue(in.getFilePath());
+			resp.setFilePath(filePathResp);
+		} else {
+			resp.setFilePath(null);
+		}
 		resp.setSha1(in.getSha1());
 		resp.setCve(in.getCve());
 
