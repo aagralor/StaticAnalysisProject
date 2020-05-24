@@ -3,6 +3,16 @@
 
 export const apiGet = url => fetch(url).then(v => v.json());
 
+export const apiGetPDF = url => 
+  fetch(
+    url,
+    {
+      method: "GET",
+      headers: new Headers({ "Content-type": "application/pdf" })
+    }
+  )
+  .then(v => v.blob());
+
 export const apiPut = (url, id, obj) => () =>
   fetch(
     `${url}/${id}`, 

@@ -1,5 +1,6 @@
 package com.example.app.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,15 +40,16 @@ public class ReportServiceImpl implements ReportService {
 	ProjectRepository repo;
 
 	@Override
-	public Object generatePDF(Project project, Analysis analysis) {
+	public byte[] generatePDF(Project project, Analysis analysis) {
 
-		String xml = toJsonString(analysis);
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
 		Document document = new Document(PageSize.A4);
 		try {
 			@SuppressWarnings("unused")
-			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("analysis_report.pdf"));
-		} catch (FileNotFoundException | DocumentException e1) {
+//			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("analysis_report.pdf"));
+			PdfWriter pdfWriter = PdfWriter.getInstance(document, buffer);
+		} catch (DocumentException e1) {
 			e1.printStackTrace();
 		}
 		document.open();
@@ -124,8 +126,7 @@ public class ReportServiceImpl implements ReportService {
 		sastTitle.setSpacingAfter(55);
 		try {
 			document.add(scaTitle);
-			List<DependencySCA> dependencyList = analysis.getSca().getDependencyList().stream()
-					.filter(Objects::nonNull)
+			List<DependencySCA> dependencyList = analysis.getSca().getDependencyList().stream().filter(Objects::nonNull)
 					.collect(Collectors.toList());
 			addSCAVulns(dependencyList, document);
 		} catch (DocumentException e) {
@@ -135,7 +136,7 @@ public class ReportServiceImpl implements ReportService {
 		// CLOSE
 		document.close();
 
-		return xml;
+		return buffer.toByteArray();
 	}
 
 	private void addSASTIssues(List<IssueSAST> issueList, Document document) throws DocumentException {
@@ -191,9 +192,7 @@ public class ReportServiceImpl implements ReportService {
 			String filePath = dep.getFilePath();
 			String sha256 = dep.getSha256();
 
-			dep.getVulnerabilityList().stream()
-			.filter(Objects::nonNull)
-			.forEach(is -> {
+			dep.getVulnerabilityList().stream().filter(Objects::nonNull).forEach(is -> {
 				Paragraph title = new Paragraph(is.getName(), fontTitle);
 				title.setSpacingAfter(25);
 				Paragraph name = new Paragraph("Filename: " + fileName);
@@ -210,7 +209,7 @@ public class ReportServiceImpl implements ReportService {
 				cvssv2.setSpacingAfter(15);
 				Paragraph cvssv3 = new Paragraph("CVSSv3: " + is.getCvssv3());
 				cvssv3.setSpacingAfter(15);
-				Paragraph cwe = new Paragraph("SCW: " + is.getCweList());
+				Paragraph cwe = new Paragraph("CWE: " + is.getCweList());
 				cwe.setSpacingAfter(15);
 				Paragraph desc = new Paragraph("Description: " + is.getDescription());
 				desc.setSpacingAfter(190);

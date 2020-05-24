@@ -9,9 +9,9 @@ import { storeCurrentAnalysis } from "../../actions/store-current-analysis";
 import { storeCurrentAnalysisKey } from "../../actions/store-current-analysis-key";
 import { storeCurrentAnalysisCompletion } from "../../actions/store-current-analysis-completion";
 import { finishAnalysisSast } from "../../actions/finish-analysis-sast";
-import { urlProject, urlStartAnalysis, urlCurrentAnalysisStatus } from "../../apis/urls";
+import { urlProject, urlStartAnalysis, urlCurrentAnalysisStatus, urlGenerateReport } from "../../apis/urls";
 import { modalExample } from "./modal-example";
-import { apiGet } from "../../apis";
+import { apiGet, apiGetPDF } from "../../apis";
 import {
   getProjectList,
   getCurrentAnalysis,
@@ -35,6 +35,15 @@ class Project extends Component {
     setTimeout(() => {
       this.props.setCurrentAnalysis(startedAnalysis);
     }, 500);
+  }
+
+  handleReportClick(projectKey) {
+    const link = document.createElement('a');
+    link.href = urlGenerateReport(projectKey);
+    link.setAttribute('download', 'app_report.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link); 
   }
 
   checkProgress = null;
@@ -83,7 +92,9 @@ class Project extends Component {
                     <Nav.Link href={`/project/${element.key}`}>Access</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link href={`#edit?key=${element.key}`}>Edit</Nav.Link>
+                    <Nav.Link onClick={() => this.handleReportClick(element.key)}>
+                      PDF
+                    </Nav.Link>
                   </Nav.Item>
                   <Nav.Item >
                     <Nav.Link href="#remove">Remove</Nav.Link>

@@ -3,7 +3,9 @@ package com.example.app.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,15 +104,21 @@ public class ProjectController {
 	}
 
 	@GetMapping(path = "/project/report")
-	public ResponseEntity<Object> generateReport(@RequestParam String key) {
+	public ResponseEntity<byte[]> generateReport(@RequestParam String key) {
 
 		Project project = this.projectService.findByKey(key);
 
 		Analysis analysis = this.analysisService.findLastAnalysis(key);
 
-		Object report = this.reportService.generatePDF(project, analysis);
+		byte[] report = this.reportService.generatePDF(project, analysis);
 
-		return new ResponseEntity<>(report, HttpStatus.OK);
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_PDF);
+	    String filename = project.getName() + "_report.pdf";
+	    headers.setContentDispositionFormData(filename, filename);
+	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+		return new ResponseEntity<>(report, headers, HttpStatus.OK);
 	}
 
 }

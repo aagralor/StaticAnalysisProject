@@ -5,6 +5,6 @@ import com.example.app.domain.Project;
 
 public interface ReportService {
 
-	Object generatePDF(Project project, Analysis analysis);
+	byte[] generatePDF(Project project, Analysis analysis);
 
 }
