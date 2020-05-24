@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.app.domain.Analysis;
 import com.example.app.domain.Project;
+import com.example.app.domain.Suppression;
 import com.example.app.dto.sast.AnalysisStatusDTO;
 import com.example.app.mapper.AnalysisSASTMapper;
 import com.example.app.service.AnalysisService;
 import com.example.app.service.GithubService;
 import com.example.app.service.ProjectService;
 import com.example.app.service.ReportService;
+import com.example.app.service.SuppressionService;
 
 @RestController
 public class ProjectController {
@@ -36,6 +38,9 @@ public class ProjectController {
 
 	@Autowired
 	ReportService reportService;
+
+	@Autowired
+	SuppressionService suppressionService;
 
 	@Autowired
 	AnalysisSASTMapper analysisSASTMapper;
@@ -119,6 +124,14 @@ public class ProjectController {
 	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
 		return new ResponseEntity<>(report, headers, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/suppress")
+	public ResponseEntity<List<Suppression>> getAllSuppressions() {
+
+		List<Suppression> response = this.suppressionService.findAll();
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 }

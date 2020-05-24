@@ -30,6 +30,9 @@ public class DependencySCA {
 	@Field("SHA256")
 	private String sha256;
 
+	@Field("SHA1")
+	private String sha1;
+
 	@Field("Description")
 	private String description;
 

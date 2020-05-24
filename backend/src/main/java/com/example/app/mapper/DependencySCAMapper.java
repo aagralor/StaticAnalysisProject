@@ -22,6 +22,7 @@ public class DependencySCAMapper {
 		resp.setFileName(in.getFileName());
 		resp.setFilePath(in.getFilePath());
 		resp.setSha256(in.getSha256());
+		resp.setSha1(in.getSha1());
 		resp.setDescription(in.getDescription());
 		resp.setPackageList(in.getPackageList());
 		resp.setVulnerabilityIdList(in.getVulnerabilityIdList());

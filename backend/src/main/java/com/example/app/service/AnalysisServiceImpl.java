@@ -183,8 +183,9 @@ public final class AnalysisServiceImpl implements AnalysisService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/home/alberto/workspace_TFM/dependency-check-APP/bin/dependency-check.sh");
 		sb.append(" --project application --scan ");
-		sb.append(path).append("/**/*.jar --format JSON --out ");
-		sb.append(path).append("/report_JSON.json");
+		sb.append(path).append("/**/*.jar --format JSON ");
+		sb.append("--suppression ./static/dependency-check-supressions.xml ");
+		sb.append("--out ").append(path).append("/report_JSON.json");
 //		"/home/alberto/workspace_TFM/dependency-check-APP/bin/dependency-check.sh --project test --scan ./target/analysis/StaticAnalysisProject-develop/**/*.jar --format JSON --out ./project/application_report_JSON.json"
 		return sb.toString();
 	}

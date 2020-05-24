@@ -87,10 +87,10 @@ public class ReportServiceImpl implements ReportService {
 		branch.setSpacingAfter(145);
 
 		try {
-			uocImage = Image.getInstance("img/uoc_logo.jpg");
+			uocImage = Image.getInstance("static/img/uoc_logo.jpg");
 			uocImage.scaleAbsolute(500, 200);
 
-			javaImage = Image.getInstance("img/java_logo.jpg");
+			javaImage = Image.getInstance("static/img/java_logo.jpg");
 			javaImage.scaleAbsolute(200, 120);
 			javaImage.setAlignment(Element.ALIGN_CENTER);
 
@@ -190,7 +190,8 @@ public class ReportServiceImpl implements ReportService {
 		depList.stream().forEach(dep -> {
 			String fileName = dep.getFileName();
 			String filePath = dep.getFilePath();
-			String sha256 = dep.getSha256();
+			String sha256Text = dep.getSha256();
+			String sha1Text = dep.getSha1();
 
 			dep.getVulnerabilityList().stream().filter(Objects::nonNull).forEach(is -> {
 				Paragraph title = new Paragraph(is.getName(), fontTitle);
@@ -199,8 +200,9 @@ public class ReportServiceImpl implements ReportService {
 				name.setSpacingAfter(15);
 				Paragraph path = new Paragraph("Filepath: " + filePath);
 				path.setSpacingAfter(15);
-				Paragraph sha = new Paragraph("SHA256: " + sha256);
-				sha.setSpacingAfter(15);
+				Paragraph sha256 = new Paragraph("SHA256: " + sha256Text);
+				Paragraph sha1 = new Paragraph("SHA1: " + sha1Text);
+				sha1.setSpacingAfter(15);
 				Paragraph source = new Paragraph("Source: " + is.getSource());
 				source.setSpacingAfter(15);
 				Paragraph severity = new Paragraph("Severity: " + is.getSeverity());
@@ -218,7 +220,8 @@ public class ReportServiceImpl implements ReportService {
 					document.add(title);
 					document.add(name);
 					document.add(path);
-					document.add(sha);
+					document.add(sha256);
+					document.add(sha1);
 					document.add(source);
 					document.add(severity);
 					document.add(cvssv2);
