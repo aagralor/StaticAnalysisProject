@@ -56,7 +56,7 @@ class CreateSuppression extends Component {
           </Form.Group>
 
           <Form.Group controlId="formBasicCheckbox" onChange={(x, y) => { console.log('change'); console.log(x); this.isRegex = !this.isRegex; }}>
-            <Form.Check type="checkbox" label="Private Repository" name="checkBoxData" />
+            <Form.Check type="checkbox" label="REGEX" name="checkBoxData" />
           </Form.Group>
 
           <Form.Group controlId="formBasicText4">
