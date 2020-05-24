@@ -134,8 +134,8 @@ public class UnitaryTest extends AbstractBaseUnitaryTest {
 	}
 	
 	@Configuration
-	@ComponentScan(basePackages = { "com.example.app.service", "com.example.app.mapper" })
-	@EnableMongoRepositories(basePackages = "com.example.app.repo")
+	@ComponentScan(basePackages = { "edu.uoc.app.service", "edu.uoc.app.mapper" })
+	@EnableMongoRepositories(basePackages = "edu.uoc.app.repo")
 	public static class MDBUnitaryTestConfiguration {
 
 		@Bean
