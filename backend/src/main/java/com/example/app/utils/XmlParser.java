@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import com.example.app.domain.sast.xdocs.BugCollectionXdocsReport;
 import com.example.app.domain.sast.xml.BugCollectionXmlReport;
+import com.example.app.domain.sca.xml.DependencyCheckSuppressions;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public final class XmlParser {
@@ -36,6 +37,18 @@ public final class XmlParser {
 		BugCollectionXdocsReport valueXdocs = xmlMapper.readValue(xdocs, BugCollectionXdocsReport.class);
 
 		return valueXdocs;
+	}
+
+	public static DependencyCheckSuppressions createDependencyCheckSuppressions(String filePath, DependencyCheckSuppressions suppressions)
+			throws FileNotFoundException, IOException {
+
+		XmlMapper xmlMapper = new XmlMapper();
+
+		String savePath = filePath + "/dependency-check-supressions.xml";
+
+		xmlMapper.writeValue(new File(savePath), suppressions);
+
+		return suppressions;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {

@@ -10,5 +10,6 @@ public interface SuppressionService {
 
 	List<Suppression> findAll();
 
+	List<Suppression> generateSuppressionsFile(String filepath);
 
 }

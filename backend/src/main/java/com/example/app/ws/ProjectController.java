@@ -75,6 +75,8 @@ public class ProjectController {
     		String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(), updatedProject.getBranchName(),
     				updatedProject.getUsername(), (updatedProject.getBearerToken() != null ? updatedProject.getBearerToken() : null));
 
+    		this.suppressionService.generateSuppressionsFile(downloadPath);
+
     		try {
     			Analysis analysis = this.analysisService.execute(downloadPath, currentAnalysis);
 
