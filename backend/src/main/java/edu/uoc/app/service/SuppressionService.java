@@ -2,14 +2,14 @@ package edu.uoc.app.service;
 
 import java.util.List;
 
-import edu.uoc.app.domain.Suppression;
+import edu.uoc.app.dto.sca.SuppressionDTO;
 
 public interface SuppressionService {
 
-	Suppression create(Suppression suppression);
+	SuppressionDTO create(SuppressionDTO suppression);
 
-	List<Suppression> findAll();
+	List<SuppressionDTO> findAll();
 
-	List<Suppression> generateSuppressionsFile(String filepath);
+	List<SuppressionDTO> generateSuppressionsFile(String filepath);
 
 }

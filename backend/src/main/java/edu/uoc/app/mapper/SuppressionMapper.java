@@ -9,10 +9,73 @@ import edu.uoc.app.domain.Suppression;
 import edu.uoc.app.domain.sca.xml.DependencyCheckSuppressions;
 import edu.uoc.app.domain.sca.xml.FilePath;
 import edu.uoc.app.domain.sca.xml.Suppress;
+import edu.uoc.app.dto.sca.SuppressionDTO;
 
 @Component
 public class SuppressionMapper {
 
+	public SuppressionDTO toSuppressionDTO(Suppression in) {
+
+		SuppressionDTO resp = new SuppressionDTO();
+
+		resp.setNotes(in.getNotes());
+		resp.setFilePath(in.getFilePath());
+		resp.setFilePathIsRegex(in.getFilePathIsRegex());
+		resp.setSha1(in.getSha1());
+		resp.setCve(in.getCve());
+
+		return resp;
+	}
+
+	public List<SuppressionDTO> toSuppressionDTOList(List<Suppression> in) {
+		List<SuppressionDTO> resp = new ArrayList<SuppressionDTO>();
+
+		if (in == null) {
+			return resp;
+		}
+
+		for (Suppression e : in) {
+			resp.add(toSuppressionDTO(e));
+		}
+
+		return resp;
+	}
+
+	public Suppression toSuppressionFromDTO(SuppressionDTO in) {
+
+		Suppression resp = new Suppression();
+
+		resp.setNotes(in.getNotes());
+		if (in.getFilePath().isEmpty()) {
+			resp.setFilePath(null);
+			resp.setFilePathIsRegex(null);
+		} else {
+			resp.setFilePath(in.getFilePath());
+			resp.setFilePathIsRegex(in.getFilePathIsRegex());
+		}
+		if (in.getSha1().isEmpty()) {
+			resp.setSha1(null);
+		} else {
+			resp.setSha1(in.getSha1());
+		}
+		resp.setCve(in.getCve());
+
+		return resp;
+	}
+
+	public List<Suppression> toSuppressionFromDTOList(List<SuppressionDTO> in) {
+		List<Suppression> resp = new ArrayList<Suppression>();
+
+		if (in == null) {
+			return resp;
+		}
+
+		for (SuppressionDTO e : in) {
+			resp.add(toSuppressionFromDTO(e));
+		}
+
+		return resp;
+	}
 
 	public Suppression toSuppression(Suppress in) {
 
@@ -89,6 +152,5 @@ public class SuppressionMapper {
 		return resp;
 
 	}
-
 
 }

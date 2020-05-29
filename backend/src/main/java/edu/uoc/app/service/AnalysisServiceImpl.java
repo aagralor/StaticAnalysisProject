@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -81,8 +80,8 @@ public final class AnalysisServiceImpl implements AnalysisService {
 				response = a;
 			}
 		}
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(sf.format(new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()))));
+//		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		System.out.println(sf.format(new Date(Long.parseLong(response.getSast().getAnalysisTimestamp()))));
 
 		return response;
 	}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import edu.uoc.app.domain.Suppression;
 import edu.uoc.app.domain.sca.xml.DependencyCheckSuppressions;
+import edu.uoc.app.dto.sca.SuppressionDTO;
 import edu.uoc.app.mapper.SuppressionMapper;
 import edu.uoc.app.repo.SuppressionRepository;
 import edu.uoc.app.utils.XmlParser;
@@ -22,27 +23,19 @@ public class SuppressionServiceImpl implements SuppressionService {
 	SuppressionMapper mapper;
 
 	@Override
-	public Suppression create(Suppression suppression) {
-		return this.repo.save(suppression);
+	public SuppressionDTO create(SuppressionDTO suppression) {
+		return this.mapper.toSuppressionDTO(this.repo.save(this.mapper.toSuppressionFromDTO(suppression)));
 	}
 
 	@Override
-	public List<Suppression> findAll() {
+	public List<SuppressionDTO> findAll() {
 		List<Suppression> response =  this.repo.findAll();
 
-		DependencyCheckSuppressions suppressions = this.mapper.toDependencyCheckSuppressions(response);
-
-		try {
-			XmlParser.createDependencyCheckSuppressions(".", suppressions);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return response;
+		return this.mapper.toSuppressionDTOList(response);
 	}
 
 	@Override
-	public List<Suppression> generateSuppressionsFile(String filepath) {
+	public List<SuppressionDTO> generateSuppressionsFile(String filepath) {
 
 		List<Suppression> response =  this.repo.findAll();
 		DependencyCheckSuppressions suppressions = this.mapper.toDependencyCheckSuppressions(response);
@@ -53,7 +46,7 @@ public class SuppressionServiceImpl implements SuppressionService {
 			e.printStackTrace();
 		}
 
-		return response;
+		return this.mapper.toSuppressionDTOList(response);
 	}
 
 	public static <T> void main(String[] args) {

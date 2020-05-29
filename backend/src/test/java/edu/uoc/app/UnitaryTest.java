@@ -72,7 +72,6 @@ public class UnitaryTest extends AbstractBaseUnitaryTest {
 		Project project = new Project();
 		project.setName("Project name");
 		project.setKey("project_key");
-		project.setAccessToken("github_access_token");
 		project.setUsername("github_username");
 
 		// when
@@ -92,12 +91,10 @@ public class UnitaryTest extends AbstractBaseUnitaryTest {
 		Project project1 = new Project();
 		project1.setName("Project name_1");
 		project1.setKey("project_key_1");
-		project1.setAccessToken("github_access_token_1");
 		project1.setUsername("github_username_1");
 		Project project2 = new Project();
 		project2.setName("Project name_2");
 		project2.setKey("project_key_2");
-		project2.setAccessToken("github_access_token_2");
 		project2.setUsername("github_username_2");
 		this.mongoTemplate.save(project1, "Project");
 		this.mongoTemplate.save(project2, "Project");
@@ -118,7 +115,6 @@ public class UnitaryTest extends AbstractBaseUnitaryTest {
 		Project project = new Project();
 		project.setName("Project name");
 		project.setKey("project_key");
-		project.setAccessToken("github_access_token");
 		project.setUsername("github_username");
 		project.setRepositoryName("repo_name");
 		this.mongoTemplate.save(project, "Project");

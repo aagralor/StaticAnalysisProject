@@ -103,10 +103,11 @@ class Project extends Component {
                 </Nav>
               </Card.Header>
               <Card.Body>
-                <Card.Title>{element.name}</Card.Title>
                 <Card.Text>
-                  With supporting text below as a natural lead-in to additional content.
+                  Project container.
                 </Card.Text>
+                <Card.Title><h2>{element.name}</h2></Card.Title>
+                <br/>
                 {
                   element.isPrivate && !element.bearerToken && 
                   <Button onClick={event =>  window.location.href='https://github.com/apps/issuesecuritycenter'} variant="primary" style={{ 'margin-right': '5px' }}>Integrate repository</Button>

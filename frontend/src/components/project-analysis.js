@@ -38,7 +38,7 @@ class ProjectAnalysis extends Component {
     return (      
     <div>
         <h2>Issue List</h2>
-        <p>Meow meow, i tell my human purr for no reason but chase after silly colored fish toys around the house thinking longingly about tuna brine hack, but where is my slave? I'm getting hungry. Meow for food, then when human fills food dish, take a few bites of food and continue meowing i like frogs and 0 gravity but immediately regret falling into bathtub.</p>
+        <br/><br/>
         <Card>
           <Card.Header>
             <Nav variant="tabs" defaultActiveKey="#SAST">

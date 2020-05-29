@@ -27,6 +27,7 @@ class Suppression extends Component {
       <div>
         <Row><h2>Suppression List for Dependency Check</h2></Row>
         <br/>
+        <br/>
         <Button variant="primary" size="lg" block href="suppress/create">
           Create New Suppression
         </Button>

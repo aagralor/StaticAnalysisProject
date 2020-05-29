@@ -28,9 +28,6 @@ public class Project {
 	@Field("Name")
 	private String name;
 
-	@Field("GithubAccessToken")
-	private String accessToken;
-
 	@Field("GithubUsername")
 	private String username;
 

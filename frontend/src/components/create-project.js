@@ -22,15 +22,14 @@ class CreateProject extends Component {
           submit={data => { 
               const key=data.get('projectKey');
               const name=data.get('projectName');
-              const accessToken=data.get('githubAccessToken');
               const email=data.get('githubEmail');
               const username=data.get('githubUsername');
               const repositoryName=data.get('githubRepository');
               const branchName=data.get('githubBranch');
               const url=data.get('githubUrl');
               const isPrivate=(data.get('checkBoxData') === 'on');
-              const newProject = apiPost(urlProject, { key, name, accessToken, email, username, repositoryName, branchName, url, isPrivate });
-              setTimeout(() => this.props.setProject(newProject), 0);
+              const newProject = apiPost(urlProject, { key, name, email, username, repositoryName, branchName, url, isPrivate });
+              setTimeout(() => this.props.setProject(newProject), 1000);
               this.props.history.push('/project');
           }}
           submitButtonText={'Accept'}
@@ -63,6 +62,10 @@ class CreateProject extends Component {
             <Form.Control type="text" placeholder="Enter repository name" name="githubRepository" />
           </Form.Group>
 
+          <Form.Group controlId="formBasicCheckbox" onChange={(x, y) => { console.log('change'); console.log(x); this.isPrivate = !this.isPrivate; }}>
+            <Form.Check type="checkbox" label="Private Repository" name="checkBoxData" />
+          </Form.Group>
+
           <Form.Group controlId="formBasicText5">
             <Form.Label>Github Branch</Form.Label>
             <Form.Control type="text" placeholder="Enter branch name" name="githubBranch" />
@@ -73,14 +76,6 @@ class CreateProject extends Component {
             <Form.Control type="text" placeholder="Enter URL of your repository" name="githubUrl" />
           </Form.Group>
 
-          <Form.Group controlId="formBasicCheckbox" onChange={(x, y) => { console.log('change'); console.log(x); this.isPrivate = !this.isPrivate; }}>
-            <Form.Check type="checkbox" label="Private Repository" name="checkBoxData" />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicText7">
-            <Form.Label>Github Access Token</Form.Label>
-            <Form.Control type="text" placeholder="Enter an access token to your private repository" name="githubAccessToken" />
-          </Form.Group>
         </CustomForm>   
     </div>
     )

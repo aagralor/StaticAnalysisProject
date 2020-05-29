@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.uoc.app.domain.Analysis;
 import edu.uoc.app.domain.Project;
-import edu.uoc.app.domain.Suppression;
 import edu.uoc.app.dto.sast.AnalysisStatusDTO;
+import edu.uoc.app.dto.sca.SuppressionDTO;
 import edu.uoc.app.mapper.AnalysisSASTMapper;
 import edu.uoc.app.service.AnalysisService;
 import edu.uoc.app.service.GithubService;
@@ -65,30 +65,32 @@ public class ProjectController {
 	public ResponseEntity<Analysis> startAnalysys(@RequestParam String key) {
 
 		Project project = this.projectService.findByKey(key);
-		Analysis  currentAnalysis = new Analysis();
+		Analysis currentAnalysis = new Analysis();
 		currentAnalysis.setCompletion("10");
 		currentAnalysis.setStatus("RUNNING");
 		Analysis response = this.analysisService.createOrUpdateAnalysis(currentAnalysis);
 		Project updatedProject = this.projectService.addAnalysis(project, response.getId());
 
 		new Thread(() -> {
-    		String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(), updatedProject.getBranchName(),
-    				updatedProject.getUsername(), (updatedProject.getBearerToken() != null ? updatedProject.getBearerToken() : null));
+			try {
 
-    		this.suppressionService.generateSuppressionsFile(downloadPath);
+				String downloadPath = this.githubService.downloadRepository(updatedProject.getRepositoryName(),
+						updatedProject.getBranchName(), updatedProject.getUsername(),
+						(updatedProject.getBearerToken() != null ? updatedProject.getBearerToken() : null));
 
-    		try {
-    			Analysis analysis = this.analysisService.execute(downloadPath, currentAnalysis);
+				this.suppressionService.generateSuppressionsFile(downloadPath);
 
-    			analysis.setCompletion("100");
-    			analysis.setStatus("COMPLETE");
-    			this.analysisService.createOrUpdateAnalysis(analysis);
-    		} catch (RuntimeException e) {
-    			e.printStackTrace();
-    			currentAnalysis.setCompletion("100");
-    			currentAnalysis.setStatus("CANCELLED");
-    			this.analysisService.createOrUpdateAnalysis(currentAnalysis);
-    		}
+				Analysis analysis = this.analysisService.execute(downloadPath, currentAnalysis);
+
+				analysis.setCompletion("100");
+				analysis.setStatus("COMPLETE");
+				this.analysisService.createOrUpdateAnalysis(analysis);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+				currentAnalysis.setCompletion("100");
+				currentAnalysis.setStatus("CANCELLED");
+				this.analysisService.createOrUpdateAnalysis(currentAnalysis);
+			}
 		}).start();
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -119,29 +121,29 @@ public class ProjectController {
 
 		byte[] report = this.reportService.generatePDF(project, analysis);
 
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_PDF);
-	    String filename = project.getName() + "_report.pdf";
-	    headers.setContentDispositionFormData(filename, filename);
-	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		String filename = project.getName() + "_report.pdf";
+		headers.setContentDispositionFormData(filename, filename);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
 		return new ResponseEntity<>(report, headers, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/suppress")
-	public ResponseEntity<List<Suppression>> createSuppression(@RequestBody Suppression suppression) {
+	public ResponseEntity<List<SuppressionDTO>> createSuppression(@RequestBody SuppressionDTO suppression) {
 
 		this.suppressionService.create(suppression);
 
-		List<Suppression> response = this.suppressionService.findAll();
+		List<SuppressionDTO> response = this.suppressionService.findAll();
 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 	@GetMapping(path = "/suppress")
-	public ResponseEntity<List<Suppression>> getAllSuppressions() {
+	public ResponseEntity<List<SuppressionDTO>> getAllSuppressions() {
 
-		List<Suppression> response = this.suppressionService.findAll();
+		List<SuppressionDTO> response = this.suppressionService.findAll();
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

@@ -77,16 +77,15 @@ class GithubPage extends Component {
         {
           renderForToken &&
           <Card className="text-center">
-            <Card.Header>Featured</Card.Header>
+            <Card.Header>Github Application</Card.Header>
             <Card.Body>
-              <Card.Title>Special title treatment</Card.Title>
+              <Card.Title>IssueSecurityCenter</Card.Title>
               <Card.Text>
-
-                With supporting text below as a natural lead-in to additional content.
+                Do you confirm the authorization code received from the Github application for an access token?
               </Card.Text>
-              <Button onClick={() => this.handleClick(code)} variant="primary">Go somewhere</Button>
+              <Button onClick={() => this.handleClick(code)} variant="primary">OK</Button>
             </Card.Body>
-            <Card.Footer className="text-muted">2 days ago</Card.Footer>
+            <Card.Footer className="text-muted">Oauth 2.0 authorization</Card.Footer>
           </Card>
         }
       </div>
